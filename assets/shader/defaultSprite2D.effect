@@ -1,0 +1,96 @@
+// Effect Syntax Guide: https://docs.cocos.com/creator/manual/zh/shader/index.html
+
+CCEffect %{
+  techniques:
+  - name: aaa
+    passes:
+    - vert: sprite-vs:vert
+      frag: unlit-fs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        alphaThreshold: { value : 0.3 }
+
+}%
+
+CCProgram sprite-vs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  #if USE_LOCAL
+    #include <builtin/uniforms/cc-local>
+  #endif
+  #if SAMPLE_FROM_RT
+    #include <common/common-define>
+  #endif
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+
+  out vec4 color;
+  out vec2 uv0;
+
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+
+    #if USE_LOCAL
+      pos = cc_matWorld * pos;
+    #endif
+
+    #if USE_PIXEL_ALIGNMENT
+      pos = cc_matView * pos;
+      pos.xyz = floor(pos.xyz);
+      pos = cc_matProj * pos;
+    #else
+      pos = cc_matViewProj * pos;
+    #endif
+
+    uv0 = a_texCoord;
+    #if SAMPLE_FROM_RT
+      CC_HANDLE_RT_SAMPLE_FLIP(uv0);
+    #endif
+    color = a_color;
+    return pos;
+  }
+}%
+
+CCProgram unlit-fs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  in vec2 uv0;
+  uniform Constant {
+    vec4 mainColor;
+    float alphaThreshold;
+  };
+  vec4 frag () {
+    vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+    // vec4 col = texture(cc_spriteTexture, uv0);
+      #if USE_SHADOW
+        vec2 cp = vec2(.5,.92);
+        float a = 0.4;
+        float b = 0.04;
+        if(uv0.y>cp.y - b&&col.a<0.5) {
+          vec2 uv2cp = uv0 - cp;
+          float x = uv2cp.x;
+          float y = uv2cp.y;
+          float dis = ((x*x)/(a*a)+(y*y)/(b*b));
+          if(dis<=1.) {
+            col.rab = vec3(0.);
+            col.a = .5;
+            #if USE_ANTI_ALIASING
+              float to_edge = dis - 0.9;
+              if(to_edge>0.) {
+                col.a = mix(col.a,0.0,to_edge/0.1);
+              }
+            #endif
+          }
+        }
+      #endif
+    return CCFragOutput(col);
+  }
+}%

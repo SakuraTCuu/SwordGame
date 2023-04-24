@@ -1,0 +1,67 @@
+//self defined effect         author:ljw 
+CCEffect %{
+  techniques:
+  - name: game2d-shader
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        fillCol:      { value: [1, 1, 1, 1], editor: { type: color } }
+}%
+
+CCProgram 2dvs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec4 color;
+  out vec2 uv0;
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    pos = cc_matViewProj * pos;
+    uv0 = a_texCoord;
+    color = a_color;
+    return pos;
+  }
+}%
+
+CCProgram 2dfs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  // #include "./common-fun"
+
+  in vec2 uv0;
+
+  vec4 getStrengthCol2();
+
+  uniform Constant {
+    vec4 mainColor;
+    vec4 fillCol;
+  };
+
+  vec4 frag () {
+    vec4 col = getStrengthCol2();
+    return CCFragOutput(col);
+  }
+
+  vec4 getStrengthCol2(){
+    vec4 col = texture(cc_spriteTexture,uv0);
+    if(col.a<.5) discard;
+    float t = mod(cc_time.x/2.,2.);
+    float strength = (col.r+col.g+col.b)/2.;
+    vec4 new_col = vec4(0.);
+    if(t>=1.) new_col = mix(fillCol,mainColor,t-1.)*strength;
+    else new_col = mix(mainColor,fillCol,t)*strength;
+    // new_col.a = .7;
+    return new_col;
+  }
+}%

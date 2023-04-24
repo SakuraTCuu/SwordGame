@@ -1,0 +1,91 @@
+//self defined effect         author:ljw 
+CCEffect %{
+  techniques:
+  - name: game2d-shader
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        col1:      { value: [1, 1, 1, 1], editor: { type: color } }
+        col2:      { value: [1, 1, 1, 1], editor: { type: color } }
+        radius: {value: .25}
+}%
+
+CCProgram 2dvs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  #if USE_LOCAL
+    #include <builtin/uniforms/cc-local>
+  #endif
+  #if SAMPLE_FROM_RT
+    #include <common/common-define>
+  #endif
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec4 color;
+  out vec2 uv0;
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    #if USE_LOCAL
+      pos = cc_matWorld * pos;
+    #endif
+    #if USE_PIXEL_ALIGNMENT
+      pos = cc_matView * pos;
+      pos.xyz = floor(pos.xyz);
+      pos = cc_matProj * pos;
+    #else
+      pos = cc_matViewProj * pos;
+    #endif
+    uv0 = a_texCoord;
+    #if SAMPLE_FROM_RT
+      CC_HANDLE_RT_SAMPLE_FLIP(uv0);
+    #endif
+    color = a_color;
+    return pos;
+  }
+}%
+
+CCProgram 2dfs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  in vec2 uv0;
+
+  uniform Constant {
+    vec4 mainColor;
+    vec4 col1;
+    vec4 col2;
+    float radius;
+  };
+
+
+
+  vec4 frag () {
+    // vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+    vec4 col = vec4(1.);//圆外的颜色
+    
+    //画火球
+    float offset = 0.03;//偏差范围内 加上缓冲色
+    vec2 cp = vec2(.5);//火球的圆心
+    vec2 pos = uv0 - cp;
+    float len = length(pos);
+    if(len<radius){
+      col = mix(col1,col2,len/radius);
+    }else if(len<radius+offset){
+      col = col2*2.;
+      col.a = 1.-(len -radius )/offset;
+    }else {
+      discard;
+    }
+
+    return CCFragOutput(col);
+  }
+}%

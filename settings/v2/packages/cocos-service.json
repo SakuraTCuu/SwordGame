@@ -1,0 +1,77 @@
+{
+  "__version__": "3.0.6",
+  "game": {
+    "app_id": "627323653",
+    "name": "to-be-immortal_20230103075245",
+    "c_id": "0"
+  },
+  "appConfigMaps": [
+    {
+      "app_id": "UNKNOW",
+      "config_id": "49f21d"
+    },
+    {
+      "app_id": "627323652",
+      "config_id": "efa7fe"
+    },
+    {
+      "app_id": "627323653",
+      "config_id": "f6e4d8"
+    }
+  ],
+  "configs": [
+    {
+      "app_id": "UNKNOW",
+      "config_id": "49f21d",
+      "config_name": "Default",
+      "config_remarks": "",
+      "services": [
+        {
+          "service_id": "316",
+          "enable": false,
+          "param": {}
+        },
+        {
+          "service_id": "278",
+          "enable": false,
+          "param": {}
+        },
+        {
+          "service_id": "235",
+          "enable": false,
+          "param": {}
+        },
+        {
+          "service_id": "314",
+          "enable": false,
+          "param": {}
+        }
+      ]
+    },
+    {
+      "app_id": "627323652",
+      "config_id": "efa7fe",
+      "config_name": "Default",
+      "config_remarks": "",
+      "services": []
+    },
+    {
+      "app_id": "627323653",
+      "config_id": "f6e4d8",
+      "config_name": "Default",
+      "config_remarks": "",
+      "services": [
+        {
+          "service_id": "235",
+          "enable": false,
+          "param": {
+            "app_id": "627323653",
+            "store_id": "160564",
+            "store_id_platform": "",
+            "plugin_version": "2.1.2_3.0.2"
+          }
+        }
+      ]
+    }
+  ]
+}

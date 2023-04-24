@@ -1,0 +1,56 @@
+//self defined effect         author:ljw 
+CCEffect %{
+  techniques:
+  - name: game2d-shader
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+}%
+
+CCProgram 2dvs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec4 color;
+  out vec2 uv0;
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    pos = cc_matViewProj * pos;
+    uv0 = a_texCoord;
+    color = a_color;
+    return pos;
+  }
+}%
+
+CCProgram 2dfs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  // #include "./common-fun"
+
+  in vec2 uv0;
+
+  uniform Constant {
+    vec4 mainColor;
+  };
+
+  vec4 frag () {
+    // vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+    vec4 col = texture(cc_spriteTexture, uv0);
+    #if USE_SHIELD_COLOR
+      if(col.a<0.4) discard;
+      else col = vec4(col.r,1.,1.,1.);
+    #endif
+    return CCFragOutput(col);
+  }
+}%

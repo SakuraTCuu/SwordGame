@@ -1,0 +1,91 @@
+//self defined effect         author:ljw 
+CCEffect %{
+  techniques:
+  - name: game2d-shader
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+}%
+
+CCProgram 2dvs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  #if USE_LOCAL
+    #include <builtin/uniforms/cc-local>
+  #endif
+  #if SAMPLE_FROM_RT
+    #include <common/common-define>
+  #endif
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec4 color;
+  out vec2 uv0;
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    #if USE_LOCAL
+      pos = cc_matWorld * pos;
+    #endif
+    #if USE_PIXEL_ALIGNMENT
+      pos = cc_matView * pos;
+      pos.xyz = floor(pos.xyz);
+      pos = cc_matProj * pos;
+    #else
+      pos = cc_matViewProj * pos;
+    #endif
+    uv0 = a_texCoord;
+    #if SAMPLE_FROM_RT
+      CC_HANDLE_RT_SAMPLE_FLIP(uv0);
+    #endif
+    color = a_color;
+    return pos;
+  }
+}%
+
+CCProgram 2dfs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  #include "./common-fun"
+
+  in vec2 uv0;
+
+  vec4 getCurPosColor(float w,float offset);
+
+  uniform Constant {
+    vec4 mainColor;//
+  };
+
+  vec4 frag () {
+    vec4 col = getCurPosColor(.1,.1);
+    return CCFragOutput(col);
+  }
+
+  //划线 w线条宽度 offset 为最大偏移量
+  vec4 getCurPosColor(float w,float offset)
+  {
+    vec2 p1 = vec2(.3,.0);
+    vec2 p2 = vec2(.5,.33);
+    vec2 p3 = vec2(.2,.67);
+    vec2 p4 = vec2(.7,1.);
+    vec4 col_w = vec4(1.);
+    vec4 col_g = vec4(.5);
+    // float t = mod(cc_time.x,1.);
+    // vec2 p = getBezierCurvePoint(p1,p2,p3,uv0.y);
+    vec2 p = getBezierCurvePoint(p1,p2,p3,p4,uv0.y);
+    if(uv0.x>p.x&&uv0.x<p.x+w){
+      float len = abs(uv0.x - p.x - w/2.);
+      len = smoothstep(w/2.-.002,w/2.+.002,len);
+      return mix(col_w,col_g,len);
+      // return col_w;
+    }else return col_g;
+  }
+}%

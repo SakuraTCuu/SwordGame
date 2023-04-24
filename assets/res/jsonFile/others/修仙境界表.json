@@ -1,0 +1,771 @@
+[{
+    "lv": 0,
+    "name": "江湖好手",
+    "exp": 1,
+    "blood": 20,
+    "damage": 3,
+    "moveSpeed": 100
+}, {
+    "lv": 1,
+    "name": "练气前期",
+    "exp": 5,
+    "blood": 40,
+    "damage": 6,
+    "moveSpeed": 100
+}, {
+    "lv": 2,
+    "name": "练气中期",
+    "exp": 20,
+    "blood": 110,
+    "damage": 9,
+    "moveSpeed": 100
+}, {
+    "lv": 3,
+    "name": "练气后期",
+    "exp": 50,
+    "blood": 180,
+    "damage": 12,
+    "moveSpeed": 100
+}, {
+    "lv": 4,
+    "name": "练气大圆满",
+    "exp": 100,
+    "blood": 250,
+    "damage": 15,
+    "moveSpeed": 100
+}, {
+    "lv": 5,
+    "name": "筑基前期一重",
+    "exp": 200,
+    "blood": 600,
+    "damage": 30,
+    "moveSpeed": 110
+}, {
+    "lv": 6,
+    "name": "筑基前期二重",
+    "exp": 300,
+    "blood": 700,
+    "damage": 41,
+    "moveSpeed": 110
+}, {
+    "lv": 7,
+    "name": "筑基前期三重",
+    "exp": 400,
+    "blood": 820,
+    "damage": 52,
+    "moveSpeed": 110
+}, {
+    "lv": 8,
+    "name": "筑基中期一重",
+    "exp": 500,
+    "blood": 930,
+    "damage": 63,
+    "moveSpeed": 110
+}, {
+    "lv": 9,
+    "name": "筑基中期二重",
+    "exp": 600,
+    "blood": 1040,
+    "damage": 74,
+    "moveSpeed": 110
+}, {
+    "lv": 10,
+    "name": "筑基中期三重",
+    "exp": 700,
+    "blood": 1150,
+    "damage": 85,
+    "moveSpeed": 110
+}, {
+    "lv": 11,
+    "name": "筑基后期一重",
+    "exp": 800,
+    "blood": 1260,
+    "damage": 96,
+    "moveSpeed": 110
+}, {
+    "lv": 12,
+    "name": "筑基后期二重",
+    "exp": 900,
+    "blood": 1370,
+    "damage": 107,
+    "moveSpeed": 110
+}, {
+    "lv": 13,
+    "name": "筑基后期三重",
+    "exp": 1000,
+    "blood": 1480,
+    "damage": 118,
+    "moveSpeed": 110
+}, {
+    "lv": 14,
+    "name": "筑基大圆满",
+    "exp": 1100,
+    "blood": 1590,
+    "damage": 129,
+    "moveSpeed": 110
+}, {
+    "lv": 15,
+    "name": "结丹前期一重",
+    "exp": 2000,
+    "blood": 8000,
+    "damage": 150,
+    "moveSpeed": 120
+}, {
+    "lv": 16,
+    "name": "结丹前期二重",
+    "exp": 3000,
+    "blood": 9600,
+    "damage": 187,
+    "moveSpeed": 120
+}, {
+    "lv": 17,
+    "name": "结丹前期三重",
+    "exp": 4000,
+    "blood": 11200,
+    "damage": 224,
+    "moveSpeed": 120
+}, {
+    "lv": 18,
+    "name": "结丹前期四重",
+    "exp": 5000,
+    "blood": 12800,
+    "damage": 261,
+    "moveSpeed": 120
+}, {
+    "lv": 19,
+    "name": "结丹前期五重",
+    "exp": 6000,
+    "blood": 14400,
+    "damage": 298,
+    "moveSpeed": 120
+}, {
+    "lv": 20,
+    "name": "结丹中期一重",
+    "exp": 7000,
+    "blood": 16000,
+    "damage": 335,
+    "moveSpeed": 120
+}, {
+    "lv": 21,
+    "name": "结丹中期二重",
+    "exp": 8000,
+    "blood": 17600,
+    "damage": 372,
+    "moveSpeed": 120
+}, {
+    "lv": 22,
+    "name": "结丹中期三重",
+    "exp": 9000,
+    "blood": 19200,
+    "damage": 409,
+    "moveSpeed": 120
+}, {
+    "lv": 23,
+    "name": "结丹中期四重",
+    "exp": 10000,
+    "blood": 20800,
+    "damage": 446,
+    "moveSpeed": 120
+}, {
+    "lv": 24,
+    "name": "结丹中期五重",
+    "exp": 12800,
+    "blood": 22400,
+    "damage": 483,
+    "moveSpeed": 120
+}, {
+    "lv": 25,
+    "name": "结丹后期一重",
+    "exp": 14000,
+    "blood": 24000,
+    "damage": 520,
+    "moveSpeed": 120
+}, {
+    "lv": 26,
+    "name": "结丹后期二重",
+    "exp": 15200,
+    "blood": 25600,
+    "damage": 557,
+    "moveSpeed": 120
+}, {
+    "lv": 27,
+    "name": "结丹后期三重",
+    "exp": 16400,
+    "blood": 27200,
+    "damage": 594,
+    "moveSpeed": 120
+}, {
+    "lv": 28,
+    "name": "结丹后期四重",
+    "exp": 17600,
+    "blood": 28800,
+    "damage": 631,
+    "moveSpeed": 120
+}, {
+    "lv": 29,
+    "name": "结丹后期五重",
+    "exp": 18800,
+    "blood": 30400,
+    "damage": 668,
+    "moveSpeed": 120
+}, {
+    "lv": 30,
+    "name": "结丹大圆满",
+    "exp": 20000,
+    "blood": 32000,
+    "damage": 705,
+    "moveSpeed": 120
+}, {
+    "lv": 31,
+    "name": "元婴初期一重",
+    "exp": 45000,
+    "blood": 120000,
+    "damage": 1000,
+    "moveSpeed": 130
+}, {
+    "lv": 32,
+    "name": "元婴初期二重",
+    "exp": 70000,
+    "blood": 166000,
+    "damage": 1367,
+    "moveSpeed": 130
+}, {
+    "lv": 33,
+    "name": "元婴初期三重",
+    "exp": 95000,
+    "blood": 212000,
+    "damage": 1734,
+    "moveSpeed": 130
+}, {
+    "lv": 34,
+    "name": "元婴初期四重",
+    "exp": 120000,
+    "blood": 258000,
+    "damage": 2101,
+    "moveSpeed": 130
+}, {
+    "lv": 35,
+    "name": "元婴初期五重",
+    "exp": 145000,
+    "blood": 304000,
+    "damage": 2468,
+    "moveSpeed": 130
+}, {
+    "lv": 36,
+    "name": "元婴中期一重",
+    "exp": 170000,
+    "blood": 350000,
+    "damage": 2835,
+    "moveSpeed": 130
+}, {
+    "lv": 37,
+    "name": "元婴中期二重",
+    "exp": 195000,
+    "blood": 396000,
+    "damage": 3202,
+    "moveSpeed": 130
+}, {
+    "lv": 38,
+    "name": "元婴中期三重",
+    "exp": 220000,
+    "blood": 442000,
+    "damage": 3569,
+    "moveSpeed": 130
+}, {
+    "lv": 39,
+    "name": "元婴中期四重",
+    "exp": 245000,
+    "blood": 488000,
+    "damage": 3936,
+    "moveSpeed": 130
+}, {
+    "lv": 40,
+    "name": "元婴中期五重",
+    "exp": 270000,
+    "blood": 534000,
+    "damage": 4303,
+    "moveSpeed": 130
+}, {
+    "lv": 41,
+    "name": "元婴后期一重",
+    "exp": 295000,
+    "blood": 580000,
+    "damage": 4670,
+    "moveSpeed": 130
+}, {
+    "lv": 42,
+    "name": "元婴后期二重",
+    "exp": 320000,
+    "blood": 626000,
+    "damage": 5037,
+    "moveSpeed": 130
+}, {
+    "lv": 43,
+    "name": "元婴后期三重",
+    "exp": 345000,
+    "blood": 672000,
+    "damage": 5404,
+    "moveSpeed": 130
+}, {
+    "lv": 44,
+    "name": "元婴后期四重",
+    "exp": 370000,
+    "blood": 718000,
+    "damage": 5771,
+    "moveSpeed": 130
+}, {
+    "lv": 45,
+    "name": "元婴后期五重",
+    "exp": 395000,
+    "blood": 764000,
+    "damage": 6138,
+    "moveSpeed": 130
+}, {
+    "lv": 46,
+    "name": "元婴大圆满",
+    "exp": 420000,
+    "blood": 810000,
+    "damage": 6505,
+    "moveSpeed": 130
+}, {
+    "lv": 47,
+    "name": "化神初期一重",
+    "exp": 500000,
+    "blood": 1600000,
+    "damage": 10000,
+    "moveSpeed": 140
+}, {
+    "lv": 48,
+    "name": "化神初期二重",
+    "exp": 820000,
+    "blood": 2383333,
+    "damage": 11667,
+    "moveSpeed": 140
+}, {
+    "lv": 49,
+    "name": "化神初期三重",
+    "exp": 1460000,
+    "blood": 3166666,
+    "damage": 13334,
+    "moveSpeed": 140
+}, {
+    "lv": 50,
+    "name": "化神初期四重",
+    "exp": 2420000,
+    "blood": 3949999,
+    "damage": 15001,
+    "moveSpeed": 140
+}, {
+    "lv": 51,
+    "name": "化神初期五重",
+    "exp": 3700000,
+    "blood": 4733332,
+    "damage": 16668,
+    "moveSpeed": 140
+}, {
+    "lv": 52,
+    "name": "化神初期六重",
+    "exp": 5300000,
+    "blood": 5516665,
+    "damage": 18335,
+    "moveSpeed": 140
+}, {
+    "lv": 53,
+    "name": "化神初期七重",
+    "exp": 7220000,
+    "blood": 6299998,
+    "damage": 20002,
+    "moveSpeed": 140
+}, {
+    "lv": 54,
+    "name": "化神初期八重",
+    "exp": 9460000,
+    "blood": 7083331,
+    "damage": 21669,
+    "moveSpeed": 140
+}, {
+    "lv": 55,
+    "name": "化神中期一重",
+    "exp": 12020000,
+    "blood": 7866664,
+    "damage": 23336,
+    "moveSpeed": 140
+}, {
+    "lv": 56,
+    "name": "化神中期二重",
+    "exp": 14900000,
+    "blood": 8649997,
+    "damage": 25003,
+    "moveSpeed": 140
+}, {
+    "lv": 57,
+    "name": "化神中期三重",
+    "exp": 18100000,
+    "blood": 9433330,
+    "damage": 26670,
+    "moveSpeed": 140
+}, {
+    "lv": 58,
+    "name": "化神中期四重",
+    "exp": 21620000,
+    "blood": 10216663,
+    "damage": 28337,
+    "moveSpeed": 140
+}, {
+    "lv": 59,
+    "name": "化神中期五重",
+    "exp": 25460000,
+    "blood": 10999996,
+    "damage": 30004,
+    "moveSpeed": 140
+}, {
+    "lv": 60,
+    "name": "化神中期六重",
+    "exp": 29620000,
+    "blood": 11783329,
+    "damage": 31671,
+    "moveSpeed": 140
+}, {
+    "lv": 61,
+    "name": "化神中期七重",
+    "exp": 34100000,
+    "blood": 12566662,
+    "damage": 33338,
+    "moveSpeed": 140
+}, {
+    "lv": 62,
+    "name": "化神中期八重",
+    "exp": 38900000,
+    "blood": 13349995,
+    "damage": 35005,
+    "moveSpeed": 140
+}, {
+    "lv": 63,
+    "name": "化神后期一重",
+    "exp": 44020000,
+    "blood": 14133328,
+    "damage": 36672,
+    "moveSpeed": 140
+}, {
+    "lv": 64,
+    "name": "化神后期二重",
+    "exp": 49460000,
+    "blood": 14916661,
+    "damage": 38339,
+    "moveSpeed": 140
+}, {
+    "lv": 65,
+    "name": "化神后期三重",
+    "exp": 55220000,
+    "blood": 15699994,
+    "damage": 40006,
+    "moveSpeed": 140
+}, {
+    "lv": 66,
+    "name": "化神后期四重",
+    "exp": 61300000,
+    "blood": 16483327,
+    "damage": 41673,
+    "moveSpeed": 140
+}, {
+    "lv": 67,
+    "name": "化神后期五重",
+    "exp": 67700000,
+    "blood": 17266660,
+    "damage": 43340,
+    "moveSpeed": 140
+}, {
+    "lv": 68,
+    "name": "化神后期六重",
+    "exp": 74420000,
+    "blood": 18049993,
+    "damage": 45007,
+    "moveSpeed": 140
+}, {
+    "lv": 69,
+    "name": "化神后期七重",
+    "exp": 81460000,
+    "blood": 18833326,
+    "damage": 46674,
+    "moveSpeed": 140
+}, {
+    "lv": 70,
+    "name": "化神后期八重",
+    "exp": 88820000,
+    "blood": 19616659,
+    "damage": 48341,
+    "moveSpeed": 140
+}, {
+    "lv": 71,
+    "name": "化神大圆满",
+    "exp": 96500000,
+    "blood": 20399992,
+    "damage": 50008,
+    "moveSpeed": 140
+}, {
+    "lv": 72,
+    "name": "返虚初期一重",
+    "exp": 20300000,
+    "blood": 21183325,
+    "damage": 51675,
+    "moveSpeed": 150
+}, {
+    "lv": 73,
+    "name": "返虚初期二重",
+    "exp": 21100000,
+    "blood": 21966658,
+    "damage": 53342,
+    "moveSpeed": 150
+}, {
+    "lv": 74,
+    "name": "返虚初期三重",
+    "exp": 21900000,
+    "blood": 22749991,
+    "damage": 55009,
+    "moveSpeed": 150
+}, {
+    "lv": 75,
+    "name": "返虚初期四重",
+    "exp": 22700000,
+    "blood": 23533324,
+    "damage": 56676,
+    "moveSpeed": 150
+}, {
+    "lv": 76,
+    "name": "返虚初期五重",
+    "exp": 23500000,
+    "blood": 24316657,
+    "damage": 58343,
+    "moveSpeed": 150
+}, {
+    "lv": 77,
+    "name": "返虚初期六重",
+    "exp": 24300000,
+    "blood": 25099990,
+    "damage": 60010,
+    "moveSpeed": 150
+}, {
+    "lv": 78,
+    "name": "返虚初期七重",
+    "exp": 25100000,
+    "blood": 25883323,
+    "damage": 61677,
+    "moveSpeed": 150
+}, {
+    "lv": 79,
+    "name": "返虚初期八重",
+    "exp": 25900000,
+    "blood": 26666656,
+    "damage": 63344,
+    "moveSpeed": 150
+}, {
+    "lv": 80,
+    "name": "返虚初期九重",
+    "exp": 26700000,
+    "blood": 27449989,
+    "damage": 65011,
+    "moveSpeed": 150
+}, {
+    "lv": 81,
+    "name": "返虚初期十重",
+    "exp": 27500000,
+    "blood": 28233322,
+    "damage": 66678,
+    "moveSpeed": 150
+}, {
+    "lv": 82,
+    "name": "返虚初期十一重",
+    "exp": 28300000,
+    "blood": 29016655,
+    "damage": 68345,
+    "moveSpeed": 150
+}, {
+    "lv": 83,
+    "name": "返虚初期十二重",
+    "exp": 29100000,
+    "blood": 29799988,
+    "damage": 70012,
+    "moveSpeed": 150
+}, {
+    "lv": 84,
+    "name": "返虚中期一重",
+    "exp": 29900000,
+    "blood": 30583321,
+    "damage": 71679,
+    "moveSpeed": 150
+}, {
+    "lv": 85,
+    "name": "返虚中期二重",
+    "exp": 30700000,
+    "blood": 31366654,
+    "damage": 73346,
+    "moveSpeed": 150
+}, {
+    "lv": 86,
+    "name": "返虚中期三重",
+    "exp": 31500000,
+    "blood": 32149987,
+    "damage": 75013,
+    "moveSpeed": 150
+}, {
+    "lv": 87,
+    "name": "返虚中期四重",
+    "exp": 32300000,
+    "blood": 32933320,
+    "damage": 76680,
+    "moveSpeed": 150
+}, {
+    "lv": 88,
+    "name": "返虚中期五重",
+    "exp": 33100000,
+    "blood": 33716653,
+    "damage": 78347,
+    "moveSpeed": 150
+}, {
+    "lv": 89,
+    "name": "返虚中期六重",
+    "exp": 33900000,
+    "blood": 34499986,
+    "damage": 80014,
+    "moveSpeed": 150
+}, {
+    "lv": 90,
+    "name": "返虚中期七重",
+    "exp": 34700000,
+    "blood": 35283319,
+    "damage": 81681,
+    "moveSpeed": 150
+}, {
+    "lv": 91,
+    "name": "返虚中期八重",
+    "exp": 35500000,
+    "blood": 36066652,
+    "damage": 83348,
+    "moveSpeed": 150
+}, {
+    "lv": 92,
+    "name": "返虚中期九重",
+    "exp": 36300000,
+    "blood": 36849985,
+    "damage": 85015,
+    "moveSpeed": 150
+}, {
+    "lv": 93,
+    "name": "返虚中期十重",
+    "exp": 37100000,
+    "blood": 37633318,
+    "damage": 86682,
+    "moveSpeed": 150
+}, {
+    "lv": 94,
+    "name": "返虚中期十一重",
+    "exp": 37900000,
+    "blood": 38416651,
+    "damage": 88349,
+    "moveSpeed": 150
+}, {
+    "lv": 95,
+    "name": "返虚中期十二重",
+    "exp": 38700000,
+    "blood": 39199984,
+    "damage": 90016,
+    "moveSpeed": 150
+}, {
+    "lv": 96,
+    "name": "返虚后期一重",
+    "exp": 39500000,
+    "blood": 39983317,
+    "damage": 91683,
+    "moveSpeed": 150
+}, {
+    "lv": 97,
+    "name": "返虚后期二重",
+    "exp": 40300000,
+    "blood": 40766650,
+    "damage": 93350,
+    "moveSpeed": 150
+}, {
+    "lv": 98,
+    "name": "返虚后期三重",
+    "exp": 41100000,
+    "blood": 41549983,
+    "damage": 95017,
+    "moveSpeed": 150
+}, {
+    "lv": 99,
+    "name": "返虚后期四重",
+    "exp": 41900000,
+    "blood": 42333316,
+    "damage": 96684,
+    "moveSpeed": 150
+}, {
+    "lv": 100,
+    "name": "返虚后期五重",
+    "exp": 42700000,
+    "blood": 43116649,
+    "damage": 98351,
+    "moveSpeed": 150
+}, {
+    "lv": 101,
+    "name": "返虚后期六重",
+    "exp": 43500000,
+    "blood": 43899982,
+    "damage": 100018,
+    "moveSpeed": 150
+}, {
+    "lv": 102,
+    "name": "返虚后期七重",
+    "exp": 44300000,
+    "blood": 44683315,
+    "damage": 101685,
+    "moveSpeed": 150
+}, {
+    "lv": 103,
+    "name": "返虚后期八重",
+    "exp": 45100000,
+    "blood": 45466648,
+    "damage": 103352,
+    "moveSpeed": 150
+}, {
+    "lv": 104,
+    "name": "返虚后期九重",
+    "exp": 45900000,
+    "blood": 46249981,
+    "damage": 105019,
+    "moveSpeed": 150
+}, {
+    "lv": 105,
+    "name": "返虚后期十重",
+    "exp": 46700000,
+    "blood": 47033314,
+    "damage": 106686,
+    "moveSpeed": 150
+}, {
+    "lv": 106,
+    "name": "返虚后期十一重",
+    "exp": 47500000,
+    "blood": 47816647,
+    "damage": 108353,
+    "moveSpeed": 150
+}, {
+    "lv": 107,
+    "name": "返虚后期十二重",
+    "exp": 48300000,
+    "blood": 48599980,
+    "damage": 110020,
+    "moveSpeed": 150
+}, {
+    "lv": 108,
+    "name": "返虚大圆满",
+    "exp": 49100000,
+    "blood": 49383313,
+    "damage": 111687,
+    "moveSpeed": 150
+}, {
+    "lv": 109,
+    "name": "虚无",
+    "exp": "",
+    "blood": "",
+    "damage": "",
+    "moveSpeed": ""
+}]

@@ -1,0 +1,134 @@
+{
+  "ver": "1.0.25",
+  "importer": "image",
+  "imported": true,
+  "uuid": "d8c99cce-62da-43a0-827d-abd9259f3888",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "d8c99cce-62da-43a0-827d-abd9259f3888@6c48a",
+      "displayName": "thunderFissionBead_00007",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "d8c99cce-62da-43a0-827d-abd9259f3888",
+        "visible": false
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    },
+    "f9941": {
+      "importer": "sprite-frame",
+      "uuid": "d8c99cce-62da-43a0-827d-abd9259f3888@f9941",
+      "displayName": "thunderFissionBead_00007",
+      "id": "f9941",
+      "name": "spriteFrame",
+      "userData": {
+        "trimType": "auto",
+        "trimThreshold": 1,
+        "rotated": false,
+        "offsetX": -26.5,
+        "offsetY": 0.5,
+        "trimX": 0,
+        "trimY": 0,
+        "width": 168,
+        "height": 236,
+        "rawWidth": 221,
+        "rawHeight": 237,
+        "borderTop": 0,
+        "borderBottom": 0,
+        "borderLeft": 0,
+        "borderRight": 0,
+        "packable": true,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "d8c99cce-62da-43a0-827d-abd9259f3888@6c48a",
+        "atlasUuid": "",
+        "pixelsToUnit": 100,
+        "pivotX": 0.5,
+        "pivotY": 0.5,
+        "meshType": 0,
+        "vertices": {
+          "rawPosition": [
+            -84,
+            -118,
+            0,
+            84,
+            -118,
+            0,
+            -84,
+            118,
+            0,
+            84,
+            118,
+            0
+          ],
+          "indexes": [
+            0,
+            1,
+            2,
+            2,
+            1,
+            3
+          ],
+          "uv": [
+            0,
+            237,
+            168,
+            237,
+            0,
+            1,
+            168,
+            1
+          ],
+          "nuv": [
+            0,
+            0.004219409282700422,
+            0.7601809954751131,
+            0.004219409282700422,
+            0,
+            1,
+            0.7601809954751131,
+            1
+          ],
+          "minPos": [
+            -84,
+            -118,
+            0
+          ],
+          "maxPos": [
+            84,
+            118,
+            0
+          ]
+        }
+      },
+      "ver": "1.0.11",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "sprite-frame",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "d8c99cce-62da-43a0-827d-abd9259f3888@f9941"
+  }
+}

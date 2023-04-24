@@ -1,0 +1,97 @@
+//伪随机
+float randomNum(vec2 p)
+{
+  return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453);
+}
+float randomNum(float x){
+  return fract(sin(x)* 43758.5453);
+}
+//随机生成一个Vec2
+vec2 randomVec2(float seed){
+  return vec2(randomNum(seed),randomNum(randomNum(seed)));
+}
+vec2 randomVec2(vec2 seed){
+  return vec2(randomNum(seed.x),randomNum(seed.y));
+}
+//随机生成一个Vec4
+vec4 randomVec4(float seed){
+  return vec4(randomNum(seed),randomNum(seed*2.),randomNum(seed*3.),randomNum(seed*4.));
+}
+// 线性插值
+float lerp(float a, float b,float x){
+  return a + x*(b-a);
+}
+// 直线方程旋转公式 l1 = k*x + b ;angle为旋转角度 p为l1上的点；l2 = k2*x+b2 返回值为旋转后传入x得到的y值
+float getLineResult(float angel,float k,float b,vec2 p,float x)
+{
+  float k2 = (k*cos(angel)+sin(angel))/(cos(angel)-k*sin(angel));
+  float b2 = ((k*p.x-p.y)*(1.-cos(angel)) -(p.x+k*p.y)*sin(angel) + b)/(cos(angel)-k*sin(angel));
+  return k2*x+b2;
+}
+// 一阶贝塞尔曲线 返回值为t下的点 t的区间为[0,1]
+vec2 getBezierCurvePoint(vec2 p1,vec2 p2,float t){
+  return (1.-t)*p1 + t*p2;
+}
+// 二阶贝塞尔曲线 返回值为t下的点 t的区间为[0,1]
+vec2 getBezierCurvePoint(vec2 p1,vec2 p2,vec2 p3,float t){
+  vec2 l1 = getBezierCurvePoint(p1,p2,t);
+  vec2 l2 = getBezierCurvePoint(p2,p3,t);
+  return getBezierCurvePoint(l1,l2,t);
+}
+// 三阶贝塞尔曲线 返回值为t下的点 t的区间为[0,1]
+vec2 getBezierCurvePoint(vec2 p1,vec2 p2,vec2 p3,vec2 p4,float t){
+  vec2 l1 = getBezierCurvePoint(p1,p2,t);
+  vec2 l2 = getBezierCurvePoint(p2,p3,t);
+  vec2 l3 = getBezierCurvePoint(p3,p4,t);
+  vec2 m1 = getBezierCurvePoint(l1,l2,t);
+  vec2 m2 = getBezierCurvePoint(l2,l3,t);
+  return getBezierCurvePoint(m1,m2,t);
+}
+
+//value noise
+float valueNoise(vec2 p) {
+  vec2 w = floor(p);
+  vec2 k = fract(p);
+  k = k*k*(3.-2.*k); // smooth it
+ 
+  float n = w.x*10. + w.y*48.;
+ 
+  float a = randomNum(n);
+  float b = randomNum(n+10.);
+  float c = randomNum(n+48.);
+  float d = randomNum(n+58.);
+ 
+  return mix(
+    mix(a, b, k.x),
+    mix(c, d, k.x),
+    k.y);
+}
+// 分形布朗运动
+float fbm6( vec2 p ) {
+  const mat2 mtx = mat2( 0.80,  0.60, -0.60,  0.80 );
+  float f = 0.0;
+  f += 0.500000*valueNoise( p ); p = mtx*p*2.02;
+  f += 0.250000*valueNoise( p ); p = mtx*p*2.03;
+  f += 0.125000*valueNoise( p ); p = mtx*p*2.01;
+  f += 0.062500*valueNoise( p ); p = mtx*p*2.04;
+  f += 0.031250*valueNoise( p ); p = mtx*p*2.01;
+  f += 0.015625*valueNoise( p );
+  return f/0.96875;
+}
+
+
+// ==================颜色相关===================
+//获取颜色
+vec4 getColor(int type){
+  if(type == 1) return vec4(1.,0.,0.,1.);
+  else if(type == 2) return vec4(0.,1.,0.,1.);
+  else if(type == 3) return vec4(0.,0.,1.,1.);
+  else return vec4(1.);
+}
+//将255 转换为1
+vec4 getColorBy255(vec4 c){
+ return vec4(c.r/255.,c.g/255.,c.b/255.,c.a/255.);
+}
+vec4 getColorBy255(vec3 c){
+ return vec4(c.r/255.,c.g/255.,c.b/255.,1.);
+}

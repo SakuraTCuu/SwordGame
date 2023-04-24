@@ -1,0 +1,34 @@
+precision highp float;
+#include <legacy/output>
+#include <builtin/internal/sprite-texture>
+in vec2 uv0;
+uniform Constant {
+  vec4 mainColor;
+};
+vec4 frag () {
+  vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+  if(col.r+col.g+col.b>0.1&&col.a>0.1) {
+    col.rgb = mainColor.rgb;
+  }else{
+    discard;
+  }
+  return CCFragOutput(col);
+}
+// vec4 frag () {
+//   if(isFlashWhite.r == 1.0){
+//   // if(mainColor.r == 0.5){
+//     vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+//     if(col.r+col.g+col.b>0.0) {
+//       col.rgb = mainColor.rgb;
+//     }else{
+//       discard;
+//     }
+//     return CCFragOutput(col);
+//   }else{
+//     vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+//     if(col.r+col.g+col.b==0.0) {
+//       discard;
+//     }
+//     return CCFragOutput(col);
+//   }
+// }

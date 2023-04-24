@@ -1,0 +1,52 @@
+{
+    "stage1": {
+        "blood": 0,
+        "damage": 0,
+        "moveSpeed": 0
+    },
+    "stage2": {
+        "blood": 0.1,
+        "damage": 0.1,
+        "moveSpeed": 0
+    },
+    "stage3": {
+        "blood": 0.2,
+        "damage": 0.2,
+        "moveSpeed": 0
+    },
+    "stage4": {
+        "blood": 0.3,
+        "damage": 0.3,
+        "moveSpeed": 0
+    },
+    "stage5": {
+        "blood": 0.5,
+        "damage": 0.5,
+        "moveSpeed": 0
+    },
+    "stage6": {
+        "blood": 0,
+        "damage": 0,
+        "moveSpeed": 0
+    },
+    "stage7": {
+        "blood": 0.2,
+        "damage": 0.2,
+        "moveSpeed": 0
+    },
+    "stage8": {
+        "blood": 0.4,
+        "damage": 0.4,
+        "moveSpeed": 0
+    },
+    "stage9": {
+        "blood": 0.7,
+        "damage": 0.7,
+        "moveSpeed": 0
+    },
+    "stage10": {
+        "blood": 1,
+        "damage": 1,
+        "moveSpeed": 0
+    }
+}

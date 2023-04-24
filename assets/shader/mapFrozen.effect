@@ -1,0 +1,96 @@
+//self defined effect         author:ljw 
+CCEffect %{
+  techniques:
+  - name: game2d-shader
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        fillColor: {value: [1, 0, 0, 1], editor: { type: color }}
+        frozenProgress: {value: 0}
+}%
+
+CCProgram 2dvs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec4 color;
+  out vec2 uv0;
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    pos = cc_matViewProj * pos;
+    uv0 = a_texCoord;
+    color = a_color;
+    return pos;
+  }
+}%
+
+CCProgram 2dfs %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  #include "./common-fun"
+
+  in vec2 uv0;
+
+  vec4 getCol();
+  vec4 getSnowEffect();
+
+  uniform Constant {
+    vec4 mainColor;
+    vec4 fillColor;
+    float frozenProgress;
+  };
+
+  vec4 frag () {
+    // vec4 col = mainColor;
+    vec4 col = getCol();
+    // 下雪渐变
+    #if USE_SNOW_EFFECT
+      col = getSnowEffect();
+    #endif
+    return CCFragOutput(col);
+  }
+  
+  // 获取下雪特效
+  vec4 getSnowEffect(){
+    // float t = mod(cc_time.x*0.1,1.);
+    float t = cc_time.x*0.01;
+    if(t>1.) t = 1.;
+    #if USE_OUT_PROGRESS
+        t = frozenProgress;
+    #endif 
+    // vec4 col_texture = vec4((texture(cc_spriteTexture,uv0)*t).rgb,1.);
+    vec4 col_texture = texture(cc_spriteTexture,uv0);
+    col_texture.rgb+=(fillColor.rgb*t/2.);
+    return col_texture;
+  }
+
+  // 扩散效果
+  vec4 getCol(){
+    // float t = mod(cc_time.x*0.05,0.5);
+    // float t = mod(cc_time.x*0.1,0.5);
+    float t = mod(cc_time.x*0.01,0.5);
+    vec2 cp = vec2(0.5,0.5);
+    // if(uv0.x<cp.x+t&&uv0.x>cp.x-t&&uv0.y<cp.y+t&&uv0.y>cp.y-t){//矩形扩散
+    if((cp.x-uv0.x)*(cp.x-uv0.x) + (cp.y-uv0.y)*(cp.y-uv0.y)<t){//矩形扩散
+      vec4 col1 =texture(cc_spriteTexture,uv0);
+      float strength = 1.;
+      vec4 col_texture = vec4((texture(cc_spriteTexture,uv0)*strength).rgb,1.);
+      col_texture.rgb+=(fillColor.rgb*strength/2.);
+      return col_texture;
+    }else{
+      return texture(cc_spriteTexture,uv0);
+    }
+  }
+
+}%

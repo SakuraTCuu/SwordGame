@@ -1,0 +1,962 @@
+{
+    "stage1": {
+        "passReward": [19, 24],
+        "passRewardRatio": [1, 0.1],
+        "monsterReward": [9],
+        "monsterRewardRatio": [0.3],
+        "leaderReward": [14, 19, 24],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 2,
+            "min": 1
+        }
+    },
+    "stage2": {
+        "passReward": [19, 19, 24],
+        "passRewardRatio": [1, 0.2, 0.3],
+        "monsterReward": [9],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [14, 19, 24],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 3,
+            "min": 1
+        }
+    },
+    "stage3": {
+        "passReward": [19, 19, 24],
+        "passRewardRatio": [1, 0.5, 0.5],
+        "monsterReward": [9],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [14, 19, 24],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 3,
+            "min": 1
+        }
+    },
+    "stage4": {
+        "passReward": [19, 19, 19, 24],
+        "passRewardRatio": [1, 1, 0.2, 1],
+        "monsterReward": [9],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [14, 19, 24],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 4,
+            "min": 1
+        }
+    },
+    "stage5": {
+        "passReward": [19, 19, 19, 24, 24, 29],
+        "passRewardRatio": [1, 1, 0.5, 1, 0.5, 0.01],
+        "monsterReward": [9],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [14, 19, 24],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 5,
+            "min": 1
+        }
+    },
+    "stage6": {
+        "passReward": [20, 25, 30],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [10],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [15, 20, 25],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 25,
+            "min": 10
+        }
+    },
+    "stage7": {
+        "passReward": [20, 20, 25, 25, 30],
+        "passRewardRatio": [1, 0.2, 1, 0.5, 0.2],
+        "monsterReward": [10],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [15, 20, 25],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 25,
+            "min": 10
+        }
+    },
+    "stage8": {
+        "passReward": [20, 20, 25, 25, 25, 30],
+        "passRewardRatio": [1, 0.5, 1, 0.5, 0.5, 0.2],
+        "monsterReward": [10],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [15, 20, 25],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 25,
+            "min": 10
+        }
+    },
+    "stage9": {
+        "passReward": [20, 20, 25, 25, 25, 25, 30],
+        "passRewardRatio": [1, 0.8, 1, 1, 0.5, 0.5, 0.5],
+        "monsterReward": [10],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [15, 20, 25],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 25,
+            "min": 10
+        }
+    },
+    "stage10": {
+        "passReward": [20, 20, 20, 25, 25, 25, 25, 30],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [10],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [15, 20, 25],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 25,
+            "min": 10
+        }
+    },
+    "stage11": {
+        "passReward": [21, 26, 31],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 200,
+            "min": 50
+        }
+    },
+    "stage12": {
+        "passReward": [21, 21, 26, 26, 31],
+        "passRewardRatio": [1, 0.2, 1, 0.5, 0.2],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 200,
+            "min": 50
+        }
+    },
+    "stage13": {
+        "passReward": [21, 21, 26, 26, 26, 31],
+        "passRewardRatio": [1, 0.5, 1, 0.5, 0.5, 0.2],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 200,
+            "min": 50
+        }
+    },
+    "stage14": {
+        "passReward": [21, 21, 26, 26, 26, 26, 31],
+        "passRewardRatio": [1, 0.8, 1, 1, 0.5, 0.5, 0.5],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 200,
+            "min": 50
+        }
+    },
+    "stage15": {
+        "passReward": [21, 21, 21, 26, 26, 26, 26, 31],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 200,
+            "min": 50
+        }
+    },
+    "stage16": {
+        "passReward": [21, 26, 31, 26, 31],
+        "passRewardRatio": [1, 1, 1, 0.5, 0.1],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 400,
+            "min": 100
+        }
+    },
+    "stage17": {
+        "passReward": [21, 21, 26, 26, 26, 31],
+        "passRewardRatio": [1, 0.2, 1, 1, 0.5, 0.3],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 400,
+            "min": 100
+        }
+    },
+    "stage18": {
+        "passReward": [21, 21, 21, 26, 26, 26, 26, 31],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 0.5],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 400,
+            "min": 100
+        }
+    },
+    "stage19": {
+        "passReward": [21, 21, 21, 26, 26, 26, 26, 26, 31, 31],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 400,
+            "min": 100
+        }
+    },
+    "stage20": {
+        "passReward": [21, 21, 21, 21, 26, 26, 26, 26, 26, 31, 31],
+        "passRewardRatio": [1, 1, 1, 0.8, 1, 1, 1, 1, 0.8, 1, 0.8],
+        "monsterReward": [11],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [16, 21, 26],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 400,
+            "min": 100
+        }
+    },
+    "stage21": {
+        "passReward": [22, 27, 32],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 4000,
+            "min": 1000
+        }
+    },
+    "stage22": {
+        "passReward": [22, 27, 32],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 4000,
+            "min": 1000
+        }
+    },
+    "stage23": {
+        "passReward": [22, 22, 27, 27, 32],
+        "passRewardRatio": [1, 0.2, 1, 0.5, 0.2],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 4000,
+            "min": 1000
+        }
+    },
+    "stage24": {
+        "passReward": [22, 22, 27, 27, 27, 32],
+        "passRewardRatio": [1, 0.5, 1, 0.5, 0.5, 0.2],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 4000,
+            "min": 1000
+        }
+    },
+    "stage25": {
+        "passReward": [22, 22, 27, 27, 27, 27, 32],
+        "passRewardRatio": [1, 0.8, 1, 1, 0.5, 0.5, 0.5],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 4000,
+            "min": 1000
+        }
+    },
+    "stage26": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 32],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 8000,
+            "min": 2000
+        }
+    },
+    "stage27": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 32],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 8000,
+            "min": 2000
+        }
+    },
+    "stage28": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 32],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 8000,
+            "min": 2000
+        }
+    },
+    "stage29": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 32],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 8000,
+            "min": 2000
+        }
+    },
+    "stage30": {
+        "passReward": [22, 27, 32, 27, 32],
+        "passRewardRatio": [1, 1, 1, 0.5, 0.1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 8000,
+            "min": 2000
+        }
+    },
+    "stage31": {
+        "passReward": [22, 27, 32, 27, 32],
+        "passRewardRatio": [1, 1, 1, 0.5, 0.1],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 16000,
+            "min": 4000
+        }
+    },
+    "stage32": {
+        "passReward": [22, 22, 27, 27, 27, 32],
+        "passRewardRatio": [1, 0.2, 1, 1, 0.5, 0.3],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 16000,
+            "min": 4000
+        }
+    },
+    "stage33": {
+        "passReward": [22, 22, 27, 27, 27, 32],
+        "passRewardRatio": [1, 0.2, 1, 1, 0.5, 0.3],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 16000,
+            "min": 4000
+        }
+    },
+    "stage34": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 32],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 0.5],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 16000,
+            "min": 4000
+        }
+    },
+    "stage35": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 32],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 0.5],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 16000,
+            "min": 4000
+        }
+    },
+    "stage36": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 27, 32, 32],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 32000,
+            "min": 8000
+        }
+    },
+    "stage37": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 27, 32, 32],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 32000,
+            "min": 8000
+        }
+    },
+    "stage38": {
+        "passReward": [22, 22, 22, 27, 27, 27, 27, 27, 32, 32],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 32000,
+            "min": 8000
+        }
+    },
+    "stage39": {
+        "passReward": [22, 22, 22, 22, 27, 27, 27, 27, 27, 32, 32],
+        "passRewardRatio": [1, 1, 1, 0.8, 1, 1, 1, 1, 0.8, 1, 0.8],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 32000,
+            "min": 8000
+        }
+    },
+    "stage40": {
+        "passReward": [22, 22, 22, 22, 27, 27, 27, 27, 27, 32, 32],
+        "passRewardRatio": [1, 1, 1, 0.8, 1, 1, 1, 1, 0.8, 1, 0.8],
+        "monsterReward": [12],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [17, 22, 27],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 32000,
+            "min": 8000
+        }
+    },
+    "stage41": {
+        "passReward": [23, 28, 33],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 40000,
+            "min": 10000
+        }
+    },
+    "stage42": {
+        "passReward": [23, 28, 33],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 40000,
+            "min": 10000
+        }
+    },
+    "stage43": {
+        "passReward": [23, 28, 33],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 40000,
+            "min": 10000
+        }
+    },
+    "stage44": {
+        "passReward": [23, 28, 33],
+        "passRewardRatio": [1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 40000,
+            "min": 10000
+        }
+    },
+    "stage45": {
+        "passReward": [23, 23, 28, 28, 33],
+        "passRewardRatio": [1, 0.2, 1, 0.5, 0.2],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 40000,
+            "min": 10000
+        }
+    },
+    "stage46": {
+        "passReward": [23, 23, 28, 28, 33],
+        "passRewardRatio": [1, 0.2, 1, 0.5, 0.2],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 80000,
+            "min": 20000
+        }
+    },
+    "stage47": {
+        "passReward": [23, 23, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.5, 1, 0.5, 0.5, 0.2],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 80000,
+            "min": 20000
+        }
+    },
+    "stage48": {
+        "passReward": [23, 23, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.5, 1, 0.5, 0.5, 0.2],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 80000,
+            "min": 20000
+        }
+    },
+    "stage49": {
+        "passReward": [23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.8, 1, 1, 0.5, 0.5, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 80000,
+            "min": 20000
+        }
+    },
+    "stage50": {
+        "passReward": [23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.8, 1, 1, 0.5, 0.5, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 80000,
+            "min": 20000
+        }
+    },
+    "stage51": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 160000,
+            "min": 40000
+        }
+    },
+    "stage52": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 160000,
+            "min": 40000
+        }
+    },
+    "stage53": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 160000,
+            "min": 40000
+        }
+    },
+    "stage54": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 160000,
+            "min": 40000
+        }
+    },
+    "stage55": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 160000,
+            "min": 40000
+        }
+    },
+    "stage56": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 320000,
+            "min": 80000
+        }
+    },
+    "stage57": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 320000,
+            "min": 80000
+        }
+    },
+    "stage58": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 320000,
+            "min": 80000
+        }
+    },
+    "stage59": {
+        "passReward": [23, 28, 33, 28, 33],
+        "passRewardRatio": [1, 1, 1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 320000,
+            "min": 80000
+        }
+    },
+    "stage60": {
+        "passReward": [23, 28, 33, 28, 33],
+        "passRewardRatio": [1, 1, 1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 320000,
+            "min": 80000
+        }
+    },
+    "stage61": {
+        "passReward": [23, 28, 33, 28, 33],
+        "passRewardRatio": [1, 1, 1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 640000,
+            "min": 160000
+        }
+    },
+    "stage62": {
+        "passReward": [23, 28, 33, 28, 33],
+        "passRewardRatio": [1, 1, 1, 0.5, 0.1],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 640000,
+            "min": 160000
+        }
+    },
+    "stage63": {
+        "passReward": [23, 23, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.2, 1, 1, 0.5, 0.3],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 640000,
+            "min": 160000
+        }
+    },
+    "stage64": {
+        "passReward": [23, 23, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.2, 1, 1, 0.5, 0.3],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 640000,
+            "min": 160000
+        }
+    },
+    "stage65": {
+        "passReward": [23, 23, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.2, 1, 1, 0.5, 0.3],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 640000,
+            "min": 160000
+        }
+    },
+    "stage66": {
+        "passReward": [23, 23, 28, 28, 28, 33],
+        "passRewardRatio": [1, 0.2, 1, 1, 0.5, 0.3],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 1280000,
+            "min": 320000
+        }
+    },
+    "stage67": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 1280000,
+            "min": 320000
+        }
+    },
+    "stage68": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 1280000,
+            "min": 320000
+        }
+    },
+    "stage69": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 1280000,
+            "min": 320000
+        }
+    },
+    "stage70": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 33],
+        "passRewardRatio": [1, 1, 0.5, 1, 1, 1, 0.5, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 1280000,
+            "min": 320000
+        }
+    },
+    "stage71": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 2560000,
+            "min": 640000
+        }
+    },
+    "stage72": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 2560000,
+            "min": 640000
+        }
+    },
+    "stage73": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 2560000,
+            "min": 640000
+        }
+    },
+    "stage74": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 2560000,
+            "min": 640000
+        }
+    },
+    "stage75": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 2560000,
+            "min": 640000
+        }
+    },
+    "stage76": {
+        "passReward": [23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 0.8, 1, 1, 1, 0.8, 0.5, 1, 0.5],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 5120000,
+            "min": 1280000
+        }
+    },
+    "stage77": {
+        "passReward": [23, 23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 1, 0.8, 1, 1, 1, 1, 0.8, 1, 0.8],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 5120000,
+            "min": 1280000
+        }
+    },
+    "stage78": {
+        "passReward": [23, 23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 1, 0.8, 1, 1, 1, 1, 0.8, 1, 0.8],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 5120000,
+            "min": 1280000
+        }
+    },
+    "stage79": {
+        "passReward": [23, 23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 1, 0.8, 1, 1, 1, 1, 0.8, 1, 0.8],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 5120000,
+            "min": 1280000
+        }
+    },
+    "stage80": {
+        "passReward": [23, 23, 23, 23, 28, 28, 28, 28, 28, 33, 33],
+        "passRewardRatio": [1, 1, 1, 0.8, 1, 1, 1, 1, 0.8, 1, 0.8],
+        "monsterReward": [13],
+        "monsterRewardRatio": [0.05],
+        "leaderReward": [18, 23, 28],
+        "leaderRewardRatio": [1, 0.01, 0.01],
+        "lingshi": {
+            "max": 5120000,
+            "min": 1280000
+        }
+    }
+}

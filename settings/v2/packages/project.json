@@ -1,0 +1,57 @@
+{
+  "__version__": "1.0.4",
+  "general": {
+    "designResolution": {
+      "width": 750,
+      "height": 1344,
+      "fitHeight": true,
+      "fitWidth": false
+    }
+  },
+  "physics": {
+    "collisionGroups": [
+      {
+        "index": 1,
+        "name": "enemy"
+      },
+      {
+        "index": 2,
+        "name": "self"
+      },
+      {
+        "index": 3,
+        "name": "obstacle"
+      },
+      {
+        "index": 4,
+        "name": "enemySkill"
+      },
+      {
+        "index": 5,
+        "name": "heroWeapon"
+      },
+      {
+        "index": 6,
+        "name": "itemInPlaying"
+      }
+    ],
+    "collisionMatrix": {
+      "0": 1,
+      "1": 44,
+      "2": 90,
+      "3": 6,
+      "4": 36,
+      "5": 18,
+      "6": 4
+    },
+    "maxSubSteps": 1,
+    "fixedTimeStep": 0.05
+  },
+  "layer": [
+    {
+      "name": "UNCHANGE",
+      "value": 1
+    }
+  ],
+  "custom_joint_texture_layouts": []
+}

@@ -1,0 +1,126 @@
+//self defined effect         author:ljw 
+CCEffect %{
+  techniques:
+  - name: game2d-shader-sin
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs-sin:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        fillColor:  { value: [1, 1, 1, 1], editor: { type: color } }
+        col_t: { value: [1, 1, 1, 1], editor: { type: color } }
+        col_b: { value: [1, 1, 1, 1], editor: { type: color } }
+        col_l: { value: [1, 1, 1, 1], editor: { type: color } }
+        col_r: { value: [1, 1, 1, 1], editor: { type: color } }
+        amplitude: { value: 0.2}
+        frequency: { value: 0.5}
+        labelLen: {value: 14}
+  - name: game2d-shader-one-after-another
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs-one-after-another:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+}%
+
+CCProgram 2dvs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec4 color;
+  out vec2 uv0;
+
+  vec4 vert () {
+    // vec4 pos = vec4(a_position, 1);
+    vec4 pos = vec4(a_position, 1);
+    pos = cc_matViewProj * pos;
+    uv0 = a_texCoord;
+    color = a_color;
+    return pos;
+  }
+}%
+
+CCProgram 2dfs-sin %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  #include "./common-fun"
+
+  in vec2 uv0;
+
+  uniform Constant {
+    vec4 mainColor;
+    vec4 fillColor;
+    vec4 col_t;
+    vec4 col_b;
+    vec4 col_l;
+    vec4 col_r;
+    float amplitude;
+    float frequency;
+    float labelLen;
+  };
+
+  vec4 labelRunLikeSin()
+  {
+    float t = cc_time.x*4.;
+    vec2 uv_sin = vec2(uv0.x,uv0.y+amplitude*sin(t+floor(uv0.x*labelLen)*frequency));
+    vec4 col = texture(cc_spriteTexture,uv_sin);
+    #if USE_GRADIENT 
+      float tlr = fract(uv0.x*labelLen);
+      float labelHeight = 100./200.;
+      float ttb = (uv_sin.y -labelHeight+amplitude)/(2.*amplitude);
+      if(col.a>.5) 
+      {
+        return mix(mix(col_l,col_r,tlr),mix(col_t,col_b,ttb),.5);
+      }
+    #endif
+    if(col.a>.5) return fillColor;
+    else discard;
+    // return col;
+  }
+
+  vec4 frag () 
+  {
+    // vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+    vec4 col = labelRunLikeSin();
+    return CCFragOutput(col);
+  }
+}%
+
+CCProgram 2dfs-one-after-another %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+  #include "./common-fun"
+
+  in vec2 uv0;
+  in vec2 scaledPosition;
+
+  uniform Constant {
+    vec4 mainColor;
+  };
+
+
+
+  vec4 frag () 
+  {
+    vec4 col = mainColor * texture(cc_spriteTexture, uv0);
+    // if(col.a>.5) col = vec4(1.,0.0,0.0,1.);
+    // vec4 col = texture(cc_spriteTexture,uv0*2.);
+    return CCFragOutput(col);
+  }
+}%

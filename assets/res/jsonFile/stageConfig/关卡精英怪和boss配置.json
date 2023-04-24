@@ -1,0 +1,713 @@
+[{
+    "id": 1,
+    "stage": 1,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 1
+}, {
+    "id": 2,
+    "stage": 2,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 2,
+    "maxLevel": 1
+}, {
+    "id": 3,
+    "stage": 3,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 3,
+    "maxLevel": 1
+}, {
+    "id": 4,
+    "stage": 4,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 4,
+    "maxLevel": 2
+}, {
+    "id": 5,
+    "stage": 5,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 5,
+    "maxLevel": 2
+}, {
+    "id": 6,
+    "stage": 6,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 6,
+    "maxLevel": 2
+}, {
+    "id": 7,
+    "stage": 7,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 7,
+    "maxLevel": 3
+}, {
+    "id": 8,
+    "stage": 8,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId":8,
+    "maxLevel": 3
+}, {
+    "id": 9,
+    "stage": 9,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 9,
+    "maxLevel": 4
+}, {
+    "id": 10,
+    "stage": 10,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": "10",
+    "maxLevel": 4
+}, {
+    "id": 11,
+    "stage": 11,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 11
+}, {
+    "id": 12,
+    "stage": 12,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 12,
+    "maxLevel": 1
+}, {
+    "id": 13,
+    "stage": 13,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 13,
+    "maxLevel": 1
+}, {
+    "id": 14,
+    "stage": 14,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 14,
+    "maxLevel": 2
+}, {
+    "id": 15,
+    "stage": 15,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 15,
+    "maxLevel": 2
+}, {
+    "id": 16,
+    "stage": 16,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 16,
+    "maxLevel": 2
+}, {
+    "id": 17,
+    "stage": 17,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 17,
+    "maxLevel": 3
+}, {
+    "id": 18,
+    "stage": 18,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 18,
+    "maxLevel": 3
+}, {
+    "id": 19,
+    "stage": 19,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 19,
+    "maxLevel": 4
+}, {
+    "id": 20,
+    "stage": 20,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": 20,
+    "maxLevel": 4
+}, {
+    "id": 21,
+    "stage": 21,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 21
+}, {
+    "id": 22,
+    "stage": 22,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 22,
+    "maxLevel": 1
+}, {
+    "id": 23,
+    "stage": 23,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 23,
+    "maxLevel": 1
+}, {
+    "id": 24,
+    "stage": 24,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 24,
+    "maxLevel": 2
+}, {
+    "id": 25,
+    "stage": 25,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 25,
+    "maxLevel": 2
+}, {
+    "id": 26,
+    "stage": 26,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 26,
+    "maxLevel": 2
+}, {
+    "id": 27,
+    "stage": 27,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 27,
+    "maxLevel": 3
+}, {
+    "id": 28,
+    "stage": 28,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 28,
+    "maxLevel": 3
+}, {
+    "id": 29,
+    "stage": 29,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 29,
+    "maxLevel": 4
+}, {
+    "id": 30,
+    "stage": 30,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": 30,
+    "maxLevel": 4
+}, {
+    "id": 31,
+    "stage": 31,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 31
+}, {
+    "id": 32,
+    "stage": 32,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 32,
+    "maxLevel": 1
+}, {
+    "id": 33,
+    "stage": 33,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 33,
+    "maxLevel": 1
+}, {
+    "id": 34,
+    "stage": 34,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 34,
+    "maxLevel": 2
+}, {
+    "id": 35,
+    "stage": 35,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 35,
+    "maxLevel": 2
+}, {
+    "id": 36,
+    "stage": 36,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 36,
+    "maxLevel": 2
+}, {
+    "id": 37,
+    "stage": 37,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 37,
+    "maxLevel": 3
+}, {
+    "id": 38,
+    "stage": 38,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 38,
+    "maxLevel": 3
+}, {
+    "id": 39,
+    "stage": 39,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 39,
+    "maxLevel": 4
+}, {
+    "id": 40,
+    "stage": 40,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": 40,
+    "maxLevel": 4
+}, {
+    "id": 41,
+    "stage": 41,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 41
+}, {
+    "id": 42,
+    "stage": 42,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 42,
+    "maxLevel": 1
+}, {
+    "id": 43,
+    "stage": 43,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 43,
+    "maxLevel": 1
+}, {
+    "id": 44,
+    "stage": 44,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 44,
+    "maxLevel": 2
+}, {
+    "id": 45,
+    "stage": 45,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 45,
+    "maxLevel": 2
+}, {
+    "id": 46,
+    "stage": 46,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 46,
+    "maxLevel": 2
+}, {
+    "id": 47,
+    "stage": 47,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 47,
+    "maxLevel": 3
+}, {
+    "id": 48,
+    "stage": 48,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 48,
+    "maxLevel": 3
+}, {
+    "id": 49,
+    "stage": 49,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 49,
+    "maxLevel": 4
+}, {
+    "id": 50,
+    "stage": 50,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": 50,
+    "maxLevel": 4
+}, {
+    "id": 51,
+    "stage": 51,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 51
+}, {
+    "id": 52,
+    "stage": 52,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 52,
+    "maxLevel": 1
+}, {
+    "id": 53,
+    "stage": 53,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 53,
+    "maxLevel": 1
+}, {
+    "id": 54,
+    "stage": 54,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 54,
+    "maxLevel": 2
+}, {
+    "id": 55,
+    "stage": 55,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 55,
+    "maxLevel": 2
+}, {
+    "id": 56,
+    "stage": 56,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 56,
+    "maxLevel": 2
+}, {
+    "id": 57,
+    "stage": 57,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 57,
+    "maxLevel": 3
+}, {
+    "id": 58,
+    "stage": 58,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 58,
+    "maxLevel": 3
+}, {
+    "id": 59,
+    "stage": 59,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 59,
+    "maxLevel": 4
+}, {
+    "id": 60,
+    "stage": 60,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": 60,
+    "maxLevel": 4
+}, {
+    "id": 61,
+    "stage": 61,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 61
+}, {
+    "id": 62,
+    "stage": 62,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 62,
+    "maxLevel": 1
+}, {
+    "id": 63,
+    "stage": 63,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 63,
+    "maxLevel": 1
+}, {
+    "id": 64,
+    "stage": 64,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 64,
+    "maxLevel": 2
+}, {
+    "id": 65,
+    "stage": 65,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 65,
+    "maxLevel": 2
+}, {
+    "id": 66,
+    "stage": 66,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 66,
+    "maxLevel": 2
+}, {
+    "id": 67,
+    "stage": 67,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 67,
+    "maxLevel": 3
+}, {
+    "id": 68,
+    "stage": 68,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 68,
+    "maxLevel": 3
+}, {
+    "id": 69,
+    "stage": 69,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 69,
+    "maxLevel": 4
+}, {
+    "id": 70,
+    "stage": 70,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": 70,
+    "maxLevel": 4
+}, {
+    "id": 71,
+    "stage": 71,
+    "startCount": 10000,
+    "mod": 1000,
+    "maxTotal": 0,
+    "type": [],
+    "bossId": 71
+}, {
+    "id": 72,
+    "stage": 72,
+    "startCount": 50,
+    "mod": 30,
+    "maxTotal": 1,
+    "type": [0],
+    "bossId": 72,
+    "maxLevel": 1
+}, {
+    "id": 73,
+    "stage": 73,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 2,
+    "type": [0],
+    "bossId": 73,
+    "maxLevel": 1
+}, {
+    "id": 74,
+    "stage": 74,
+    "startCount": 30,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 74,
+    "maxLevel": 2
+}, {
+    "id": 75,
+    "stage": 75,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 75,
+    "maxLevel": 2
+}, {
+    "id": 76,
+    "stage": 76,
+    "startCount": 20,
+    "mod": 20,
+    "maxTotal": 3,
+    "type": [0, 1],
+    "bossId": 76,
+    "maxLevel": 2
+}, {
+    "id": 77,
+    "stage": 77,
+    "startCount": 20,
+    "mod": 30,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 77,
+    "maxLevel": 3
+}, {
+    "id": 78,
+    "stage": 78,
+    "startCount": 15,
+    "mod": 25,
+    "maxTotal": 4,
+    "type": [0, 1, 2],
+    "bossId": 78,
+    "maxLevel": 3
+}, {
+    "id": 79,
+    "stage": 79,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 4,
+    "type": [0, 1, 2, 3],
+    "bossId": 79,
+    "maxLevel": 4
+}, {
+    "id": 80,
+    "stage": 80,
+    "startCount": 15,
+    "mod": 20,
+    "maxTotal": 5,
+    "type": [0, 1, 2, 3],
+    "bossId": 80,
+    "maxLevel": 4
+}]

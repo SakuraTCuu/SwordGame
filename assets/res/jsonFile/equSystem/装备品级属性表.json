@@ -1,0 +1,245 @@
+[{
+    "id": 1,
+    "name": "破旧巨剑",
+    "effect": [1, 2],
+    "maxLevel": 2
+}, {
+    "id": 2,
+    "name": "实用巨剑",
+    "effect": [3],
+    "maxLevel": 1
+}, {
+    "id": 3,
+    "name": "稀有巨剑",
+    "effect": [1001, 1002],
+    "maxLevel": 2
+}, {
+    "id": 4,
+    "name": "传说巨剑",
+    "effect": [5001, 1001, 1003],
+    "maxLevel": 3
+}, {
+    "id": 5,
+    "name": "史诗巨剑",
+    "effect": [5002, 1004, 1005],
+    "maxLevel": 3
+}, {
+    "id": 6,
+    "name": "破旧长剑",
+    "effect": [1, 2],
+    "maxLevel": 2
+}, {
+    "id": 7,
+    "name": "实用长剑",
+    "effect": []
+}, {
+    "id": 8,
+    "name": "稀有长剑",
+    "effect": [1002, 1001, 5003],
+    "maxLevel": 3
+}, {
+    "id": 9,
+    "name": "传说长剑",
+    "effect": [1003, 5004],
+    "maxLevel": 2
+}, {
+    "id": 10,
+    "name": "史诗长剑",
+    "effect": [1004, 5003, 5004, 1005],
+    "maxLevel": 4
+}, {
+    "id": 11,
+    "name": "破旧巨斧",
+    "effect": [1, 2],
+    "maxLevel": 2
+}, {
+    "id": 12,
+    "name": "实用巨斧",
+    "effect": [3],
+    "maxLevel": 1
+}, {
+    "id": 13,
+    "name": "稀有巨斧",
+    "effect": [1002, 1006],
+    "maxLevel": 2
+}, {
+    "id": 14,
+    "name": "传说巨斧",
+    "effect": [1003, 1007],
+    "maxLevel": 2
+}, {
+    "id": 15,
+    "name": "史诗巨斧",
+    "effect": [1004, 1005, 1001, 5005],
+    "maxLevel": 4
+}, {
+    "id": 16,
+    "name": "破旧旋转斧",
+    "effect": [1, 2],
+    "maxLevel": 2
+}, {
+    "id": 17,
+    "name": "实用旋转斧",
+    "effect": []
+}, {
+    "id": 18,
+    "name": "稀有旋转斧",
+    "effect": [1002, 1008],
+    "maxLevel": 2
+}, {
+    "id": 19,
+    "name": "传说旋转斧",
+    "effect": [1003, 1009],
+    "maxLevel": 2
+}, {
+    "id": 20,
+    "name": "史诗旋转斧",
+    "effect": [1004, 1009, 1005, 1011],
+    "maxLevel": 4
+}, {
+    "id": 21,
+    "name": "破旧巨弩",
+    "effect": [1, 2],
+    "maxLevel": 2
+}, {
+    "id": 22,
+    "name": "实用巨弩",
+    "effect": []
+}, {
+    "id": 23,
+    "name": "稀有巨弩",
+    "effect": [1002, 1001],
+    "maxLevel": 2
+}, {
+    "id": 24,
+    "name": "传说巨弩",
+    "effect": [1003, 1001, 1008],
+    "maxLevel": 3
+}, {
+    "id": 25,
+    "name": "史诗巨弩",
+    "effect": [1004, 1005, 1001, 1008],
+    "maxLevel": 4
+}, {
+    "id": 26,
+    "name": "破旧连弩",
+    "effect": [1],
+    "maxLevel": 1
+}, {
+    "id": 27,
+    "name": "实用连弩",
+    "effect": []
+}, {
+    "id": 28,
+    "name": "稀有连弩",
+    "effect": [1002, 1001],
+    "maxLevel": 2
+}, {
+    "id": 29,
+    "name": "传说连弩",
+    "effect": [1003, 1001, 1010],
+    "maxLevel": 3
+}, {
+    "id": 30,
+    "name": "史诗连弩",
+    "effect": [1003, 1001, 1010, 1011],
+    "maxLevel": 4
+}, {
+    "id": 31,
+    "name": "破旧法袍",
+    "effect": [4],
+    "maxLevel": 1
+}, {
+    "id": 32,
+    "name": "实用法袍",
+    "effect": []
+}, {
+    "id": 33,
+    "name": "稀有法袍",
+    "effect": [1012, 2001, 2004],
+    "maxLevel": 3
+}, {
+    "id": 34,
+    "name": "传说法袍",
+    "effect": [1013, 2002, 2005, 5007],
+    "maxLevel": 4
+}, {
+    "id": 35,
+    "name": "史诗法袍",
+    "effect": [1014, 2003, 2006, 5008],
+    "maxLevel": 4
+}, {
+    "id": 36,
+    "name": "破旧重甲",
+    "effect": [4, 8],
+    "maxLevel": 2
+}, {
+    "id": 37,
+    "name": "实用重甲",
+    "effect": [7, 2010],
+    "maxLevel": 2
+}, {
+    "id": 38,
+    "name": "稀有重甲",
+    "effect": [6, 1012, 2011],
+    "maxLevel": 3
+}, {
+    "id": 39,
+    "name": "传说重甲",
+    "effect": "[5-1013-2012"
+}, {
+    "id": 40,
+    "name": "史诗重甲",
+    "effect": [1014, 2003, 2012, 5006],
+    "maxLevel": 4
+}, {
+    "id": 41,
+    "name": "破旧风火轮",
+    "effect": [4, 2007],
+    "maxLevel": 2
+}, {
+    "id": 42,
+    "name": "实用风火轮",
+    "effect": [2008],
+    "maxLevel": 1
+}, {
+    "id": 43,
+    "name": "稀有风火轮",
+    "effect": [1012, 2009],
+    "maxLevel": 2
+}, {
+    "id": 44,
+    "name": "传说风火轮",
+    "effect": [1013, 2009, 2013],
+    "maxLevel": 3
+}, {
+    "id": 45,
+    "name": "史诗风火轮",
+    "effect": [1014, 2009, 2013, 2014, 5010],
+    "maxLevel": 5
+}, {
+    "id": 46,
+    "name": "破旧筋斗云",
+    "effect": [4, 2016],
+    "maxLevel": 2
+}, {
+    "id": 47,
+    "name": "实用筋斗云",
+    "effect": [2017],
+    "maxLevel": 1
+}, {
+    "id": 48,
+    "name": "稀有筋斗云",
+    "effect": [1012, 2018],
+    "maxLevel": 2
+}, {
+    "id": 49,
+    "name": "传说筋斗云",
+    "effect": [1013, 2019, 2021],
+    "maxLevel": 3
+}, {
+    "id": 50,
+    "name": "史诗筋斗云",
+    "effect": [1014, 2020, 2022],
+    "maxLevel": 3
+}]

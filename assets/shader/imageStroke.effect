@@ -1,0 +1,95 @@
+//self defined effect         author:ljw 
+CCEffect %{
+  techniques:
+  - name: stroke-drawShadow
+    passes:
+    - vert: 2dvs:vert # builtin header
+      frag: 2dfs-shadow:frag
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one_minus_src_alpha
+          blendDstAlpha: one_minus_src_alpha
+      properties: &props
+        mainColor:      { value: [1, 1, 1, 1], editor: { type: color } }
+        strokeColor: {value: [1, 1, 1, 1] , editor: { type: color }}
+        fillColor: {value: [1, 0, 0, 1], editor: { type: color }}
+        shaowColor: { value: [0,0,1,1], editor: { type: color }}
+        strokeWidth: { value: 0.005}
+        shadowWidth: {value: 0.1}
+}%
+
+CCProgram 2dvs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec4 color;
+  out vec2 uv0;
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1);
+    pos = cc_matViewProj * pos;
+    uv0 = a_texCoord;
+    color = a_color;
+    return pos;
+  }
+}%
+
+
+CCProgram 2dfs-shadow %{
+  precision highp float;
+  #include <legacy/output>
+  #include <builtin/internal/sprite-texture>
+
+  in vec2 uv0;
+  
+  uniform Constant {
+    vec4 mainColor;
+    vec4 strokeColor;
+    vec4 fillColor;
+    vec4 shaowColor;
+    float strokeWidth;
+    float shadowWidth;
+  };
+  vec4 drawEdgeStroke(){
+    vec4 col1 =texture(cc_spriteTexture,uv0);
+    if(col1.a>0.2) {//有点颜色就渲染 通过线性插值 处理抗锯齿
+      // #if USE_STROKE
+      //   col1.a = smoothstep(0.1,0.7,col1.a);
+      //   return vec4(fillColor.rgb,col1.a);//文字 正常渲染
+      // #endif
+      // return vec4(fillColor.rgb,texture(cc_spriteTexture,uv0).a);
+      return texture(cc_spriteTexture,uv0);
+    }
+    else {
+      #if USE_STROKE
+        //上下左右偏移 strokeWidth个长度后的坐标
+        vec4 col2 = texture(cc_spriteTexture, uv0+vec2(strokeWidth,0.));
+        vec4 col3 = texture(cc_spriteTexture, uv0+vec2(-strokeWidth,0.));
+        vec4 col4 = texture(cc_spriteTexture, uv0+vec2(0.,strokeWidth));
+        vec4 col5 = texture(cc_spriteTexture, uv0+vec2(0.,-strokeWidth));
+        vec4 col6 = texture(cc_spriteTexture, uv0+vec2(strokeWidth,strokeWidth));
+        vec4 col7 = texture(cc_spriteTexture, uv0+vec2(strokeWidth,-strokeWidth));
+        vec4 col8 = texture(cc_spriteTexture, uv0+vec2(-strokeWidth,strokeWidth));
+        vec4 col9 = texture(cc_spriteTexture, uv0+vec2(-strokeWidth,-strokeWidth));
+        vec4 col_average = (col1+col2+col3+col4+col5+col6+col7+col8+col9)/9.;
+        col_average.a = smoothstep(.01,.05,col_average.a);
+        if(col_average.a>.05) return vec4(strokeColor.rgb,col_average.a);
+        #if USE_SHAOW
+          vec4 col10 = texture(cc_spriteTexture,uv0+vec2(-shadowWidth));// 下右偏移 制作影子
+          col10.a = smoothstep(0.2,0.25,col10.a);
+          if(col10.a>0.2) return vec4(shaowColor.rgb,col10.a);
+        #endif
+      #endif
+
+      discard;
+    }
+  }
+  vec4 frag () {
+    vec4 col = drawEdgeStroke();
+    return CCFragOutput(col);
+  }
+}%
+
