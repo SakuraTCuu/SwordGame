@@ -5,14 +5,26 @@ const { ccclass, property } = _decorator;
 // 主菜单新手引导
 @ccclass('MainMenuGuide')
 export class MainMenuGuide extends Component {
-    @property(Node)
-    guideFinger;
+    @property({
+        type: Node,
+        displayName: "引导手指"
+    })
+    guideFinger: Node = null;
+
     @property([Node])
-    btnArr;
-    @property(Node)
-    guideTipsBg;
-    @property(Label)
-    guideTipsLabel;
+    btnArr: Node[] = [];
+
+    @property({
+        type: Node,
+        displayName: "引导提示节点"
+    })
+    guideTipsBg: Node = null;
+
+    @property({
+        type: Label,
+        displayName: "引导提示Label"
+    })
+    guideTipsLabel: Label = null;
 
     _guideData = {
         "SelectStageLayer": false,
@@ -23,18 +35,21 @@ export class MainMenuGuide extends Component {
         "MakePillsLayer": false,
         "SkillBookLayer": false,
     }
+
     onDestroy() {
         em.remove("getGuideData");
         em.remove("setGuideData");
         em.remove("initMainMenuByGuideData");
         em.remove("openGuideTips");
     }
+
     onLoad() {
         em.add("getGuideData", this.getGuideData.bind(this));
         em.add("setGuideData", this.setGuideData.bind(this));
         em.add("initMainMenuByGuideData", this.initMainMenuByGuideData.bind(this));
         em.add("openGuideTips", this.openGuideTips.bind(this));
     }
+
     start() {
         let data = em.dispatch("getTempData", "guideData");
         if (data) {
@@ -47,6 +62,7 @@ export class MainMenuGuide extends Component {
         em.dispatch("savingToTempData", "guideData", this._guideData);
         this.initMainMenuByGuideData();
     }
+
     // 通过新手引导数据初始化主菜单
     initMainMenuByGuideData() {
         console.log("通过新手引导数据初始化主菜单");
@@ -95,6 +111,7 @@ export class MainMenuGuide extends Component {
             this.playGuideAnim1();
         }
     }
+
     setGuideData(key, value = true) {
         if (this._guideData.hasOwnProperty(key)) {
             this._guideData[key] = value;
@@ -104,6 +121,7 @@ export class MainMenuGuide extends Component {
         }
 
     }
+
     //播放引导动画1
     playGuideAnim1() {
         let a1 = tween().by(0.5, { position: new Vec3(0, -100, 0) });
@@ -113,6 +131,7 @@ export class MainMenuGuide extends Component {
         action.tag(1);
         action.start();
     }
+
     // 隐藏所有菜单按钮
     hideBtnsFromIndexStart(index) {
         for (let i = 0; i < this.btnArr.length; i++) {
@@ -120,15 +139,18 @@ export class MainMenuGuide extends Component {
             else this.btnArr[i].active = true;
         }
     }
+
     closeGuideTips() {
         this.guideTipsLabel.string = "";
         this.guideTipsBg.active = false;
     }
+
     //===========外部调用===========
     // 获取新手引导数据
     getGuideData() {
         return this._guideData;
     }
+
     //开启引导提示
     openGuideTips(content: string) {
         this.guideTipsLabel.string = content;

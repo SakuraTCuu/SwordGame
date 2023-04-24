@@ -141,6 +141,27 @@
     "versionCode": {
       "__id__": 109
     },
+    "gameName": {
+      "__id__": 16
+    },
+    "progressNode": {
+      "__id__": 24
+    },
+    "loginLayer": {
+      "__id__": 33
+    },
+    "accountEditBox": {
+      "__id__": 46
+    },
+    "pwdEditBox": {
+      "__id__": 60
+    },
+    "loading": {
+      "__id__": 79
+    },
+    "loadingLabel": {
+      "__id__": 91
+    },
     "_id": "04JC/eMlBA7Ivr+Vqi5+3B"
   },
   {
@@ -3171,7 +3192,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Label",
+    "_name": "loadingLabel",
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
@@ -3228,7 +3249,7 @@
     "__prefab": null,
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 159.96,
+      "width": 151.68,
       "height": 75.6
     },
     "_anchorPoint": {

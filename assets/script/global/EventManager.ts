@@ -1,15 +1,4 @@
 import { ggd } from "./globalData";
-
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-26 14:06:40
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-12-08 15:43:40
- * @FilePath: \to-be-immortal\assets\script\global\EventManager.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 export { em }
 
 class EventManager {
