@@ -41,13 +41,23 @@ class EventManager {
         if (!type) throw new Error("事件名称参数为空");
         if (!this._eventMap[type]) throw new Error("事件" + type + "未注册");
 
-        this._eventMap[type].forEach((eventObj) => {
+        for (let i = 0; i < this._eventMap[type].length; i++) {
+            let eventObj = this._eventMap[type][i];
             if (!eventObj.target) {
                 eventObj.callback && eventObj.callback(...params);
-                return;
+                continue;
             }
-            eventObj.callback.apply(eventObj.target, ...params);
-        });
+            // eventObj.callback.call(eventObj.target, ...params);
+            eventObj.callback.apply(eventObj.target, params);
+        }
+
+        // this._eventMap[type].forEach((eventObj) => {
+        //     if (!eventObj.target) {
+        //         eventObj.callback && eventObj.callback(...params);
+        //         return;
+        //     }
+        //     eventObj.callback.apply(eventObj.target, ...params);
+        // });
     }
 
     /**

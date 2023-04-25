@@ -9,11 +9,7 @@ export class SavingManager {
 
     _tempData = null;
 
-    constructor() {
-        this.onInit();
-    }
-
-    onInit() {
+    lazyInitialize() {
         this.initTempData();
 
         // director.addPersistRootNode(this.node);//背包物品在各个场景皆可用到 设置为常驻节点

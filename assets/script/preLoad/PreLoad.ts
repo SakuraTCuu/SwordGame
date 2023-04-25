@@ -73,14 +73,14 @@ export class PreLoad extends Component {
     _curPasswordString: string;
 
     onLoad() {
+        em.add(EventId.updateLoadingProgress, this.updateLoadingProgress, this);
+        em.add(EventId.loadingComplete, this.showLoginLayer, this);
+
         this.gameName.active = true;
         this.progressNode.active = true;
+        this.versionCode.string = ggd.versionCode;
 
         director.preloadScene("mainMenu");
-
-        // this.enterMainMenuScene();
-
-        this.versionCode.string = ggd.versionCode;
     }
 
     onDestroy() {

@@ -1,0 +1,181 @@
+[{
+    "id": 1,
+    "name": "巨剑（一阶）",
+    "baseDamage": 6,
+    "damageTimes": 1.2,
+    "attackInterval": 8
+}, {
+    "id": 2,
+    "name": "巨剑（二阶）",
+    "baseDamage": 30,
+    "damageTimes": 1.4,
+    "attackInterval": 7.5
+}, {
+    "id": 3,
+    "name": "巨剑（三阶）",
+    "baseDamage": 150,
+    "damageTimes": 1.6,
+    "attackInterval": 7
+}, {
+    "id": 4,
+    "name": "巨剑（四阶）",
+    "baseDamage": 1000,
+    "damageTimes": 1.8,
+    "attackInterval": 6.5
+}, {
+    "id": 5,
+    "name": "巨剑（五阶）",
+    "baseDamage": 10000,
+    "damageTimes": 2,
+    "attackInterval": 6
+}, {
+    "id": 6,
+    "name": "长剑（一阶）",
+    "baseDamage": 3,
+    "damageTimes": 0.5,
+    "attackInterval": 5
+}, {
+    "id": 7,
+    "name": "长剑（二阶）",
+    "baseDamage": 15,
+    "damageTimes": 0.6,
+    "attackInterval": 4.8
+}, {
+    "id": 8,
+    "name": "长剑（三阶）",
+    "baseDamage": 75,
+    "damageTimes": 0.7,
+    "attackInterval": 4.6
+}, {
+    "id": 9,
+    "name": "长剑（四阶）",
+    "baseDamage": 500,
+    "damageTimes": 0.8,
+    "attackInterval": 4.4
+}, {
+    "id": 10,
+    "name": "长剑（五阶）",
+    "baseDamage": 5000,
+    "damageTimes": 1,
+    "attackInterval": 4
+}, {
+    "id": 11,
+    "name": "巨斧（一阶）",
+    "baseDamage": 9,
+    "damageTimes": 1.2,
+    "attackInterval": 8
+}, {
+    "id": 12,
+    "name": "巨斧（二阶）",
+    "baseDamage": 45,
+    "damageTimes": 1.4,
+    "attackInterval": 7.5
+}, {
+    "id": 13,
+    "name": "巨斧（三阶）",
+    "baseDamage": 225,
+    "damageTimes": 1.6,
+    "attackInterval": 7
+}, {
+    "id": 14,
+    "name": "巨斧（四阶）",
+    "baseDamage": 1500,
+    "damageTimes": 1.8,
+    "attackInterval": 6.5
+}, {
+    "id": 15,
+    "name": "巨斧（五阶）",
+    "baseDamage": 15000,
+    "damageTimes": 2,
+    "attackInterval": 6
+}, {
+    "id": 16,
+    "name": "旋转斧（一阶）",
+    "baseDamage": 6,
+    "damageTimes": 0.8,
+    "attackInterval": 5
+}, {
+    "id": 17,
+    "name": "旋转斧（二阶）",
+    "baseDamage": 30,
+    "damageTimes": 0.9,
+    "attackInterval": 4.8
+}, {
+    "id": 18,
+    "name": "旋转斧（三阶）",
+    "baseDamage": 150,
+    "damageTimes": 1,
+    "attackInterval": 4.6
+}, {
+    "id": 19,
+    "name": "旋转斧（四阶）",
+    "baseDamage": 1000,
+    "damageTimes": 1.1,
+    "attackInterval": 4.4
+}, {
+    "id": 20,
+    "name": "旋转斧（五阶）",
+    "baseDamage": 10000,
+    "damageTimes": 1.2,
+    "attackInterval": 4
+}, {
+    "id": 21,
+    "name": "巨弩（一阶）",
+    "baseDamage": 6,
+    "damageTimes": 1.2,
+    "attackInterval": 8
+}, {
+    "id": 22,
+    "name": "巨弩（二阶）",
+    "baseDamage": 30,
+    "damageTimes": 1.4,
+    "attackInterval": 7.5
+}, {
+    "id": 23,
+    "name": "巨弩（三阶）",
+    "baseDamage": 150,
+    "damageTimes": 1.6,
+    "attackInterval": 7
+}, {
+    "id": 24,
+    "name": "巨弩（四阶）",
+    "baseDamage": 1000,
+    "damageTimes": 1.8,
+    "attackInterval": 6.5
+}, {
+    "id": 25,
+    "name": "巨弩（五阶）",
+    "baseDamage": 10000,
+    "damageTimes": 2,
+    "attackInterval": 6
+}, {
+    "id": 26,
+    "name": "连弩（一阶）",
+    "baseDamage": 1,
+    "damageTimes": 0.2,
+    "attackInterval": 0.5
+}, {
+    "id": 27,
+    "name": "连弩（二阶）",
+    "baseDamage": 5,
+    "damageTimes": 0.2,
+    "attackInterval": 0.4
+}, {
+    "id": 28,
+    "name": "连弩（三阶）",
+    "baseDamage": 25,
+    "damageTimes": 0.3,
+    "attackInterval": 0.4
+}, {
+    "id": 29,
+    "name": "连弩（四阶）",
+    "baseDamage": 170,
+    "damageTimes": 0.3,
+    "attackInterval": 0.3
+}, {
+    "id": 30,
+    "name": "连弩（五阶）",
+    "baseDamage": 1700,
+    "damageTimes": 0.3,
+    "attackInterval": 0.2
+}]

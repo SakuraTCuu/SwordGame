@@ -1,0 +1,945 @@
+[{
+    "id": 1,
+    "name": "",
+    "animKey": 1,
+    "damage": 2,
+    "maxBlood": 30,
+    "moveSpeed": 70,
+    "color": "normal",
+    "effects": []
+}, {
+    "id": 2,
+    "name": "",
+    "animKey": 2,
+    "damage": 4,
+    "maxBlood": 40,
+    "moveSpeed": 80,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 3,
+    "name": "",
+    "animKey": 3,
+    "damage": 6,
+    "maxBlood": 50,
+    "moveSpeed": 90,
+    "color": "normal",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 4,
+    "name": "",
+    "animKey": 4,
+    "damage": 8,
+    "maxBlood": 60,
+    "moveSpeed": 100,
+    "color": "normal",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 5,
+    "name": "",
+    "animKey": 5,
+    "damage": 10,
+    "maxBlood": 70,
+    "moveSpeed": 110,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 6,
+    "name": "",
+    "animKey": 6,
+    "damage": 12,
+    "maxBlood": 80,
+    "moveSpeed": 120,
+    "color": "normal",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 7,
+    "name": "",
+    "animKey": 1,
+    "damage": 30,
+    "maxBlood": 150,
+    "moveSpeed": 90,
+    "color": "green",
+    "effects": []
+}, {
+    "id": 8,
+    "name": "",
+    "animKey": 2,
+    "damage": 40,
+    "maxBlood": 200,
+    "moveSpeed": 100,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 9,
+    "name": "",
+    "animKey": 3,
+    "damage": 50,
+    "maxBlood": 250,
+    "moveSpeed": 110,
+    "color": "green",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 10,
+    "name": "",
+    "animKey": 4,
+    "damage": 60,
+    "maxBlood": 300,
+    "moveSpeed": 120,
+    "color": "green",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 11,
+    "name": "",
+    "animKey": 5,
+    "damage": 70,
+    "maxBlood": 350,
+    "moveSpeed": 130,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 12,
+    "name": "",
+    "animKey": 6,
+    "damage": 80,
+    "maxBlood": 400,
+    "moveSpeed": 140,
+    "color": "green",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 13,
+    "name": "",
+    "animKey": 7,
+    "damage": 400,
+    "maxBlood": 1500,
+    "moveSpeed": 85,
+    "color": "normal",
+    "effects": []
+}, {
+    "id": 14,
+    "name": "",
+    "animKey": 8,
+    "damage": 500,
+    "maxBlood": 2000,
+    "moveSpeed": 90,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 15,
+    "name": "",
+    "animKey": 9,
+    "damage": 600,
+    "maxBlood": 2500,
+    "moveSpeed": 95,
+    "color": "normal",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 16,
+    "name": "",
+    "animKey": 10,
+    "damage": 700,
+    "maxBlood": 3000,
+    "moveSpeed": 100,
+    "color": "normal",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 17,
+    "name": "",
+    "animKey": 11,
+    "damage": 800,
+    "maxBlood": 3500,
+    "moveSpeed": 105,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 18,
+    "name": "",
+    "animKey": 12,
+    "damage": 900,
+    "maxBlood": 4000,
+    "moveSpeed": 110,
+    "color": "normal",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 19,
+    "name": "",
+    "animKey": 7,
+    "damage": 1000,
+    "maxBlood": 4500,
+    "moveSpeed": 115,
+    "color": "green",
+    "effects": []
+}, {
+    "id": 20,
+    "name": "",
+    "animKey": 8,
+    "damage": 1100,
+    "maxBlood": 5000,
+    "moveSpeed": 120,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 21,
+    "name": "",
+    "animKey": 9,
+    "damage": 1200,
+    "maxBlood": 5500,
+    "moveSpeed": 125,
+    "color": "green",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 22,
+    "name": "",
+    "animKey": 10,
+    "damage": 1300,
+    "maxBlood": 6000,
+    "moveSpeed": 130,
+    "color": "green",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 23,
+    "name": "",
+    "animKey": 11,
+    "damage": 1400,
+    "maxBlood": 6500,
+    "moveSpeed": 135,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 24,
+    "name": "",
+    "animKey": 12,
+    "damage": 1500,
+    "maxBlood": 7000,
+    "moveSpeed": 140,
+    "color": "green",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 25,
+    "name": "",
+    "animKey": 13,
+    "damage": 4000,
+    "maxBlood": 15000,
+    "moveSpeed": 145,
+    "color": "normal",
+    "effects": []
+}, {
+    "id": 26,
+    "name": "",
+    "animKey": 14,
+    "damage": 5000,
+    "maxBlood": 20000,
+    "moveSpeed": 150,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 27,
+    "name": "",
+    "animKey": 15,
+    "damage": 6000,
+    "maxBlood": 25000,
+    "moveSpeed": 155,
+    "color": "normal",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 28,
+    "name": "",
+    "animKey": 16,
+    "damage": 7000,
+    "maxBlood": 30000,
+    "moveSpeed": 160,
+    "color": "normal",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 29,
+    "name": "",
+    "animKey": 17,
+    "damage": 8000,
+    "maxBlood": 35000,
+    "moveSpeed": 165,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 30,
+    "name": "",
+    "animKey": 18,
+    "damage": 9000,
+    "maxBlood": 40000,
+    "moveSpeed": 170,
+    "color": "normal",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 31,
+    "name": "",
+    "animKey": 13,
+    "damage": 10000,
+    "maxBlood": 45000,
+    "moveSpeed": 175,
+    "color": "green",
+    "effects": []
+}, {
+    "id": 32,
+    "name": "",
+    "animKey": 14,
+    "damage": 11000,
+    "maxBlood": 50000,
+    "moveSpeed": 180,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 33,
+    "name": "",
+    "animKey": 15,
+    "damage": 12000,
+    "maxBlood": 55000,
+    "moveSpeed": 185,
+    "color": "green",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 34,
+    "name": "",
+    "animKey": 16,
+    "damage": 13000,
+    "maxBlood": 60000,
+    "moveSpeed": 190,
+    "color": "green",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 35,
+    "name": "",
+    "animKey": 17,
+    "damage": 14000,
+    "maxBlood": 65000,
+    "moveSpeed": 195,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 36,
+    "name": "",
+    "animKey": 18,
+    "damage": 15000,
+    "maxBlood": 70000,
+    "moveSpeed": 200,
+    "color": "green",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 37,
+    "name": "",
+    "animKey": 13,
+    "damage": 16000,
+    "maxBlood": 75000,
+    "moveSpeed": 205,
+    "color": "red",
+    "effects": []
+}, {
+    "id": 38,
+    "name": "",
+    "animKey": 14,
+    "damage": 17000,
+    "maxBlood": 80000,
+    "moveSpeed": 210,
+    "color": "red",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 39,
+    "name": "",
+    "animKey": 15,
+    "damage": 18000,
+    "maxBlood": 85000,
+    "moveSpeed": 215,
+    "color": "red",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 40,
+    "name": "",
+    "animKey": 16,
+    "damage": 19000,
+    "maxBlood": 90000,
+    "moveSpeed": 220,
+    "color": "red",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 41,
+    "name": "",
+    "animKey": 17,
+    "damage": 20000,
+    "maxBlood": 95000,
+    "moveSpeed": 225,
+    "color": "red",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 42,
+    "name": "",
+    "animKey": 18,
+    "damage": 21000,
+    "maxBlood": 100000,
+    "moveSpeed": 230,
+    "color": "red",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 43,
+    "name": "",
+    "animKey": 13,
+    "damage": 22000,
+    "maxBlood": 105000,
+    "moveSpeed": 235,
+    "color": "yellow",
+    "effects": []
+}, {
+    "id": 44,
+    "name": "",
+    "animKey": 14,
+    "damage": 23000,
+    "maxBlood": 110000,
+    "moveSpeed": 240,
+    "color": "yellow",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 45,
+    "name": "",
+    "animKey": 15,
+    "damage": 24000,
+    "maxBlood": 115000,
+    "moveSpeed": 245,
+    "color": "yellow",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 46,
+    "name": "",
+    "animKey": 16,
+    "damage": 25000,
+    "maxBlood": 120000,
+    "moveSpeed": 250,
+    "color": "yellow",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 47,
+    "name": "",
+    "animKey": 17,
+    "damage": 26000,
+    "maxBlood": 125000,
+    "moveSpeed": 255,
+    "color": "yellow",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 48,
+    "name": "",
+    "animKey": 18,
+    "damage": 27000,
+    "maxBlood": 130000,
+    "moveSpeed": 260,
+    "color": "yellow",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 49,
+    "name": "",
+    "animKey": 19,
+    "damage": 40000,
+    "maxBlood": 150000,
+    "moveSpeed": 155,
+    "color": "normal",
+    "effects": []
+}, {
+    "id": 50,
+    "name": "",
+    "animKey": 20,
+    "damage": 50000,
+    "maxBlood": 200000,
+    "moveSpeed": 160,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 51,
+    "name": "",
+    "animKey": 21,
+    "damage": 60000,
+    "maxBlood": 250000,
+    "moveSpeed": 165,
+    "color": "normal",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 52,
+    "name": "",
+    "animKey": 22,
+    "damage": 70000,
+    "maxBlood": 300000,
+    "moveSpeed": 170,
+    "color": "normal",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 53,
+    "name": "",
+    "animKey": 23,
+    "damage": 80000,
+    "maxBlood": 350000,
+    "moveSpeed": 175,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 54,
+    "name": "",
+    "animKey": 24,
+    "damage": 90000,
+    "maxBlood": 400000,
+    "moveSpeed": 180,
+    "color": "normal",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 55,
+    "name": "",
+    "animKey": 25,
+    "damage": 100000,
+    "maxBlood": 450000,
+    "moveSpeed": 185,
+    "color": "normal",
+    "effects": []
+}, {
+    "id": 56,
+    "name": "",
+    "animKey": 26,
+    "damage": 110000,
+    "maxBlood": 500000,
+    "moveSpeed": 190,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 57,
+    "name": "",
+    "animKey": 27,
+    "damage": 120000,
+    "maxBlood": 550000,
+    "moveSpeed": 195,
+    "color": "normal",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 58,
+    "name": "",
+    "animKey": 28,
+    "damage": 130000,
+    "maxBlood": 600000,
+    "moveSpeed": 200,
+    "color": "normal",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 59,
+    "name": "",
+    "animKey": 29,
+    "damage": 140000,
+    "maxBlood": 650000,
+    "moveSpeed": 205,
+    "color": "normal",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 60,
+    "name": "",
+    "animKey": 30,
+    "damage": 150000,
+    "maxBlood": 700000,
+    "moveSpeed": 210,
+    "color": "normal",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 61,
+    "name": "",
+    "animKey": 19,
+    "damage": 160000,
+    "maxBlood": 750000,
+    "moveSpeed": 215,
+    "color": "green",
+    "effects": []
+}, {
+    "id": 62,
+    "name": "",
+    "animKey": 20,
+    "damage": 170000,
+    "maxBlood": 800000,
+    "moveSpeed": 220,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 63,
+    "name": "",
+    "animKey": 21,
+    "damage": 180000,
+    "maxBlood": 850000,
+    "moveSpeed": 225,
+    "color": "green",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 64,
+    "name": "",
+    "animKey": 22,
+    "damage": 190000,
+    "maxBlood": 900000,
+    "moveSpeed": 230,
+    "color": "green",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 65,
+    "name": "",
+    "animKey": 23,
+    "damage": 200000,
+    "maxBlood": 950000,
+    "moveSpeed": 235,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 66,
+    "name": "",
+    "animKey": 24,
+    "damage": 210000,
+    "maxBlood": 1000000,
+    "moveSpeed": 240,
+    "color": "green",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 67,
+    "name": "",
+    "animKey": 25,
+    "damage": 220000,
+    "maxBlood": 1050000,
+    "moveSpeed": 245,
+    "color": "green",
+    "effects": []
+}, {
+    "id": 68,
+    "name": "",
+    "animKey": 26,
+    "damage": 230000,
+    "maxBlood": 1100000,
+    "moveSpeed": 250,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 69,
+    "name": "",
+    "animKey": 27,
+    "damage": 240000,
+    "maxBlood": 1150000,
+    "moveSpeed": 255,
+    "color": "green",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 70,
+    "name": "",
+    "animKey": 28,
+    "damage": 250000,
+    "maxBlood": 1200000,
+    "moveSpeed": 260,
+    "color": "green",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 71,
+    "name": "",
+    "animKey": 29,
+    "damage": 260000,
+    "maxBlood": 1250000,
+    "moveSpeed": 265,
+    "color": "green",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 72,
+    "name": "",
+    "animKey": 30,
+    "damage": 270000,
+    "maxBlood": 1300000,
+    "moveSpeed": 270,
+    "color": "green",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 73,
+    "name": "",
+    "animKey": 19,
+    "damage": 280000,
+    "maxBlood": 1350000,
+    "moveSpeed": 275,
+    "color": "red",
+    "effects": []
+}, {
+    "id": 74,
+    "name": "",
+    "animKey": 20,
+    "damage": 290000,
+    "maxBlood": 1400000,
+    "moveSpeed": 280,
+    "color": "red",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 75,
+    "name": "",
+    "animKey": 21,
+    "damage": 300000,
+    "maxBlood": 1450000,
+    "moveSpeed": 285,
+    "color": "red",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 76,
+    "name": "",
+    "animKey": 22,
+    "damage": 310000,
+    "maxBlood": 1500000,
+    "moveSpeed": 290,
+    "color": "red",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 77,
+    "name": "",
+    "animKey": 23,
+    "damage": 320000,
+    "maxBlood": 1550000,
+    "moveSpeed": 295,
+    "color": "red",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 78,
+    "name": "",
+    "animKey": 24,
+    "damage": 330000,
+    "maxBlood": 1600000,
+    "moveSpeed": 300,
+    "color": "red",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 79,
+    "name": "",
+    "animKey": 25,
+    "damage": 340000,
+    "maxBlood": 1650000,
+    "moveSpeed": 305,
+    "color": "red",
+    "effects": []
+}, {
+    "id": 80,
+    "name": "",
+    "animKey": 26,
+    "damage": 350000,
+    "maxBlood": 1700000,
+    "moveSpeed": 310,
+    "color": "red",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 81,
+    "name": "",
+    "animKey": 27,
+    "damage": 360000,
+    "maxBlood": 1750000,
+    "moveSpeed": 315,
+    "color": "red",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 82,
+    "name": "",
+    "animKey": 28,
+    "damage": 370000,
+    "maxBlood": 1800000,
+    "moveSpeed": 320,
+    "color": "red",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 83,
+    "name": "",
+    "animKey": 29,
+    "damage": 380000,
+    "maxBlood": 1850000,
+    "moveSpeed": 325,
+    "color": "red",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 84,
+    "name": "",
+    "animKey": 30,
+    "damage": 390000,
+    "maxBlood": 1900000,
+    "moveSpeed": 330,
+    "color": "red",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 85,
+    "name": "",
+    "animKey": 19,
+    "damage": 400000,
+    "maxBlood": 1950000,
+    "moveSpeed": 335,
+    "color": "yellow",
+    "effects": []
+}, {
+    "id": 86,
+    "name": "",
+    "animKey": 20,
+    "damage": 410000,
+    "maxBlood": 2000000,
+    "moveSpeed": 340,
+    "color": "yellow",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 87,
+    "name": "",
+    "animKey": 21,
+    "damage": 420000,
+    "maxBlood": 2050000,
+    "moveSpeed": 345,
+    "color": "yellow",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 88,
+    "name": "",
+    "animKey": 22,
+    "damage": 430000,
+    "maxBlood": 2100000,
+    "moveSpeed": 350,
+    "color": "yellow",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 89,
+    "name": "",
+    "animKey": 23,
+    "damage": 440000,
+    "maxBlood": 2150000,
+    "moveSpeed": 355,
+    "color": "yellow",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 90,
+    "name": "",
+    "animKey": 24,
+    "damage": 450000,
+    "maxBlood": 2200000,
+    "moveSpeed": 360,
+    "color": "yellow",
+    "effects": [2, 3],
+    "maxLevel": 2
+}, {
+    "id": 91,
+    "name": "",
+    "animKey": 25,
+    "damage": 460000,
+    "maxBlood": 2250000,
+    "moveSpeed": 365,
+    "color": "yellow",
+    "effects": []
+}, {
+    "id": 92,
+    "name": "",
+    "animKey": 26,
+    "damage": 470000,
+    "maxBlood": 2300000,
+    "moveSpeed": 370,
+    "color": "yellow",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 93,
+    "name": "",
+    "animKey": 27,
+    "damage": 480000,
+    "maxBlood": 2350000,
+    "moveSpeed": 375,
+    "color": "yellow",
+    "effects": [2],
+    "maxLevel": 1
+}, {
+    "id": 94,
+    "name": "",
+    "animKey": 28,
+    "damage": 490000,
+    "maxBlood": 2400000,
+    "moveSpeed": 380,
+    "color": "yellow",
+    "effects": [3],
+    "maxLevel": 1
+}, {
+    "id": 95,
+    "name": "",
+    "animKey": 29,
+    "damage": 500000,
+    "maxBlood": 2450000,
+    "moveSpeed": 385,
+    "color": "yellow",
+    "effects": [1],
+    "maxLevel": 1
+}, {
+    "id": 96,
+    "name": "",
+    "animKey": 30,
+    "damage": 510000,
+    "maxBlood": 2500000,
+    "moveSpeed": 390,
+    "color": "yellow",
+    "effects": [2, 3],
+    "maxLevel": 2
+}]

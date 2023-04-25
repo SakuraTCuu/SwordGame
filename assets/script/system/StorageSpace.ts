@@ -3,6 +3,8 @@ import { em } from '../global/EventManager';
 import { ItemManger } from './ItemManager';
 import { director } from 'cc';
 import main from '../Main';
+import { EventId } from '../global/GameEvent';
+import { resources } from 'cc';
 
 export class StorageSpace {
 
@@ -12,19 +14,28 @@ export class StorageSpace {
 
     _IM: ItemManger;
 
-    constructor() {
-        this.onInit();
+    constructor() { }
+
+    lazyInitialize() {
+        em.add(EventId.loadingComplete, this.lazyInitItemData, this);
     }
 
-    layzItemData(data: JsonAsset) {
-        this.itemDataJson = data;
-    }
+    lazyInitItemData() {
+        // 物品表
+        let resPath = "data/others/item"
 
-    onInit() {
+        this.itemDataJson = main.dynamicLoading.getRes(resPath) as JsonAsset;
+
+        // em.dispatchs(EventId.loadRes, resPath, (assets: JsonAsset) => {
+        //     console.log(assets);
+        //     this.itemDataJson = assets;
+        // }, () => {
+        //     console.log("load failed");
+        // });
+
         this.initItemData();
         this._IM = new ItemManger();
         // this.schedule(this.showAll,1);
-        // director.addPersistRootNode(this.node);//背包物品在各个场景皆可用到 设置为常驻节点
     }
 
     initItemData() {
@@ -115,16 +126,18 @@ export class StorageSpace {
         };
     }
 
-
-
     /**
      * @description: 通过id 或 name 获取物品属性 
      * @param {*} id_name 物品 id 或 name
      */
     getItemDataByIdOrName(id_name) {
-        if (this._itemData.hasOwnProperty(id_name)) return this._itemData[id_name];
-        else throw id_name + " of _itemData is null";
+        if (this._itemData.hasOwnProperty(id_name)) {
+            return this._itemData[id_name];
+        }
+        console.log(id_name + " of _itemData is null");
+        return null;
     }
+
     //判断物品id或名称是否有效
     itemIsValid(id_name) {
         return this._itemData.hasOwnProperty(id_name);
@@ -163,7 +176,11 @@ export class StorageSpace {
     //获取指定id 或 名称的物品 的数量
     getItemTotalByIdOrName(id_name) {
         // console.log("this._itemData",this._itemData);
-        if (!this._itemData.hasOwnProperty(id_name)) throw id_name + " of _itemData is null";
+        if (!this._itemData.hasOwnProperty(id_name)) {
+            // throw id_name + " of _itemData is null";
+            console.log(id_name + " of _itemData is null");
+            return null;
+        }
         let id = this._itemData[id_name].id;
         return this._IM.getItemTotal(id);
     }

@@ -6,7 +6,8 @@ const enum EventId {
     loadRes = "loadRes",
     loadDir = "loadDir",
     switchMainMenuLayer = "switchMainMenuLayer",
-    
+    updateLoadingProgress = 'updateLoadingProgress',
+    loadingComplete = 'loadingComplete',
 }
 enum ViewId {
     tipsViewShow = "tipsViewShow",

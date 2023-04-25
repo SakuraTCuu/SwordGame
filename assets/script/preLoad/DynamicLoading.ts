@@ -1,38 +1,26 @@
-import { _decorator, Component, Node, resources, SpriteFrame, game, AssetManager, director } from 'cc';
+import { _decorator, resources, AssetManager } from 'cc';
 import { em } from '../global/EventManager';
-import { PreLoad } from './PreLoad';
 import { EventId } from '../global/GameEvent';
-const { ccclass, property } = _decorator;
+import { Asset } from 'cc';
 
-@ccclass('DynamicLoading')
-export class DynamicLoading extends Component {
+export class DynamicLoading {
 
-    @property({
-        type: PreLoad,
-        displayName: "PreLoad"
-    })
-    preLoadScript: PreLoad = null;
-
-    onDestroy() {
-        em.remove(EventId.loadRes);
-        em.remove(EventId.loadDir);
+    constructor() {
     }
 
-    onLoad() {
+    lazyInitialize() {
         em.add(EventId.loadRes, this.loadRes.bind(this));
         em.add(EventId.loadDir, this.loadDir.bind(this));
         this.preLoadAllResources();
-        // this.loadDir("anim/enemy/monster");
-        director.addPersistRootNode(this.node);
     }
 
     // 加载所有资源
     preLoadAllResources() {
         console.log("preLoadAllResources");
-
         //加载resources目录下所有文件
         resources.loadDir("", (finished: number, total: number, item: AssetManager.RequestItem) => {
-            this.preLoadScript.updateLoadingProgress(finished / total);
+            //进度
+            em.dispatchs(EventId.updateLoadingProgress, finished / total);
         }, (err, assets) => {
 
             if (err) {
@@ -40,9 +28,8 @@ export class DynamicLoading extends Component {
                 return;
             } else {
                 // this.preLoadScript.enterMainMenuScene();
-                this.preLoadScript.showLoginLayer();
+                em.dispatchs(EventId.loadingComplete);
             }
-
         });
     }
 
@@ -58,7 +45,6 @@ export class DynamicLoading extends Component {
                 if (callback) callback(assets);
             }
         });
-
     }
 
     //加载具体路径资源 asset为单个资源
@@ -74,6 +60,10 @@ export class DynamicLoading extends Component {
             }
 
         })
+    }
+
+    getRes(path: string): Asset {
+        return resources.get(path);
     }
 }
 

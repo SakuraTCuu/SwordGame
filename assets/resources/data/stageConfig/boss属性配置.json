@@ -1,0 +1,561 @@
+[{
+    "id": 1,
+    "name": "boss1",
+    "moveSpeed": 50,
+    "maxBlood": 1000,
+    "normalDamage": 6,
+    "animKey": "monster1"
+}, {
+    "id": 2,
+    "name": "boss2",
+    "moveSpeed": 60,
+    "maxBlood": 2000,
+    "normalDamage": 12,
+    "animKey": "monster2"
+}, {
+    "id": 3,
+    "name": "boss3",
+    "moveSpeed": 40,
+    "maxBlood": 2500,
+    "normalDamage": 18,
+    "animKey": "monster3"
+}, {
+    "id": 4,
+    "name": "boss4",
+    "moveSpeed": 100,
+    "maxBlood": 4000,
+    "normalDamage": 24,
+    "animKey": "monster4"
+}, {
+    "id": 5,
+    "name": "boss5",
+    "moveSpeed": 120,
+    "maxBlood": 5000,
+    "normalDamage": 30,
+    "animKey": "boss_5_move"
+}, {
+    "id": 6,
+    "name": "boss6",
+    "moveSpeed": 100,
+    "maxBlood": 8000,
+    "normalDamage": 60,
+    "animKey": "monster5"
+}, {
+    "id": 7,
+    "name": "boss7",
+    "moveSpeed": 120,
+    "maxBlood": 50000,
+    "normalDamage": 80,
+    "animKey": "monster6"
+}, {
+    "id": 8,
+    "name": "boss8",
+    "moveSpeed": 120,
+    "maxBlood": 12000,
+    "normalDamage": 100,
+    "animKey": "monster5"
+}, {
+    "id": 9,
+    "name": "boss9",
+    "moveSpeed": 100,
+    "maxBlood": 15000,
+    "normalDamage": 120,
+    "animKey": "monster6"
+}, {
+    "id": 10,
+    "name": "boss10",
+    "moveSpeed": 132,
+    "maxBlood": 25000,
+    "normalDamage": 140,
+    "animKey": "boss_10_move"
+}, {
+    "id": 11,
+    "name": "boss11",
+    "moveSpeed": 140,
+    "maxBlood": 30000,
+    "normalDamage": 800,
+    "animKey": "monster7"
+}, {
+    "id": 12,
+    "name": "boss12",
+    "moveSpeed": 150,
+    "maxBlood": 40000,
+    "normalDamage": 900,
+    "animKey": "monster8"
+}, {
+    "id": 13,
+    "name": "boss13",
+    "moveSpeed": 160,
+    "maxBlood": 50000,
+    "normalDamage": 1000,
+    "animKey": "monster9"
+}, {
+    "id": 14,
+    "name": "boss14",
+    "moveSpeed": 170,
+    "maxBlood": 60000,
+    "normalDamage": 1100,
+    "animKey": "monster10"
+}, {
+    "id": 15,
+    "name": "boss15",
+    "moveSpeed": 180,
+    "maxBlood": 70000,
+    "normalDamage": 1200,
+    "animKey": "boss_15_move"
+}, {
+    "id": 16,
+    "name": "boss16",
+    "moveSpeed": 190,
+    "maxBlood": 80000,
+    "normalDamage": 1300,
+    "animKey": "monster11"
+}, {
+    "id": 17,
+    "name": "boss17",
+    "moveSpeed": 200,
+    "maxBlood": 90000,
+    "normalDamage": 1400,
+    "animKey": "monster12"
+}, {
+    "id": 18,
+    "name": "boss18",
+    "moveSpeed": 210,
+    "maxBlood": 100000,
+    "normalDamage": 1500,
+    "animKey": "monster11"
+}, {
+    "id": 19,
+    "name": "boss19",
+    "moveSpeed": 220,
+    "maxBlood": 110000,
+    "normalDamage": 1600,
+    "animKey": "monster12"
+}, {
+    "id": 20,
+    "name": "boss20",
+    "moveSpeed": 230,
+    "maxBlood": 150000,
+    "normalDamage": 1700,
+    "animKey": "boss_20_move"
+}, {
+    "id": 21,
+    "name": "boss21",
+    "moveSpeed": 160,
+    "maxBlood": 300000,
+    "normalDamage": 8000,
+    "animKey": "monster13"
+}, {
+    "id": 22,
+    "name": "boss22",
+    "moveSpeed": 170,
+    "maxBlood": 400000,
+    "normalDamage": 10000,
+    "animKey": "monster14"
+}, {
+    "id": 23,
+    "name": "boss23",
+    "moveSpeed": 180,
+    "maxBlood": 500000,
+    "normalDamage": 12000,
+    "animKey": "monster15"
+}, {
+    "id": 24,
+    "name": "boss24",
+    "moveSpeed": 190,
+    "maxBlood": 600000,
+    "normalDamage": 14000,
+    "animKey": "monster16"
+}, {
+    "id": 25,
+    "name": "boss25",
+    "moveSpeed": 200,
+    "maxBlood": 700000,
+    "normalDamage": 16000,
+    "animKey": "monster17"
+}, {
+    "id": 26,
+    "name": "boss26",
+    "moveSpeed": 210,
+    "maxBlood": 800000,
+    "normalDamage": 18000,
+    "animKey": "monster18"
+}, {
+    "id": 27,
+    "name": "boss27",
+    "moveSpeed": 220,
+    "maxBlood": 900000,
+    "normalDamage": 20000,
+    "animKey": "monster13"
+}, {
+    "id": 28,
+    "name": "boss28",
+    "moveSpeed": 230,
+    "maxBlood": 1000000,
+    "normalDamage": 22000,
+    "animKey": "monster14"
+}, {
+    "id": 29,
+    "name": "boss29",
+    "moveSpeed": 240,
+    "maxBlood": 1100000,
+    "normalDamage": 24000,
+    "animKey": "monster15"
+}, {
+    "id": 30,
+    "name": "boss30",
+    "moveSpeed": 250,
+    "maxBlood": 1200000,
+    "normalDamage": 26000,
+    "animKey": "monster16"
+}, {
+    "id": 31,
+    "name": "boss31",
+    "moveSpeed": 260,
+    "maxBlood": 1300000,
+    "normalDamage": 28000,
+    "animKey": "monster17"
+}, {
+    "id": 32,
+    "name": "boss32",
+    "moveSpeed": 270,
+    "maxBlood": 1400000,
+    "normalDamage": 30000,
+    "animKey": "monster18"
+}, {
+    "id": 33,
+    "name": "boss33",
+    "moveSpeed": 280,
+    "maxBlood": 1500000,
+    "normalDamage": 32000,
+    "animKey": "monster13"
+}, {
+    "id": 34,
+    "name": "boss34",
+    "moveSpeed": 290,
+    "maxBlood": 1600000,
+    "normalDamage": 34000,
+    "animKey": "monster14"
+}, {
+    "id": 35,
+    "name": "boss35",
+    "moveSpeed": 300,
+    "maxBlood": 1700000,
+    "normalDamage": 36000,
+    "animKey": "monster15"
+}, {
+    "id": 36,
+    "name": "boss36",
+    "moveSpeed": 310,
+    "maxBlood": 1800000,
+    "normalDamage": 38000,
+    "animKey": "monster16"
+}, {
+    "id": 37,
+    "name": "boss37",
+    "moveSpeed": 320,
+    "maxBlood": 1900000,
+    "normalDamage": 40000,
+    "animKey": "monster17"
+}, {
+    "id": 38,
+    "name": "boss38",
+    "moveSpeed": 330,
+    "maxBlood": 2000000,
+    "normalDamage": 42000,
+    "animKey": "monster18"
+}, {
+    "id": 39,
+    "name": "boss39",
+    "moveSpeed": 340,
+    "maxBlood": 2100000,
+    "normalDamage": 44000,
+    "animKey": "monster17"
+}, {
+    "id": 40,
+    "name": "boss40",
+    "moveSpeed": 350,
+    "maxBlood": 2200000,
+    "normalDamage": 46000,
+    "animKey": "monster18"
+}, {
+    "id": 41,
+    "name": "boss41",
+    "moveSpeed": 205,
+    "maxBlood": 3000000,
+    "normalDamage": 80000,
+    "animKey": "monster19"
+}, {
+    "id": 42,
+    "name": "boss42",
+    "moveSpeed": 210,
+    "maxBlood": 4000000,
+    "normalDamage": 100000,
+    "animKey": "monster20"
+}, {
+    "id": 43,
+    "name": "boss43",
+    "moveSpeed": 215,
+    "maxBlood": 5000000,
+    "normalDamage": 120000,
+    "animKey": "monster21"
+}, {
+    "id": 44,
+    "name": "boss44",
+    "moveSpeed": 220,
+    "maxBlood": 6000000,
+    "normalDamage": 140000,
+    "animKey": "monster22"
+}, {
+    "id": 45,
+    "name": "boss45",
+    "moveSpeed": 225,
+    "maxBlood": 7000000,
+    "normalDamage": 160000,
+    "animKey": "monster23"
+}, {
+    "id": 46,
+    "name": "boss46",
+    "moveSpeed": 230,
+    "maxBlood": 8000000,
+    "normalDamage": 180000,
+    "animKey": "monster24"
+}, {
+    "id": 47,
+    "name": "boss47",
+    "moveSpeed": 235,
+    "maxBlood": 9000000,
+    "normalDamage": 200000,
+    "animKey": "monster19"
+}, {
+    "id": 48,
+    "name": "boss48",
+    "moveSpeed": 240,
+    "maxBlood": 10000000,
+    "normalDamage": 220000,
+    "animKey": "monster20"
+}, {
+    "id": 49,
+    "name": "boss49",
+    "moveSpeed": 245,
+    "maxBlood": 11000000,
+    "normalDamage": 240000,
+    "animKey": "monster21"
+}, {
+    "id": 50,
+    "name": "boss50",
+    "moveSpeed": 250,
+    "maxBlood": 12000000,
+    "normalDamage": 260000,
+    "animKey": "monster22"
+}, {
+    "id": 51,
+    "name": "boss51",
+    "moveSpeed": 255,
+    "maxBlood": 13000000,
+    "normalDamage": 280000,
+    "animKey": "monster23"
+}, {
+    "id": 52,
+    "name": "boss52",
+    "moveSpeed": 260,
+    "maxBlood": 14000000,
+    "normalDamage": 300000,
+    "animKey": "monster24"
+}, {
+    "id": 53,
+    "name": "boss53",
+    "moveSpeed": 265,
+    "maxBlood": 15000000,
+    "normalDamage": 320000,
+    "animKey": "monster19"
+}, {
+    "id": 54,
+    "name": "boss54",
+    "moveSpeed": 270,
+    "maxBlood": 16000000,
+    "normalDamage": 340000,
+    "animKey": "monster20"
+}, {
+    "id": 55,
+    "name": "boss55",
+    "moveSpeed": 275,
+    "maxBlood": 17000000,
+    "normalDamage": 360000,
+    "animKey": "monster21"
+}, {
+    "id": 56,
+    "name": "boss56",
+    "moveSpeed": 280,
+    "maxBlood": 18000000,
+    "normalDamage": 380000,
+    "animKey": "monster22"
+}, {
+    "id": 57,
+    "name": "boss57",
+    "moveSpeed": 285,
+    "maxBlood": 19000000,
+    "normalDamage": 400000,
+    "animKey": "monster23"
+}, {
+    "id": 58,
+    "name": "boss58",
+    "moveSpeed": 290,
+    "maxBlood": 20000000,
+    "normalDamage": 420000,
+    "animKey": "monster24"
+}, {
+    "id": 59,
+    "name": "boss59",
+    "moveSpeed": 295,
+    "maxBlood": 21000000,
+    "normalDamage": 440000,
+    "animKey": "monster19"
+}, {
+    "id": 60,
+    "name": "boss60",
+    "moveSpeed": 300,
+    "maxBlood": 22000000,
+    "normalDamage": 460000,
+    "animKey": "monster20"
+}, {
+    "id": 61,
+    "name": "boss61",
+    "moveSpeed": 305,
+    "maxBlood": 23000000,
+    "normalDamage": 480000,
+    "animKey": "monster21"
+}, {
+    "id": 62,
+    "name": "boss62",
+    "moveSpeed": 310,
+    "maxBlood": 24000000,
+    "normalDamage": 500000,
+    "animKey": "monster22"
+}, {
+    "id": 63,
+    "name": "boss63",
+    "moveSpeed": 315,
+    "maxBlood": 25000000,
+    "normalDamage": 520000,
+    "animKey": "monster23"
+}, {
+    "id": 64,
+    "name": "boss64",
+    "moveSpeed": 320,
+    "maxBlood": 26000000,
+    "normalDamage": 540000,
+    "animKey": "monster24"
+}, {
+    "id": 65,
+    "name": "boss65",
+    "moveSpeed": 325,
+    "maxBlood": 27000000,
+    "normalDamage": 560000,
+    "animKey": "monster19"
+}, {
+    "id": 66,
+    "name": "boss66",
+    "moveSpeed": 330,
+    "maxBlood": 28000000,
+    "normalDamage": 580000,
+    "animKey": "monster20"
+}, {
+    "id": 67,
+    "name": "boss67",
+    "moveSpeed": 335,
+    "maxBlood": 29000000,
+    "normalDamage": 600000,
+    "animKey": "monster21"
+}, {
+    "id": 68,
+    "name": "boss68",
+    "moveSpeed": 340,
+    "maxBlood": 30000000,
+    "normalDamage": 620000,
+    "animKey": "monster22"
+}, {
+    "id": 69,
+    "name": "boss69",
+    "moveSpeed": 345,
+    "maxBlood": 31000000,
+    "normalDamage": 640000,
+    "animKey": "monster23"
+}, {
+    "id": 70,
+    "name": "boss70",
+    "moveSpeed": 350,
+    "maxBlood": 32000000,
+    "normalDamage": 660000,
+    "animKey": "monster24"
+}, {
+    "id": 71,
+    "name": "boss71",
+    "moveSpeed": 355,
+    "maxBlood": 33000000,
+    "normalDamage": 680000,
+    "animKey": "monster19"
+}, {
+    "id": 72,
+    "name": "boss72",
+    "moveSpeed": 360,
+    "maxBlood": 34000000,
+    "normalDamage": 700000,
+    "animKey": "monster20"
+}, {
+    "id": 73,
+    "name": "boss73",
+    "moveSpeed": 365,
+    "maxBlood": 35000000,
+    "normalDamage": 720000,
+    "animKey": "monster21"
+}, {
+    "id": 74,
+    "name": "boss74",
+    "moveSpeed": 370,
+    "maxBlood": 36000000,
+    "normalDamage": 740000,
+    "animKey": "monster22"
+}, {
+    "id": 75,
+    "name": "boss75",
+    "moveSpeed": 375,
+    "maxBlood": 37000000,
+    "normalDamage": 760000,
+    "animKey": "monster23"
+}, {
+    "id": 76,
+    "name": "boss76",
+    "moveSpeed": 380,
+    "maxBlood": 38000000,
+    "normalDamage": 780000,
+    "animKey": "monster24"
+}, {
+    "id": 77,
+    "name": "boss77",
+    "moveSpeed": 385,
+    "maxBlood": 39000000,
+    "normalDamage": 800000,
+    "animKey": "monster21"
+}, {
+    "id": 78,
+    "name": "boss78",
+    "moveSpeed": 390,
+    "maxBlood": 40000000,
+    "normalDamage": 820000,
+    "animKey": "monster22"
+}, {
+    "id": 79,
+    "name": "boss79",
+    "moveSpeed": 395,
+    "maxBlood": 41000000,
+    "normalDamage": 840000,
+    "animKey": "monster23"
+}, {
+    "id": 80,
+    "name": "boss80",
+    "moveSpeed": 400,
+    "maxBlood": 42000000,
+    "normalDamage": 860000,
+    "animKey": "monster24"
+}]
