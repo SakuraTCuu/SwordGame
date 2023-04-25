@@ -11,6 +11,7 @@ import { _decorator, Component, Node, Sprite, Prefab, instantiate, Label, find }
 import { em } from '../../global/EventManager';
 import { ggd } from '../../global/globalData';
 import { glf } from '../../global/globalFun';
+import { EventId } from '../../global/GameEvent';
 
 const { ccclass, property } = _decorator;
 
@@ -92,7 +93,7 @@ export class SkillManager extends Component {
                     skill.parent = this.node;
                     let sprite = skill.getComponent(Sprite);
                     let loadUrl = "images/icons/icon_" + skillName + "/spriteFrame";
-                    em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+                    em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
                     glf.createButton(this.node, skill, "SkillManager", "onBtnSkill", skillName);
                 }
             }
@@ -109,7 +110,7 @@ export class SkillManager extends Component {
         let totalTime = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", p).cd;
         let label = e.target.getChildByName("remainingTime").getComponent(Label);
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", p);
-        em.dispatch("createTipsTex", skillData.name);
+        em.dispatchs("createTipsTex", skillData.name);
         this.startCoolDowntime(sprite, label, totalTime);
     }
     // 开始冷却
@@ -150,36 +151,36 @@ export class SkillManager extends Component {
     changeMoveSpeed() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "changeMoveSpeed");
         // em.dispatch("usingHeroControlFun", "changeHeroMoveSpeed", 2, 10);//两倍移速 10s
-        em.dispatch("usingHeroControlFun", "changeHeroMoveSpeed", skillData.moveSpeedTimes, skillData.duration);//两倍移速 10s
+        em.dispatchs("usingHeroControlFun", "changeHeroMoveSpeed", skillData.moveSpeedTimes, skillData.duration);//两倍移速 10s
     }
     //剑雨术 --->武技
     swordRain() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillSwordRain");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillSwordRain");
     }
     // 一剑隔世 --->绝技
     justOneSwordDivideWorld() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillJustOneSwordDivideWorld");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillJustOneSwordDivideWorld");
     }
     // 凝气术 --->心法
     collectGas() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "凝气术");
-        em.dispatch("usingHeroControlFun", "updateTempCriticalHitRate", skillData.criticalHitRate);
-        em.dispatch("usingHeroControlFun", "isOpenCollectGas", true);
+        em.dispatchs("usingHeroControlFun", "updateTempCriticalHitRate", skillData.criticalHitRate);
+        em.dispatchs("usingHeroControlFun", "isOpenCollectGas", true);
         let t = skillData.duration;
         let fun = () => {
             if (ggd.stopAll) return;
             t--;
             if (t <= 0) {
                 this.unschedule(fun);
-                em.dispatch("usingHeroControlFun", "updateTempCriticalHitRate", -skillData.criticalHitRate);
-                em.dispatch("usingHeroControlFun", "isOpenCollectGas", false);
+                em.dispatchs("usingHeroControlFun", "updateTempCriticalHitRate", -skillData.criticalHitRate);
+                em.dispatchs("usingHeroControlFun", "isOpenCollectGas", false);
             }
         }
         this.schedule(fun, 1);
     }
     //万剑归冢 --->神通
     thousandsSwordToTomb() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillThousandsSwordToTomb");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillThousandsSwordToTomb");
     }
     /**
      * @description: 二阶功法
@@ -187,25 +188,25 @@ export class SkillManager extends Component {
     // 迷踪步 --->身法
     trackDisappear() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "trackDisappear");
-        em.dispatch("usingHeroControlFun", "usingSkillTrackDisappear", skillData.duration);
-        em.dispatch("usingHeroControlFun", "changeHeroMoveSpeed", skillData.moveSpeedTimes, skillData.duration);//两倍移速 10s
+        em.dispatchs("usingHeroControlFun", "usingSkillTrackDisappear", skillData.duration);
+        em.dispatchs("usingHeroControlFun", "changeHeroMoveSpeed", skillData.moveSpeedTimes, skillData.duration);//两倍移速 10s
     }
     // 怒狮狂吼 --->武技
     lionRoar() {
-        em.dispatch("usingHeroControlFun", "usingSkillLionRoar");
+        em.dispatchs("usingHeroControlFun", "usingSkillLionRoar");
     }
     // 冰锥术 --->绝技 向周围发射冰锥，每个冰锥造成500伤害，附加1.5伤害加成，并冻结对方
     iceCone() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillIceCone");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillIceCone");
     }
     // 冰盾术 ---> 心法
     iceShield() {
-        em.dispatch("usingHeroControlFun", "usingSkillIceShield");
+        em.dispatchs("usingHeroControlFun", "usingSkillIceShield");
     }
     // 冰河世纪 --->神通
     iceAge() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "iceAge");
-        em.dispatch("usingMapLayerFun", "frozenMap", skillData.duration, 0.2);
+        em.dispatchs("usingMapLayerFun", "frozenMap", skillData.duration, 0.2);
     }
     /**
      * @description: 三阶功法
@@ -213,12 +214,12 @@ export class SkillManager extends Component {
     //大步流星 --> 身法
     moveLikeMeteor() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "moveLikeMeteor");
-        em.dispatch("usingHeroControlFun", "changeHeroMoveSpeed", skillData.moveSpeedTimes, skillData.duration);//两倍移速 10s
+        em.dispatchs("usingHeroControlFun", "changeHeroMoveSpeed", skillData.moveSpeedTimes, skillData.duration);//两倍移速 10s
     }
     // 三昧真火 --> 武技
     samadhiTrueFire() {
         let url = "/prefabs/hero/weapon/samadhiTrueFire";
-        em.dispatch("loadTheDirResources", url, (assets) => {
+        em.dispatchs(EventId.loadRes, url, (assets) => {
             let prefab = instantiate(assets);
             prefab.getComponent("SamadhiTrueFire").init();
         })
@@ -226,12 +227,12 @@ export class SkillManager extends Component {
     // 烈日心决 ---> 心法
     sunHeart() {
         let url = "/prefabs/hero/weapon/sunHeart";
-        em.dispatch("loadTheDirResources", url, (assets) => {
+        em.dispatchs(EventId.loadRes, url, (assets) => {
             let prefab = instantiate(assets);
             prefab.parent = em.dispatch("getHeroControlProperty", "node").getChildByName("effect");
         })
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "sunHeart");
-        em.dispatch("usingHeroControlFun", "updateTempCriticalHitRate", skillData.criticalHitRate);
+        em.dispatchs("usingHeroControlFun", "updateTempCriticalHitRate", skillData.criticalHitRate);
         this._countdownList.sunHeart = skillData.duration;
         this.unschedule(this.sunHeartCountdownRun);
         this.schedule(() => {
@@ -243,33 +244,33 @@ export class SkillManager extends Component {
         if (ggd.stopAll) return;
         this._countdownList.sunHeart--;
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "sunHeart");
-        em.dispatch("usingHeroControlFun", "updatePercentageBloodProgress", -skillData.damageTimes);
+        em.dispatchs("usingHeroControlFun", "updatePercentageBloodProgress", -skillData.damageTimes);
         if (this._countdownList.sunHeart <= 0) {
-            em.dispatch("usingHeroControlFun", "updateTempCriticalHitRate", -skillData.criticalHitRate);
+            em.dispatchs("usingHeroControlFun", "updateTempCriticalHitRate", -skillData.criticalHitRate);
             this.unschedule(this.sunHeartCountdownRun);
         }
     }
     // 炎爆术 ---> 绝技
     fireBloom() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillFireBloom");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillFireBloom");
     }
     // 地狱火
     hellFire() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillHellFire");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillHellFire");
     }
     // ==================四阶功法===================
     /**
      * @description: 身法 移形换影  留下残影，吸引火力
      */
     moveLikeShadow() {
-        em.dispatch("usingHeroControlFun", "usingSkillMoveLikeShadow");
+        em.dispatchs("usingHeroControlFun", "usingSkillMoveLikeShadow");
     }
     /**
      * @description: 武技 灵风指 持续变化的技能，跟随瞄准方向。持续伤害
      */
     fingerLikeWind() {
         console.log("使用灵风指");
-        em.dispatch("loadTheDirResources", "/prefabs/hero/weapon/fingerLikeWind", (assets) => {
+        em.dispatchs(EventId.loadRes, "/prefabs/hero/weapon/fingerLikeWind", (assets) => {
             let prefab = instantiate(assets);
             prefab.getComponent("FingerLikeWind").init();
         });
@@ -279,19 +280,19 @@ export class SkillManager extends Component {
      */
     likeSpringBreeze() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "likeSpringBreeze");
-        em.dispatch("usingHeroControlFun", "updateTempCriticalHitRate", skillData.criticalHitRate);
-        em.dispatch("usingHeroControlFun", "updateTempPercentageDamage", skillData.damageTimes);
-        em.dispatch("usingHeroControlFun", "isOpenLikeSpringBreeze", true);
+        em.dispatchs("usingHeroControlFun", "updateTempCriticalHitRate", skillData.criticalHitRate);
+        em.dispatchs("usingHeroControlFun", "updateTempPercentageDamage", skillData.damageTimes);
+        em.dispatchs("usingHeroControlFun", "isOpenLikeSpringBreeze", true);
         let t = skillData.duration;
         let fun = () => {
             if (ggd.stopAll) return;
-            em.dispatch("usingHeroControlFun", "updatePercentageBloodProgress", skillData.baseDamage);
+            em.dispatchs("usingHeroControlFun", "updatePercentageBloodProgress", skillData.baseDamage);
             t--;
             if (t <= 0) {
                 this.unschedule(fun);
-                em.dispatch("usingHeroControlFun", "updateTempCriticalHitRate", -skillData.criticalHitRate);
-                em.dispatch("usingHeroControlFun", "updateTempPercentageDamage", -skillData.damageTimes);
-                em.dispatch("usingHeroControlFun", "isOpenLikeSpringBreeze", false);
+                em.dispatchs("usingHeroControlFun", "updateTempCriticalHitRate", -skillData.criticalHitRate);
+                em.dispatchs("usingHeroControlFun", "updateTempPercentageDamage", -skillData.damageTimes);
+                em.dispatchs("usingHeroControlFun", "isOpenLikeSpringBreeze", false);
             }
         }
         this.schedule(fun, 1);
@@ -300,31 +301,31 @@ export class SkillManager extends Component {
      * @description: 绝技  八面危风   向周边发射持续的八道龙卷风 
      */
     dangerWindToNear() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillDangerWindToNear");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillDangerWindToNear");
     }
     /**
      * @description: 末日风暴 不断向周边发射大风暴，范围广。伤害高,攻击间隔短
      */
     doomsdayStorm() {
-        em.dispatch("usingWeaponManagerFun", "usingSkillDoomsdayStorm");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillDoomsdayStorm");
     }
 
 
     // ==================五阶功法===================
     // 飞雷神
     flyingThunderGod() {
-        em.dispatch("usingHeroControlFun", "usingSkillFlyingThunderGod");
+        em.dispatchs("usingHeroControlFun", "usingSkillFlyingThunderGod");
     }
     // 雷神之力
     thunderGodPower() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "thunderGodPower");
         this._skillDebuffEffect.paralysis.duration = skillData.baseDamage;
         this._skillDebuffEffect.paralysis.probability = skillData.damageTimes;
-        em.dispatch("usingHeroControlFun", "isOpenThunderGodPower");
+        em.dispatchs("usingHeroControlFun", "isOpenThunderGodPower");
     }
     //雷云术
     thundercloud() {
-        em.dispatch("loadTheDirResources", "/prefabs/hero/weapon/thundercloud", (assets) => {
+        em.dispatchs(EventId.loadRes, "/prefabs/hero/weapon/thundercloud", (assets) => {
             let prefab = instantiate(assets);
             let layer = find("Canvas/bulletLayer");
             prefab.parent = layer;
@@ -386,7 +387,7 @@ export class SkillManager extends Component {
     //火行步
     moveLikeFire() {
         this._openSecretList.push("moveLikeFire");
-        em.dispatch("usingWeaponManagerFun", "usingSkillMoveLikeFire");
+        em.dispatchs("usingWeaponManagerFun", "usingSkillMoveLikeFire");
     }
     //流火诀
     flowFire() {

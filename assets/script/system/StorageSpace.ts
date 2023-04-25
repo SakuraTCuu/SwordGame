@@ -1,13 +1,3 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-06 17:34:04
- * @LastEditors: li_jiang_wei 739671694@qq.com
- * @LastEditTime: 2022-12-14 23:54:12
- * @FilePath: \to-be-immortal\assets\script\system\StorageSpace.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, JsonAsset, game, find, Label, director } from 'cc';
 import { em } from '../global/EventManager';
 import { ItemManger } from './ItemManager';
@@ -15,11 +5,14 @@ const { ccclass, property } = _decorator;
 
 @ccclass('StorageSpace')
 export class StorageSpace extends Component {
+
     @property(JsonAsset)
-    itemDataJson;
+    itemDataJson: JsonAsset = null;
 
     _itemData = {};
+    
     _IM: ItemManger;
+
     onDestroy() {
         em.remove("addItemToSS");
         em.remove("reduceItemFromSS");
@@ -140,7 +133,7 @@ export class StorageSpace extends Component {
         else throw id_name + " of _itemData is null";
     }
     //判断物品id或名称是否有效
-    itemIsValid(id_name){
+    itemIsValid(id_name) {
         return this._itemData.hasOwnProperty(id_name);
     }
     //默认记录 添加的物品 isSaving = true；当初始化添加物品时
@@ -190,36 +183,36 @@ export class StorageSpace extends Component {
     getItemsRewardByAds() {
         let data = em.dispatch("getTempData", "training");//读取缓存
         let t1 = 1;
-        let t2 = 5+Math.random()*5|0;//最少5个 最多10个妖丹
-        if (!data||data.curLv < 5) {
+        let t2 = 5 + Math.random() * 5 | 0;//最少5个 最多10个妖丹
+        if (!data || data.curLv < 5) {
             this.addItemToSS("一阶宝箱", t1);
             this.addItemToSS("炼气丹", t2);
-            let tips = "获得物品：一阶宝箱x"+t1+"、炼气丹x"+t2;
+            let tips = "获得物品：一阶宝箱x" + t1 + "、炼气丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else if (data.curLv < 15) {
             this.addItemToSS("二阶宝箱", t1);
             this.addItemToSS("筑基丹", t2);
-            let tips = "获得物品：二阶宝箱x"+t1+"筑基丹x"+t2;
+            let tips = "获得物品：二阶宝箱x" + t1 + "筑基丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else if (data.curLv < 31) {
             this.addItemToSS("三阶宝箱", t1);
             this.addItemToSS("金元丹", t2);
-            let tips = "获得物品：三阶宝箱x"+t1+"金元丹x"+t2;
+            let tips = "获得物品：三阶宝箱x" + t1 + "金元丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else if (data.curLv < 47) {
             this.addItemToSS("四阶宝箱", t1);
             this.addItemToSS("元婴丹", t2);
-            let tips = "获得物品：四阶宝箱x"+t1+"元婴丹x"+t2;
+            let tips = "获得物品：四阶宝箱x" + t1 + "元婴丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else {
             this.addItemToSS("五阶宝箱", t1);
             this.addItemToSS("化神丹", t2);
-            let tips = "获得物品：五阶宝箱x"+t1+"化神丹x"+t2;
+            let tips = "获得物品：五阶宝箱x" + t1 + "化神丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         };
         let ssNode = find("Canvas/menuLayer/HeroInfoLayer/storageSpace");
-        if(ssNode.active){
-            let script:any = find("Canvas/menuLayer/HeroInfoLayer").getComponent("HeroInfoLayer");
+        if (ssNode.active) {
+            let script: any = find("Canvas/menuLayer/HeroInfoLayer").getComponent("HeroInfoLayer");
             script.updateStorageSpace();
         }
     }

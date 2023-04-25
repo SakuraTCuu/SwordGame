@@ -1,11 +1,9 @@
-import { ggd } from "./globalData";
+import { EventId, ViewId, MapId, EditId, NetId } from '../global/GameEvent';
+
 export { em }
 
-enum EventKey {
-    tipsViewShow = 'tipsViewShow',
-}
 
-type EventId = EventKey | any;
+export type EventKey = EventId | ViewId | MapId | EditId | NetId | string;
 
 interface EventObj {
     target: any
@@ -14,16 +12,12 @@ interface EventObj {
 
 class EventManager {
 
-    _eventMap: Record<EventId, EventObj[]> = Object.create(null);
+    _eventMap: Record<EventKey, EventObj[]> = Object.create(null);
 
-    public add(type: EventId, callback: Function, target?: any): void {
+    public add(type: EventKey, callback: Function, target?: any): void {
 
         if (!this._eventMap[type]) {
             this._eventMap[type] = [];
-        }
-
-        if (this.has(type, callback, target)) {
-            throw new Error(`重复定义 ${type}`);
         }
 
         this._eventMap[type].push({ target, callback });
@@ -43,7 +37,7 @@ class EventManager {
     /**
      * 同步方法?
      */
-    public dispaths(type: EventId, ...params: any[]) {
+    public dispatchs(type: EventKey, ...params: any[]) {
         if (!type) throw new Error("事件名称参数为空");
         if (!this._eventMap[type]) throw new Error("事件" + type + "未注册");
 
@@ -63,7 +57,7 @@ class EventManager {
      * @param params 
      * @returns 
      */
-    public dispatch(type: EventId, ...params: any[]) {
+    public dispatch(type: EventKey, ...params: any[]) {
         if (!type) throw new Error("事件名称参数为空");
         if (!this._eventMap[type]) throw new Error("事件" + type + "未注册");
 
@@ -74,10 +68,10 @@ class EventManager {
     /**
      * 事件是否定义
      * @deprecated
-     * @param type EventId
+     * @param type EventKey
      * @returns 
      */
-    public eventIsDefined(type: EventId): boolean {
+    public eventIsDefined(type: EventKey): boolean {
         if (!this._eventMap[type] || this._eventMap[type].length <= 0) {
             return false;
         }
@@ -92,23 +86,11 @@ class EventManager {
      * @param target 
      * @returns 
      */
-    public has(type: EventId, callback: Function, target?: any): boolean {
+    public has(type: EventKey): boolean {
         if (!this._eventMap[type] || this._eventMap[type].length <= 0) {
             return false;
         }
-
-        let hasEvent = false;
-
-        this._eventMap[type].forEach(eventObj => {
-            if (target && target === eventObj.target) {
-                hasEvent = true
-            }
-            if (callback && callback === eventObj.callback) {
-                hasEvent = true
-            }
-        });
-
-        return hasEvent;
+        return true;
     }
 
     /**
@@ -117,7 +99,7 @@ class EventManager {
      * @param callback 
      * @param target 
      */
-    public remove(type: EventId, callback?: Function, target?: any): void {
+    public remove(type: EventKey, callback?: Function, target?: any): void {
 
         if (!type) throw new Error("事件名称参数为空");
         if (!this._eventMap[type] || this._eventMap[type].length <= 0) {
@@ -138,7 +120,7 @@ class EventManager {
     }
 
     public removeAll() {
-        this._eventMap = {};
+        this._eventMap = Object.create(null);
     }
 
     showAllEvents() {

@@ -10,6 +10,7 @@
  */
 import { _decorator, Component, Node, game, AudioSource, AudioClip, input, Input, director } from 'cc';
 import { em } from '../global/EventManager';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('AudioManager')
@@ -41,14 +42,14 @@ export class AudioManager extends Component {
     // 切换bgm
     switchMainBgm(url){
         this.bgmPlayer.stop();
-        em.dispatch("loadTheDirResources", url, (clip) => {
+        em.dispatch(EventId.loadRes, url, (clip) => {
             this.bgmPlayer.clip = clip;
             this.bgmPlayer.play();
         });
     }
     //播放音效
     playOneShot(url) {
-        em.dispatch("loadTheDirResources", "/audio/effect/"+url, (clip) => {
+        em.dispatch(EventId.loadRes, "/audio/effect/"+url, (clip) => {
             this.effectPlayer.playOneShot(clip);
         });
     }

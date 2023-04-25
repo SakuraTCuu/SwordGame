@@ -2,6 +2,7 @@ import { _decorator, Component, Node, Label, Sprite, SpriteFrame, RichText } fro
 import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('MergeEquLayer')
@@ -60,8 +61,8 @@ export class MergeEquLayer extends Component {
                 let loadUrl: string = data.loadUrl;
                 if (!data.loadUrl) loadUrl = "item_default";
                 loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-                em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets, () => {
-                    em.dispatch("loadTheDirResources", "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
+                em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets, () => {
+                    em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
                 });
                 // prefab.getChildByName("total").getComponent(Label).string = "X" + total;
                 prefab.getChildByName("total").getComponent(Label).string = total;
@@ -90,11 +91,11 @@ export class MergeEquLayer extends Component {
         let loadUrl: string = data.loadUrl;
         if (!data.loadUrl) loadUrl = "item_default";
         loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-        em.dispatch("loadTheDirResources", loadUrl, (assets) => {
+        em.dispatch(EventId.loadRes, loadUrl, (assets) => {
             this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
             this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
         }, () => {
-            em.dispatch("loadTheDirResources", "images/items/item_default/spriteFrame", (assets) => {
+            em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => {
                 this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
                 this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
             });

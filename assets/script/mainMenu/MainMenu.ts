@@ -1,64 +1,63 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-05 10:16:04
- * @LastEditors: li_jiang_wei 739671694@qq.com
- * @LastEditTime: 2022-12-10 20:49:10
- * @FilePath: \to-be-immortal\assets\script\mainMenu\MainMenu.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, SpriteFrame, find, Sprite, Label, Color, Layers, director, sys, JsonAsset, native } from 'cc';
-import { JSB } from 'cc/env';
 import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('MainMenu')
 export class MainMenu extends Component {
 
     @property([SpriteFrame])
-    selectBtnSF;
+    selectBtnSF: SpriteFrame[] = [];
+
     @property([Node])
-    btnArr
+    btnArr: Node[] = [];
+
     @property([SpriteFrame])
-    menuBtnSF;
+    menuBtnSF: SpriteFrame[] = [];
+
     @property(JsonAsset)
-    trainingLvListJson;
+    trainingLvListJson: JsonAsset = null;
+
     @property(Node)
-    versionNotice;
+    versionNotice: Node = null;
+
     @property(Node)
-    gets;
+    gets: Node = null;
+
     @property(Node)
-    upgradeEquLvLayer;
+    upgradeEquLvLayer: Node = null;;
 
     _layerNode = [];
 
-    _SSLNode: Node;
-    _HILNode: Node;
-    _TLNode: Node;
-    _MPNode: Node;
-    _SBNode: Node;
-    _PHNode: Node;
-    _AINode: Node;
-    onDestroy() {
-        em.remove("switchMainMenuLayer");
-    }
-    onLoad() {
-        em.add("switchMainMenuLayer", this.onSelectBtn.bind(this));
+    _SSLNode: Node = null;
+    _HILNode: Node = null;
+    _TLNode: Node = null;
+    _MPNode: Node = null;
+    _SBNode: Node = null;
+    _PHNode: Node = null;
+    _AINode: Node = null;
 
-        this._SSLNode = find("Canvas/menuLayer/SelectStageLayer");
-        this._HILNode = find("Canvas/menuLayer/HeroInfoLayer");
-        this._TLNode = find("Canvas/menuLayer/TrainingLayer");
-        this._MPNode = find("Canvas/menuLayer/MakePillsLayer");
-        this._SBNode = find("Canvas/menuLayer/SkillBookLayer");
-        this._PHNode = find("Canvas/menuLayer/PrizeHallLayer");
-        this._AINode = find("Canvas/menuLayer/AddItemsLayer");
+    _nickNameLabel: Label = null;
+    _levelLabel: Label = null;
+    _lingshiTotalLabel: Label = null;
+
+    onDestroy() {
+        em.remove(EventId.switchMainMenuLayer);
+    }
+
+    onLoad() {
+        em.add(EventId.switchMainMenuLayer, this.onSelectBtn.bind(this));
+
+        this.initView();
 
         this._layerNode.push(this._SSLNode, this._HILNode, this._TLNode, this._MPNode, this._SBNode, this._PHNode, this._AINode);
+
         this.onSelectBtn(null, "1");
+
         director.preloadScene("game");
+
         // 激活节点 注册事件
         this.versionNotice.active = true;
         this.versionNotice.active = false;
@@ -67,38 +66,54 @@ export class MainMenu extends Component {
 
         // em.dispatch("directPlayAD","GameMonetize");
     }
+
     start() {
         this.initAccountInfo();
         this.initLvInfo();
         this.initLingshiTotal();
         // let lvData = this.trainingLvListJson.json;
     }
+
+    initView() {
+        this._SSLNode = find("Canvas/menuLayer/SelectStageLayer");
+        this._HILNode = find("Canvas/menuLayer/HeroInfoLayer");
+        this._TLNode = find("Canvas/menuLayer/TrainingLayer");
+        this._MPNode = find("Canvas/menuLayer/MakePillsLayer");
+        this._SBNode = find("Canvas/menuLayer/SkillBookLayer");
+        this._PHNode = find("Canvas/menuLayer/PrizeHallLayer");
+        this._AINode = find("Canvas/menuLayer/AddItemsLayer");
+
+        this._nickNameLabel = find("Canvas/menuLayer/title/heroBaseInfoBg/nickname").getComponent(Label);
+        this._levelLabel = find("Canvas/menuLayer/title/heroBaseInfoBg/curLv").getComponent(Label);
+        this._lingshiTotalLabel = find("Canvas/menuLayer/title/lingshiTotalBg/total").getComponent(Label)
+    }
+
     initAccountInfo() {
         let accountData: any = sys.localStorage.getItem("loginInfo");
         if (accountData) {
             accountData = JSON.parse(accountData);
-            find("Canvas/menuLayer/title/heroBaseInfoBg/nickname").getComponent(Label).string = accountData.account;
+            this._nickNameLabel.string = accountData.account;
         } else {
-            find("Canvas/menuLayer/title/heroBaseInfoBg/nickname").getComponent(Label).string = "游客";
+            this._nickNameLabel.string = "游客";
         }
     }
+
     initLvInfo() {
         let data = em.dispatch("getTempData", "training");//读取缓存
         if (null === data) {
-            find("Canvas/menuLayer/title/heroBaseInfoBg/curLv").getComponent(Label).string = "江湖好手";
+            this._levelLabel.string = "江湖好手";
         } else {
             let des = this.trainingLvListJson.json[data.curLv].name;
-            find("Canvas/menuLayer/title/heroBaseInfoBg/curLv").getComponent(Label).string = des;
+            this._levelLabel.string = des;
         }
     }
+
     initLingshiTotal() {
-        let total = em.dispatch("getItemTotalByIdOrName","灵石");
-        find("Canvas/menuLayer/title/lingshiTotalBg/total").getComponent(Label).string = total;
+        let total = em.dispatch("getItemTotalByIdOrName", "灵石");
+        this._lingshiTotalLabel.string = total;
     }
 
-
-
-    onSelectBtn(e, p) {
+    onSelectBtn(e: any, p: string) {
         this.updateBtnSF(parseInt(p) - 1);
         switch (p) {
             case "1":
@@ -149,19 +164,19 @@ export class MainMenu extends Component {
             else layer.active = false;
         });
     }
-    onBtnAds(e,p) {
+    onBtnAds(e, p) {
         ggd.curAdRewardType = p;
         glf.playAd();
         // native.reflection.callStaticMethod("com/cocos/game/AppActivity", "createAds", "()V");
         // em.dispatch("getItemsRewardByAds");
     }
     // 打开装备升阶界面
-    onBtnOpenUpgradeEquLvLayer(){
+    onBtnOpenUpgradeEquLvLayer() {
         this.upgradeEquLvLayer.active = true;
     }
     // 今日签到
-    onBtnSignInToday(){
-        em.dispatch("usingGameRewardFun","signInToday");
+    onBtnSignInToday() {
+        em.dispatch("usingGameRewardFun", "signInToday");
     }
 }
 

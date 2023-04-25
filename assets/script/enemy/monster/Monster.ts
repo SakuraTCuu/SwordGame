@@ -6,6 +6,7 @@ import RVOMath from '../../RVO/RVOMath';
 import Simulator from '../../RVO/Simulator';
 import Vector2 from '../../RVO/Vector2';
 import { monsterData } from './MonsterData';
+import { EventId } from '../../global/GameEvent';
 const { ccclass, property } = _decorator;
 //
 @ccclass('Monster')
@@ -180,7 +181,7 @@ export class Monster extends Component {
             this.node.getComponent(Animation).defaultClip = clip;
             this.node.getComponent(Animation).play();
         } else {
-            em.dispatch("loadTheDirResources", "/anim/enemy/monster/" + animKey, (assets) => {
+            em.dispatchs(EventId.loadRes, "/anim/enemy/monster/" + animKey, (assets) => {
                 this._moveAnimClip = assets;
                 this.node.getComponent(Animation).defaultClip = assets;
                 this.node.getComponent(Animation).play();

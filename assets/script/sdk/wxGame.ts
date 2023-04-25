@@ -2,6 +2,7 @@ import { _decorator, Component, Node, director, sys } from 'cc';
 import { em } from '../global/EventManager';
 import { ggConfig, ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('WX_GAME')
@@ -12,9 +13,9 @@ export class WX_GAME extends Component {
     _curAdIndex = 0;
     onLoad() {
         if (!ggd.isOpenAd) return;//没开启 直接停止初始化
-        em.add("showWxVideoAd", this.showWxVideoAd.bind(this));
-        em.add("showBanner", this.showBanner.bind(this));
-        em.add("hideBanner", this.hideBanner.bind(this));
+        em.add(EventId.showWxVideoAd, this.showWxVideoAd.bind(this));
+        em.add(EventId.showBanner, this.showBanner.bind(this));
+        em.add(EventId.hideBanner, this.hideBanner.bind(this));
         // em.add("initRewardAdByPlayTimes", this.initRewardAdByPlayTimes.bind(this));
         //如果是微信小游戏
         if (sys.platform == sys.Platform.WECHAT_GAME) {
@@ -53,6 +54,8 @@ export class WX_GAME extends Component {
         this._bannerAd = wx.createBannerAd({
             adUnitId: 'adunit-fa354a32215cecf4',
             style: {
+                // height: wx.getSystemInfoSync().screenHeight,
+                height: 0,
                 left: 0,
                 top: wx.getSystemInfoSync().screenHeight - 100,
                 // bottom:0,

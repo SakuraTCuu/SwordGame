@@ -4,6 +4,7 @@ import { em } from '../global/EventManager';
 import { ggd, tagData } from '../global/globalData';
 import { LevelManager } from "../system/LevelManager";
 import { glf } from '../global/globalFun';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('HeroControl')
@@ -173,7 +174,7 @@ export class HeroControl extends Component {
         ]
         for (let i = 0; i < total; i++) {
             let pos = posArr[i];
-            em.dispatch("loadTheDirResources", loadUrl, assets => {
+            em.dispatchs(EventId.loadRes, loadUrl, assets => {
                 let prefab = instantiate(this.itemInPlaying);
                 prefab.parent = find("Canvas/bulletLayer");
                 prefab.setPosition(pos.x, pos.y, 0);
@@ -1101,7 +1102,7 @@ export class HeroControl extends Component {
     usingSkillMoveLikeShadow() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "moveLikeShadow");
         let value = this.getMaxBlood() * skillData.damageTimes;
-        em.dispatch("loadTheDirResources", "/prefabs/hero/weapon/moveLikeShadow", (assets) => {
+        em.dispatchs(EventId.loadRes, "/prefabs/hero/weapon/moveLikeShadow", (assets) => {
             let prefab = instantiate(assets);
             let wp = this.getHeroWorldPos();
             prefab.parent = find("Canvas/puppetLayer");

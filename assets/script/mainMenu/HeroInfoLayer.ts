@@ -13,6 +13,7 @@ import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('HeroInfoLayer')
@@ -200,7 +201,7 @@ export class HeroInfoLayer extends Component {
             let sprite = prefab.getChildByName("icon").getComponent(Sprite);
             // let loadUrl = "images/icons/icon_" + str + "/spriteFrame";
             let loadUrl = "images/icons/baseProperty/icon_" + str + "/spriteFrame";
-            em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+            em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
             // prefab.getChildByName("description").getComponent(Label).string = this._nameConfig[str] + ":" + curLv;
             prefab.getChildByName("description").getComponent(Label).string = "Lv:" + curLv + "\n" + this._nameConfig[str];
             prefab.getChildByName("value").getComponent(Label).string = em.dispatch("usingHeroBasePropertyFun", "getHeroBaseProperty", str);
@@ -376,8 +377,8 @@ export class HeroInfoLayer extends Component {
             let loadUrl: string = data.loadUrl;
             if (!data.loadUrl) loadUrl = "item_default";
             loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-            em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets, () => {
-                em.dispatch("loadTheDirResources", "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
+            em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets, () => {
+                em.dispatchs(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
             });
             // prefab.getChildByName("total").getComponent(Label).string = "X" + total;
             prefab.getChildByName("total").getComponent(Label).string = total;
@@ -557,11 +558,11 @@ export class HeroInfoLayer extends Component {
                 break;;
             case "丹药":
                 this.closeItemDetail();
-                em.dispatch("switchMainMenuLayer", null, "3");
+                em.dispatchs(EventId.switchMainMenuLayer, null, "3");
                 break;;
             case "功法":
                 this.closeItemDetail();
-                em.dispatch("switchMainMenuLayer", null, "5");
+                em.dispatchs(EventId.switchMainMenuLayer, null, "5");
                 break;
             case "宝箱":
                 this.openTreasureChest();
@@ -724,7 +725,7 @@ export class HeroInfoLayer extends Component {
         let sprite:any = find("heroInfoBg/" + type + "/sprite", this.node).getComponent(Sprite);
         sprite.node.data = data;
         glf.createButton(this.node,sprite.node,"HeroInfoLayer","viewEquDetail");
-        em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+        em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
         let label = find("heroInfoBg/" + type + "/label", this.node).getComponent(Label);
         console.log("data.lv", data.lv);
         if (data.lv) {

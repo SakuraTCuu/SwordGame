@@ -7,6 +7,7 @@ import { ggConfig, ggd } from '../../global/globalData';
 import { Queue } from '../../global/Queue';
 import Simulator from '../../RVO/Simulator';
 import RVOConfig from '../../RVO/RVOConfig';
+import { EventId } from '../../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('MonsterManager')
@@ -129,7 +130,7 @@ export class MonsterManager extends Component {
     }
     // 初始化动画剪辑
     initAnimClips() {
-        em.dispatch("loadTheDir", "/anim/enemy/monster", (arr) => {
+        em.dispatch(EventId.loadDir, "/anim/enemy/monster", (arr) => {
             arr.forEach(clip => {
                 this._monsterAnimClips[clip.name] = clip;
             });

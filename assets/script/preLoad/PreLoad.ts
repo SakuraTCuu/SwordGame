@@ -3,6 +3,8 @@ import { em } from '../global/EventManager';
 import { gUrl } from '../global/GameUrl';
 import { ggd } from '../global/globalData';
 import { hr } from '../global/HttpRequest';
+import { EventId } from '../global/GameEvent';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('PreLoad')
@@ -82,7 +84,9 @@ export class PreLoad extends Component {
     }
 
     onDestroy() {
-        if (em.eventIsDefined("hideBanner")) em.dispatch("hideBanner");
+        if (em.has(EventId.hideBanner)) {
+            em.dispatchs(EventId.hideBanner);
+        }
     }
 
     start() {
@@ -170,18 +174,18 @@ export class PreLoad extends Component {
             sys.localStorage.setItem("loginInfo", JSON.stringify(data));
             this.enterMainMenuScene();
         } else {
-            em.dispatch("tipsViewShow", res.message);
+            em.dispatchs(EventId.tipsViewShow, res.message);
         }
     }
 
     loginError() {
         this.loading.active = false;
-        em.dispatch("tipsViewShow", "网络异常，请重试或通过游客登录。");
+        em.dispatchs(EventId.tipsViewShow, "网络异常，请重试或通过游客登录。");
     }
 
     loginTimeout() {
         this.loading.active = false;
-        em.dispatch("tipsViewShow", "网络延迟，请重试或通过游客登录。");
+        em.dispatchs(EventId.tipsViewShow, "网络延迟，请重试或通过游客登录。");
     }
 
     onBtnRegister() {
@@ -203,21 +207,21 @@ export class PreLoad extends Component {
         console.log("registerComplete", res);
         if (res.code == 200) {
             this.loading.active = false;
-            em.dispatch("tipsViewShow", "注册成功，请登录");
+            em.dispatchs(EventId.tipsViewShow, "注册成功，请登录");
         } else {
             this.loading.active = false;
-            em.dispatch("tipsViewShow", res.message);
+            em.dispatchs(EventId.tipsViewShow, res.message);
         }
     }
 
     registerError() {
         this.loading.active = false;
-        em.dispatch("tipsViewShow", "网络异常，请重试或通过游客登录。");
+        em.dispatchs(EventId.tipsViewShow, "网络异常，请重试或通过游客登录。");
     }
 
     registerTimeout() {
         this.loading.active = false;
-        em.dispatch("tipsViewShow", "网络延迟，请重试或通过游客登录。");
+        em.dispatchs(EventId.tipsViewShow, "网络延迟，请重试或通过游客登录。");
     }
 
     onBtnAsVisitor() {

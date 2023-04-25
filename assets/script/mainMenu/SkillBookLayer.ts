@@ -12,6 +12,7 @@ import { _decorator, Component, Node, Prefab, find, instantiate, Label, Sprite, 
 import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('SkillBookLayer')
@@ -73,12 +74,12 @@ export class SkillBookLayer extends Component {
     dynamicLoadPrefabs() {
         let dir1 = "prefabs/mainMenu/skillBookClass";
         let dir2 = "prefabs/mainMenu/skillBook";
-        em.dispatch("loadTheDirResources", dir1, (assets) => {
+        em.dispatch(EventId.loadRes, dir1, (assets) => {
             this._skillBookClass = assets;
             this._loadingList._skillBookClass = true;
             this.initBookListView();
         });
-        em.dispatch("loadTheDirResources", dir2, (assets) => {
+        em.dispatch(EventId.loadRes, dir2, (assets) => {
             this._skillBook = assets;
             this._loadingList._skillBook = true;
             this.initBookListView();
@@ -120,7 +121,7 @@ export class SkillBookLayer extends Component {
                 arr.forEach(data => {
                     let book = instantiate(this._skillBook);
                     let loadUrl = "images/icons/icon_" + data.name2 + "/spriteFrame";
-                    em.dispatch("loadTheDirResources", loadUrl, (assets) => book.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets);
+                    em.dispatch(EventId.loadRes, loadUrl, (assets) => book.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets);
                     if (this._finishBookList.indexOf(data.name) < 0) {//未学习的功法
                         book.getComponent(Sprite).spriteFrame = this.skillBg[0];
                         book.getChildByName("Label").getComponent(Label).color = new Color(30, 30, 30, 255);
@@ -268,7 +269,7 @@ export class SkillBookLayer extends Component {
                 if ("" !== skillName) {
                     let sprite = find("usingBook/" + type, this.node).getChildByName("sprite").getComponent(Sprite);
                     let loadUrl = "images/icons/icon_" + skillName + "/spriteFrame";
-                    em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+                    em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
                 }
             }
         }
@@ -294,7 +295,7 @@ export class SkillBookLayer extends Component {
                 prefab.parent = par;
                 prefab.getChildByName("name").getComponent(Label).string = data.name;
                 let loadUrl = "images/icons/icon_" + data.name2 + "/spriteFrame";
-                em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+                em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
                 glf.createButton(this.node, prefab, "SkillBookLayer", "switchBook", type + "@" + data.name2);
             };
         });
@@ -312,7 +313,7 @@ export class SkillBookLayer extends Component {
         let skillName = ps[1]
         let sprite = find("usingBook/" + type, this.node).getChildByName("sprite").getComponent(Sprite);
         let loadUrl = "images/icons/icon_" + skillName + "/spriteFrame";
-        em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+        em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
         this._usingBookList[type] = skillName;
         console.log("this._usingBookList", this._usingBookList);
         this.closeSwitchBook();

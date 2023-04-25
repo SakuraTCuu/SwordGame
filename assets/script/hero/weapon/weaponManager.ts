@@ -4,6 +4,7 @@ import { ggd, tagData } from '../../global/globalData';
 import { glf } from '../../global/globalFun';
 import { plm } from '../../global/PoolManager';
 import { Queue } from '../../global/Queue';
+import { EventId } from '../../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('WeaponManager')
@@ -177,7 +178,7 @@ export class weaponManager extends Component {
     loadPrefab(fileName, callback = null) {
         let defaultUrl = "/prefabs/hero/weapon/"
         // let prefabString = "_" + fileName + "Prefab";
-        em.dispatch("loadTheDirResources", defaultUrl + fileName, (assets) => {
+        em.dispatchs(EventId.loadRes, defaultUrl + fileName, (assets) => {
             if (callback) callback(assets);
             else {
                 // this[prefabString] = assets;
@@ -957,8 +958,8 @@ export class weaponManager extends Component {
             let node = this.btnNodes[i];
             let name = randomArr[i];
             let sprite = node.getChildByName("mask").getChildByName("icon").getComponent(Sprite);
-            // em.dispatch("loadTheDirResources", "images/weapons/" + name + "/spriteFrame", (assets) => sprite.spriteFrame = assets);
-            em.dispatch("loadTheDirResources", "images/weapons/icon_" + name + "/spriteFrame", (assets) => sprite.spriteFrame = assets);
+            // em.dispatch(EventId.loadRes, "images/weapons/" + name + "/spriteFrame", (assets) => sprite.spriteFrame = assets);
+            em.dispatchs(EventId.loadRes, "images/weapons/icon_" + name + "/spriteFrame", (assets) => sprite.spriteFrame = assets);
             //添加回调函数寻址方式
             glf.createButton(this.node, node, "WeaponManager", "getUpgradeReward", name);
             // 初始化描述

@@ -3,6 +3,7 @@ import { em } from "./EventManager";
 import { gUrl } from "./GameUrl";
 import { ggd } from "./globalData";
 import { hr } from "./HttpRequest";
+import { EventId } from "./GameEvent";
 
 export { glf }
 
@@ -89,7 +90,7 @@ const glf = {
                 native.reflection.callStaticMethod("com/cocos/game/AppActivity", "createAds", "()V");
                 break;
             case "wxGame":
-                em.dispatch("showWxVideoAd");
+                em.dispatchs(EventId.showWxVideoAd);
                 break;
             default:
                 break;

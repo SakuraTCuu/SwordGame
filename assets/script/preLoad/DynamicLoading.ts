@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, resources, SpriteFrame, game, AssetManager, director } from 'cc';
 import { em } from '../global/EventManager';
 import { PreLoad } from './PreLoad';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('DynamicLoading')
@@ -13,15 +14,15 @@ export class DynamicLoading extends Component {
     preLoadScript: PreLoad = null;
 
     onDestroy() {
-        em.remove("loadTheDirResources");
-        em.remove("loadTheDir");
+        em.remove(EventId.loadRes);
+        em.remove(EventId.loadDir);
     }
 
     onLoad() {
-        em.add("loadTheDirResources", this.loadTheDirResources.bind(this));
-        em.add("loadTheDir", this.loadTheDir.bind(this));
+        em.add(EventId.loadRes, this.loadRes.bind(this));
+        em.add(EventId.loadDir, this.loadDir.bind(this));
         this.preLoadAllResources();
-        // this.loadTheDir("anim/enemy/monster");
+        // this.loadDir("anim/enemy/monster");
         director.addPersistRootNode(this.node);
     }
 
@@ -46,14 +47,14 @@ export class DynamicLoading extends Component {
     }
 
     // 加载文件夹 assets 为数组
-    loadTheDir(dir, callback = null) {
+    loadDir(dir, callback = null) {
 
         resources.loadDir(dir, (err, assets) => {
             if (err) {
                 console.log(err);
                 return;
             } else {
-                // console.log("loadTheDir",assets);
+                // console.log(EventId.loadDir,assets);
                 if (callback) callback(assets);
             }
         });
@@ -61,15 +62,14 @@ export class DynamicLoading extends Component {
     }
 
     //加载具体路径资源 asset为单个资源
-    loadTheDirResources(dir, callback = null, errCallback = null) {
+    loadRes(dir, callback = null, errCallback = null) {
         resources.load(dir, (err, assets) => {
-
             if (err) {
                 if (errCallback) errCallback();
                 else console.log(err);
                 return;
             } else {
-                // console.log("loadTheDirResources",assets);
+                // console.log(EventId.loadRes,assets);
                 if (callback) callback(assets);
             }
 

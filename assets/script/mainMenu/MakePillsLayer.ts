@@ -12,6 +12,7 @@ import { _decorator, Component, Node, Prefab, find, SpriteFrame, instantiate, Sp
 import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('MakePillsLayer')
@@ -175,8 +176,8 @@ export class MakePillsLayer extends Component {
         let t2 = em.dispatch("getItemTotalByIdOrName", "灵石");
         let s1 = m1.getChildByName("sprite").getComponent(Sprite);
         let s2 = m2.getChildByName("sprite").getComponent(Sprite);
-        em.dispatch("loadTheDirResources", "images/items/" + data1.loadUrl + "/spriteFrame", (assets) => s1.spriteFrame = assets);
-        em.dispatch("loadTheDirResources", "images/items/" + data2.loadUrl + "/spriteFrame", (assets) => s2.spriteFrame = assets);
+        em.dispatch(EventId.loadRes, "images/items/" + data1.loadUrl + "/spriteFrame", (assets) => s1.spriteFrame = assets);
+        em.dispatch(EventId.loadRes, "images/items/" + data2.loadUrl + "/spriteFrame", (assets) => s2.spriteFrame = assets);
         let l1 = m1.getChildByName("Label").getComponent(Label);
         let l2 = m2.getChildByName("Label").getComponent(Label);
         let l12 = m1.getChildByName("Label2").getComponent(Label);

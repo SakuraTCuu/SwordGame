@@ -3,6 +3,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { LevelManager } from '../system/LevelManager';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('TrainingLayer')
@@ -74,7 +75,7 @@ export class TrainingLayer extends Component {
                 pill.getChildByName("total").getComponent(Label).string = total;
                 let sprite = pill.getChildByName("sprite").getComponent(Sprite);
                 let loadUrl = "images/items/" + data.loadUrl + "/spriteFrame";
-                em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+                em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
                 glf.createButton(this.node, pill, "TrainingLayer", "onBtnUsingPill", data.name);
                 this._itemPrefabArr.push(pill);
                 count++;

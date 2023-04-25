@@ -6,6 +6,7 @@ import { glf } from '../../global/globalFun';
 import { plm } from '../../global/PoolManager';
 import { Queue } from '../../global/Queue';
 import { monsterData } from '../monster/MonsterData';
+import { EventId } from '../../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('Boss')
@@ -64,7 +65,7 @@ export class Boss extends Component {
     }
     // 初始化boss移动动画
     initBossMoveAnim(animKey) {
-        em.dispatch("loadTheDirResources", "/anim/enemy/monster/" + animKey, (assets) => {
+        em.dispatchs(EventId.loadRes, "/anim/enemy/monster/" + animKey, (assets) => {
             this._sprite.getComponent(Animation).defaultClip = assets;
             this._sprite.getComponent(Animation).play();
         });
@@ -160,7 +161,7 @@ export class Boss extends Component {
     // 动态加载预制件
     loadPrefab(fileName, callback = null) {
         let defaultUrl = "/prefabs/enemy/";
-        em.dispatch("loadTheDirResources", defaultUrl + fileName, (assets) => {
+        em.dispatchs(EventId.loadRes, defaultUrl + fileName, (assets) => {
             if (callback) callback(assets);
         });
     }

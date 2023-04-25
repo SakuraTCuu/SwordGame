@@ -11,6 +11,7 @@
 import { _decorator, Component, Node, Sprite, find, SpriteFrame, instantiate, Label, director } from 'cc';
 import { em } from '../../../script/global/EventManager';
 import { ggd } from '../../../script/global/globalData';
+import { EventId } from '../../../script/global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('PassRewardLayer')
@@ -88,7 +89,7 @@ export class PassRewardLayer extends Component {
                 prefab.getChildByName("name").getComponent(Label).string = itemData.name + "x" + data.total;
                 let sprite = prefab.getChildByName("sprite").getComponent(Sprite);
                 let loadUrl = "images/items/" + itemData.loadUrl + "/spriteFrame";
-                em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+                em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
                 prefab.active = true;
             }
         });

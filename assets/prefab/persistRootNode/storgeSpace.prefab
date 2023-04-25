@@ -8,8 +8,7 @@
       "__id__": 1
     },
     "optimizationPolicy": 0,
-    "persistent": false,
-    "asyncLoadAssets": false
+    "persistent": false
   },
   {
     "__type__": "cc.Node",
@@ -46,6 +45,7 @@
       "y": 1,
       "z": 1
     },
+    "_mobility": 0,
     "_layer": 1073741824,
     "_euler": {
       "__type__": "cc.Vec3",
@@ -84,6 +84,8 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "b8pPw14JhH1byt0NjP8eZ7"
+    "fileId": "b8pPw14JhH1byt0NjP8eZ7",
+    "instance": null,
+    "targetOverrides": null
   }
 ]

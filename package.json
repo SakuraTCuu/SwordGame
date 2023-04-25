@@ -3,7 +3,8 @@
     "version": "3.7.2"
   },
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "minigame-api-typings": "^3.7.3"
   },
   "name": "修了个仙",
   "uuid": "b2f9510a-65f5-4649-b9fc-318a179eb4d7",

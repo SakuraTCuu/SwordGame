@@ -1,6 +1,7 @@
 import { _decorator, Component, Node, find, NodePool, Label, Sprite, Color } from 'cc';
 import { em } from '../global/EventManager';
 import { plm } from '../global/PoolManager';
+import { EventId } from '../global/GameEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('GetsControl')
@@ -52,7 +53,7 @@ export class GetsControl extends Component {
                 let loadUrl: string = data.loadUrl;
                 if (!data.loadUrl) loadUrl = "item_default";
                 loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-                em.dispatch("loadTheDirResources", loadUrl, (assets) => sprite.spriteFrame = assets);
+                em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
                 let color = this.getColorStrByQuality(data.quality);
                 let label = prefab.getChildByName("name").getComponent(Label);
                 label.color = color;
