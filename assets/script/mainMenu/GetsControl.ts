@@ -2,6 +2,7 @@ import { _decorator, Component, Node, find, NodePool, Label, Sprite, Color } fro
 import { em } from '../global/EventManager';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('GetsControl')
@@ -44,7 +45,8 @@ export class GetsControl extends Component {
         for (const key in items) {
             if (Object.prototype.hasOwnProperty.call(items, key)) {
                 const total = items[key];
-                let data = em.dispatch("getItemDataByIdOrName", key);
+                let data = main.bagManager.getItemDataByIdOrName(key);
+
                 // let prefab = instantiate(itemPrefab);
                 let prefab = plm.getFromPool("SSLGetsItemPrefab");
                 prefab.active = true;

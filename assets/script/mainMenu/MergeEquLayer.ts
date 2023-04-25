@@ -3,6 +3,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('MergeEquLayer')
@@ -48,9 +49,9 @@ export class MergeEquLayer extends Component {
             let prefab = this._itemPrefabArr.shift();
             plm.putToPool("SSLItemPrefab", prefab);
         }
-        let list = em.dispatch("getItemList");
+        let list = main.bagManager.getItemList();
         for (const key in list) {
-            let data = em.dispatch("getItemDataByIdOrName", key);
+            let data = main.bagManager.getItemDataByIdOrName(key);
             if (data.type == "装备") {
                 let total = list[key];
                 let prefab = plm.getFromPool("SSLItemPrefab");
@@ -75,7 +76,8 @@ export class MergeEquLayer extends Component {
     }
     // 合成
     onBtnItemInMergeLayer(e, p) {
-        let data = em.dispatch("getItemDataByIdOrName", p);
+        let data = main.bagManager.getItemDataByIdOrName(p);
+
         if (data.quality >= 5) {
             em.dispatch("tipsViewShow", "当前品质为最高品质，不可提升");
             return;
@@ -116,7 +118,7 @@ export class MergeEquLayer extends Component {
         if (curTotal >= needTotal) {
             console.log("合成");
             this.consumeEqu(this.curSelect.data.name, needTotal);
-            em.dispatch("addItemToSS", this.target.data.name, 1);
+            main.bagManager.addItemToBag(this.target.data.name, 1);
             let gets = {};
             gets[this.target.data.name] = 1;
             em.dispatch("showGets", gets);
@@ -131,14 +133,14 @@ export class MergeEquLayer extends Component {
         let lvArr = ["（一阶）", "（二阶）", "（三阶）", "（四阶）", "（五阶）", "（六阶）", "（七阶）", "（八阶）", "（九阶）"];
         for (const lv of lvArr) {
             let name = curName.slice(0, index) + lv;
-            let total = em.dispatch("getItemTotalByIdOrName", name);
+            let total = main.bagManager.getItemTotalByIdOrName(name);
             if (total > 0) {
                 if (needTotal <= total) {
-                    em.dispatch("reduceItemFromSS", name, needTotal);
+                    main.bagManager.reduceItemFromBag(name, needTotal);
                     break;
                 } else {
                     needTotal -= total;
-                    em.dispatch("reduceItemFromSS", name, total);
+                    main.bagManager.reduceItemFromBag(name, total);
                 }
             }
         }
@@ -151,7 +153,7 @@ export class MergeEquLayer extends Component {
         let string = "";
         for (const lv of lvArr) {
             let name = curName.slice(0, index) + lv;
-            let total = em.dispatch("getItemTotalByIdOrName", name);
+            let total = main.bagManager.getItemTotalByIdOrName(name);
             if (total > 0) string = string + name + "x" + total + "\n";
         }
         this.mergeDetailLabel.string = string;
@@ -163,7 +165,7 @@ export class MergeEquLayer extends Component {
         let total = 0;
         for (const lv of lvArr) {
             let name = curName.slice(0, index) + lv;
-            total += em.dispatch("getItemTotalByIdOrName", name);
+            total += main.bagManager.getItemTotalByIdOrName(name);
         }
         return total;
     }
@@ -178,7 +180,8 @@ export class MergeEquLayer extends Component {
 
         if (!pre) throw "target is no existent";
         let targetName = pre + curName.slice(2);
-        return em.dispatch("getItemDataByIdOrName", targetName);
+
+        return main.bagManager.getItemDataByIdOrName(targetName);
     }
     // 初始化物品等级
     initPrefabLv(prefab, data) {

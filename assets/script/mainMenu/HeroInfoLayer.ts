@@ -14,6 +14,7 @@ import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('HeroInfoLayer')
@@ -79,7 +80,7 @@ export class HeroInfoLayer extends Component {
         5: [0, 0, 0.2, 0.9, 1]
     };
     // _equList = ["巨剑", "长剑", "巨弩", "连弩", "巨斧", "旋转斧"];
-    _equList = ["巨剑", "长剑", "巨弩", "连弩", "巨斧", "旋转斧","风火轮","筋斗云","重甲","法袍"];
+    _equList = ["巨剑", "长剑", "巨弩", "连弩", "巨斧", "旋转斧", "风火轮", "筋斗云", "重甲", "法袍"];
     //Ratio数组均小于1的 默认只获得一个物品
     _rewardConfig: any;
     onDestroy() {
@@ -270,7 +271,7 @@ export class HeroInfoLayer extends Component {
         if (itemName) {
             // console.log("可以升级");
             //更新等级 刷新显示
-            em.dispatch("reduceItemFromSS", itemName, 1);
+            main.bagManager.reduceItemFromBag(itemName, 1);
             em.dispatch("usingHeroBasePropertyFun", "upgradeBaseProperty", p);
             let pLv = em.dispatch("usingHeroBasePropertyFun", "getHeroBasePropertyCurLv", p);
             let pValue = em.dispatch("usingHeroBasePropertyFun", "getHeroBaseProperty", p);
@@ -316,7 +317,7 @@ export class HeroInfoLayer extends Component {
                 console.warn("itemLv is " + itemLv);
                 break;
         }
-        let itemTotal = em.dispatch("getItemTotalByIdOrName", itemName);
+        let itemTotal = main.bagManager.getItemTotalByIdOrName(itemName);
         if (itemTotal > 0) {
             return itemName;
         } else {
@@ -364,11 +365,12 @@ export class HeroInfoLayer extends Component {
             let prefab = this._itemPrefabArr.shift();
             plm.putToPool("SSLItemPrefab", prefab);
         }
-        let list = em.dispatch("getItemList");
+        let list = main.bagManager.getItemList();
+
         for (const key in list) {
             let total = list[key];
             if (key == "灵石" || key == "3") continue;//不显示灵石
-            let data = em.dispatch("getItemDataByIdOrName", key);
+            let data = main.bagManager.getItemDataByIdOrName(key);
             let prefab = plm.getFromPool("SSLItemPrefab");
             prefab.parent = this.itemPrefabPar;
             prefab.getChildByName("itemBg").getComponent(Sprite).spriteFrame = this.itemQBg[data.quality - 1];
@@ -413,7 +415,7 @@ export class HeroInfoLayer extends Component {
     onBtnItem(e, p) {
         console.log("onBtnItem", p);
         this.guideFinger.active = false;
-        let data = em.dispatch("getItemDataByIdOrName", p);
+        let data = main.bagManager.getItemDataByIdOrName(p);
         this._curSelectItemData = data;
         switch (data.type) {
             case "材料":
@@ -439,7 +441,7 @@ export class HeroInfoLayer extends Component {
         }
     }
     // 查看装备信息
-    viewEquDetail(e){
+    viewEquDetail(e) {
         let node = e.target;
         this._curSelectItemData = node.data;
         this.showItemDetail();
@@ -448,7 +450,7 @@ export class HeroInfoLayer extends Component {
      * @description: 展示物品细节
      * @param {number} showBtnArr 需要显示的按钮的索引  0:卖出；1:使用 2:合成 
      */
-    showItemDetail(showBtnArr: number[]=[]) {
+    showItemDetail(showBtnArr: number[] = []) {
         console.log("showItemDetail", this._curSelectItemData);
         let colorStr = this.getColorStrByQuality(this._curSelectItemData.quality - 1);
         this.maskPar.getChildByName("name").getComponent(RichText).string = colorStr + this._curSelectItemData.name + "</color>";
@@ -483,7 +485,7 @@ export class HeroInfoLayer extends Component {
         console.log("showEquDetail", string);
         this.maskPar.getChildByName("description").getComponent(RichText).string = string;
         // console.log("showEquDetail",string);
-    } 
+    }
     // 通过物品品质 获得 物品颜色值
     getColorStrByType(index) {
         index > 2 ? 2 : index;
@@ -503,16 +505,18 @@ export class HeroInfoLayer extends Component {
         console.log("确定卖出");
         let progress = find("/itemDetail/ProgressBar", this.node).getComponent(ProgressBar).progress;
         let data = this._curSelectItemData;
-        let total = em.dispatch("getItemTotalByIdOrName", data.name);
+        let total = main.bagManager.getItemTotalByIdOrName(data.name);
+
         total = Math.floor(total * progress);
         let totalPrice = data.price * total;
         // console.log("卖出物品总数：" + total);
         // console.log("卖出物品总价格：" + totalPrice);
-        em.dispatch("reduceItemFromSS", data.name, total);//卖出物品
-        em.dispatch("addItemToSS", "灵石", totalPrice);//获得灵石
+        main.bagManager.reduceItemFromBag(data.name, total);//卖出物品
+        main.bagManager.addItemToBag("灵石", totalPrice);
         this.updateStorageSpace();
         this.maskPar.active = false;
-        find("Canvas/menuLayer/title/lingshiTotalBg/total").getComponent(Label).string = em.dispatch("getItemTotalByIdOrName", "灵石");
+        find("Canvas/menuLayer/title/lingshiTotalBg/total")
+            .getComponent(Label).string = main.bagManager.getItemTotalByIdOrName("灵石");
         this.closeProgressBar();
     }
     // 取消卖出
@@ -525,7 +529,7 @@ export class HeroInfoLayer extends Component {
         let pb = find("/itemDetail/ProgressBar", this.node);
         pb.getComponent(ProgressBar).progress = 0;
         pb.getComponent(Slider).progress = 0;
-        let total = em.dispatch("getItemTotalByIdOrName", this._curSelectItemData.name);
+        let total = main.bagManager.getItemTotalByIdOrName(this._curSelectItemData.name);
         pb.getChildByName("Label").getComponent(Label).string = "数量：" + 0 + "/" + total + "\n" + "价格：0";
         pb.active = true;
     }
@@ -538,7 +542,7 @@ export class HeroInfoLayer extends Component {
         let pb = find("/itemDetail/ProgressBar", this.node);
         let progress = slider.progress;
         pb.getComponent(ProgressBar).progress = progress;
-        let total = em.dispatch("getItemTotalByIdOrName", this._curSelectItemData.name);
+        let total = main.bagManager.getItemTotalByIdOrName(this._curSelectItemData.name);
         let sellTotal = Math.floor(total * progress);
         let totalPrice = sellTotal * this._curSelectItemData.price;
         pb.getChildByName("Label").getComponent(Label).string = "数量：" + sellTotal + "/" + total + "\n" + "价格：" + totalPrice;
@@ -578,14 +582,14 @@ export class HeroInfoLayer extends Component {
     }
     // 打开装备箱
     openEquBox() {
-        em.dispatch("reduceItemFromSS", this._curSelectItemData.name, 1);
+        main.bagManager.reduceItemFromBag(this._curSelectItemData.name, 1);
         this.maskPar.active = false;
         let gets = this.getEquByBoxType();
         em.dispatch("showGets", gets);
         for (const key in gets) {
             if (Object.prototype.hasOwnProperty.call(gets, key)) {
                 // console.log("key", key);
-                em.dispatch("addItemToSS", key, gets[key]);
+                main.bagManager.addItemToBag(key, gets[key]);
             }
         };
         this.updateStorageSpace();
@@ -614,7 +618,7 @@ export class HeroInfoLayer extends Component {
     }
     // 打开宝箱
     openTreasureChest() {
-        em.dispatch("reduceItemFromSS", this._curSelectItemData.name, 1);
+        main.bagManager.reduceItemFromBag(this._curSelectItemData.name, 1);
         this.maskPar.active = false;
         let itemName = this._curSelectItemData.name;
         let rewardArr = this._rewardConfig[itemName];
@@ -654,11 +658,11 @@ export class HeroInfoLayer extends Component {
         for (const key in gets) {
             if (Object.prototype.hasOwnProperty.call(gets, key)) {
                 console.log("key", key);
-                em.dispatch("addItemToSS", key, gets[key]);
+                main.bagManager.addItemToBag(key, gets[key]);
             }
         }
         this.updateStorageSpace();
-        let total = em.dispatch("getItemTotalByIdOrName", "灵石");
+        let total = main.bagManager.getItemTotalByIdOrName("灵石");
         find("Canvas/menuLayer/title/lingshiTotalBg/total").getComponent(Label).string = total;
     }
 
@@ -666,14 +670,15 @@ export class HeroInfoLayer extends Component {
     onBtnMerge() {
         this.maskPar.active = false;
         let data = this._curSelectItemData;
-        let curTotal = em.dispatch("getItemTotalByIdOrName", data.name);
+        let curTotal = main.bagManager.getItemTotalByIdOrName(data.name);
+
         if (curTotal < data.mergeDemandTotal) {
             em.dispatch("tipsViewShow", data.name + "数量不足，无法合成");
         } else {
             let getTotal = Math.floor(curTotal / data.mergeDemandTotal);
             let consumeTotal = getTotal * data.mergeDemandTotal;
-            em.dispatch("reduceItemFromSS", data.name, consumeTotal);
-            em.dispatch("addItemToSS", data.mergeTarget, getTotal);
+            main.bagManager.reduceItemFromBag(data.name, consumeTotal);
+            main.bagManager.addItemToBag(data.mergeTarget, getTotal);
             let gets = {};
             gets[data.mergeTarget] = getTotal;
             em.dispatch("showGets", gets);
@@ -695,7 +700,7 @@ export class HeroInfoLayer extends Component {
         for (const key in list) {
             const equName = list[key];
             if (equName) {
-                let data = em.dispatch("getItemDataByIdOrName", equName);
+                let data = main.bagManager.getItemDataByIdOrName(equName);
                 // console.log("key", key);
                 // console.log("data", data);
                 this.takeEqu(key, data);
@@ -708,12 +713,12 @@ export class HeroInfoLayer extends Component {
         let type: string = data.type2;
         // 卸下装备
         let curEquName = em.dispatch("usingHeroBasePropertyFun", "getEquNameByType", type);
-        if (curEquName) em.dispatch("addItemToSS", curEquName, 1);//装备存在 则卸下装备
+        if (curEquName) main.bagManager.addItemToBag(curEquName, 1);//装备存在 则卸下装备
         // 穿上装备
         this.takeEqu(type, data);
 
         em.dispatch("usingHeroBasePropertyFun", "switchEqu", type, data.name);
-        em.dispatch("reduceItemFromSS", data.name, 1);//装备新装备 从仓库删除物品
+        main.bagManager.reduceItemFromBag(data.name, 1);//装备新装备 从仓库删除物品
         this.updateStorageSpace();// 刷新仓库
     }
     // 穿上装备
@@ -722,9 +727,9 @@ export class HeroInfoLayer extends Component {
         if (!loadUrl) loadUrl = "item_default";
         loadUrl = "images/items/" + loadUrl + "/spriteFrame";
         find("heroInfoBg/" + type, this.node).getComponent(Sprite).spriteFrame = this.itemQBg[data.quality - 1];
-        let sprite:any = find("heroInfoBg/" + type + "/sprite", this.node).getComponent(Sprite);
+        let sprite: any = find("heroInfoBg/" + type + "/sprite", this.node).getComponent(Sprite);
         sprite.node.data = data;
-        glf.createButton(this.node,sprite.node,"HeroInfoLayer","viewEquDetail");
+        glf.createButton(this.node, sprite.node, "HeroInfoLayer", "viewEquDetail");
         em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
         let label = find("heroInfoBg/" + type + "/label", this.node).getComponent(Label);
         console.log("data.lv", data.lv);
@@ -742,7 +747,7 @@ export class HeroInfoLayer extends Component {
     //开始仓库新手引导
     startSpaceGuide() {
         // 赠送物品道法果
-        em.dispatch("addItemToSS", "一阶道法果", 1);
+        main.bagManager.addItemToBag("一阶道法果", 1);
         let tips = "获得物品一阶道法果x1";
         em.dispatch("tipsViewShow", tips);
         this.updateStorageSpace();

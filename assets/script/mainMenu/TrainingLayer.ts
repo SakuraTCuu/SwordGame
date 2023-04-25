@@ -4,6 +4,7 @@ import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { LevelManager } from '../system/LevelManager';
 import { EventId } from '../global/GameEvent';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('TrainingLayer')
@@ -62,7 +63,7 @@ export class TrainingLayer extends Component {
             let prefab = this._itemPrefabArr.shift();
             plm.putToPool("TLPillPrefab", prefab);
         }
-        let pillList = em.dispatch("getAllPills");
+        let pillList = main.bagManager.getAllPills();
         let count = 0;
         for (const id in pillList) {
             if (Object.prototype.hasOwnProperty.call(pillList, id)) {
@@ -70,7 +71,7 @@ export class TrainingLayer extends Component {
                 // let pill = instantiate(this.pillPrefab);
                 let pill = plm.getFromPool("TLPillPrefab");
                 pill.parent = this.pillPar;
-                let data = em.dispatch("getItemDataByIdOrName", id);
+                let data = main.bagManager.getItemDataByIdOrName(id);
                 pill.getChildByName("name").getComponent(Label).string = data.name;
                 pill.getChildByName("total").getComponent(Label).string = total;
                 let sprite = pill.getChildByName("sprite").getComponent(Sprite);
@@ -92,7 +93,7 @@ export class TrainingLayer extends Component {
     }
     // 初始化修行等级
     initTrainingLv() {
-        let data = em.dispatch("getTempData", "training");//读取缓存
+        let data = main.savingManager.getTempData("training");//读取缓存
         if (null === data) {
             this._curTrainingExp = 0;
             this._curTrainingLv = 0;
@@ -120,12 +121,12 @@ export class TrainingLayer extends Component {
             "curExp": this._curTrainingExp,
             "curLv": this._curTrainingLv
         }
-        em.dispatch("savingToTempData", "training", data);
+        main.savingManager.savingToTempData("training", data);
     }
     //使用丹药
     onBtnUsingPill(e, p) {
         em.dispatch("playOneShot", "common/吃药");
-        em.dispatch("reduceItemFromSS", p, 1);//使用丹药
+        main.bagManager.reduceItemFromBag(p, 1);//使用丹药
         this.updatePillsContent();
         let exp: number;
         switch (p) {
@@ -217,8 +218,8 @@ export class TrainingLayer extends Component {
     afterPlayUpgradeAnim() {
         this._isUpgrading = false;
         this.updateProgressView();
-        console.log("TrainingLayer",em.dispatch("getGuideData", "TrainingLayer"));
-        
+        console.log("TrainingLayer", em.dispatch("getGuideData", "TrainingLayer"));
+
         if (!em.dispatch("getGuideData").TrainingLayer) {
             em.dispatch("setGuideData", "TrainingLayer", true);
             em.dispatch("initMainMenuByGuideData");
@@ -253,7 +254,9 @@ export class TrainingLayer extends Component {
         let guideTips = "点击使用丹药，提升修为。当人物全身金黄时，说明修为已满，可以通过突破提升境界。越高阶的丹药提升的修为越高。丹药可以通过炼制丹药获取。";
         em.dispatch("openGuideTips", guideTips);
         find("Canvas/menuLayer/guideFinger").active = false;
-        em.dispatch("addItemToSS", "炼气丹", 1);
+
+        main.bagManager.addItemToBag("炼气丹", 1);
+
         let tips = "获得物品炼气丹x1";
         em.dispatch("tipsViewShow", tips);
         this.updatePillsContent();

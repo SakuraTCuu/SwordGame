@@ -4,6 +4,7 @@ import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
 import { Queue } from '../global/Queue';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('StageManager')
@@ -69,7 +70,7 @@ export class StageManager extends Component {
         this._stageConfig = this.stageConfigJson.json;
         this._bossConfig = this.leaderAndBossConfigJson.json[ggd.curStage - 1];
         this._monsterArmyConfig = this.monsterArmyConfigJson.json[this._curStageName];
-        console.log("this._monsterArmyConfig",this._monsterArmyConfig);
+        console.log("this._monsterArmyConfig", this._monsterArmyConfig);
         console.log("_bossConfig", this._bossConfig);
 
         this._rewardConfig = this.rewardConfigJson.json;
@@ -262,15 +263,17 @@ export class StageManager extends Component {
             console.log("单倍奖励");
 
         }
-        em.dispatch("showPassReward", passReward, string,this._rewardData.isDouble);
+        em.dispatch("showPassReward", passReward, string, this._rewardData.isDouble);
         // 添加奖励到背包
         passReward.forEach(data => {
-            if (data.total > 0) em.dispatch("addItemToSS", data.id, data.total);
+            if (data.total > 0) {
+                main.bagManager.addItemToBag(data.id, data.total);
+            }
         });
         //更新关卡进度
         if (isPass && ggd.curStage + 1 > ggd.stageProgress) {
             ggd.stageProgress = ggd.curStage + 1;
-            em.dispatch("savingGlobalDataToTempData");
+            main.savingManager.savingGlobalDataToTempData();
         }
     }
     //通过当前数据创建怪物

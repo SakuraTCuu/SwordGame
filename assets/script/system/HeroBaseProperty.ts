@@ -1,6 +1,7 @@
 
 import { _decorator, Component, Node, JsonAsset, game, director } from 'cc';
 import { em } from '../global/EventManager';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('HeroBaseProperty')
@@ -114,7 +115,7 @@ export class HeroBaseProperty extends Component {
     }
     // 初始化英雄当前装备
     initHeroCurEqu() {
-        let data = em.dispatch("getTempData", "curEquData");
+        let data = main.savingManager.getTempData("curEquData");
         if (data) {
             for (const key in data) {
                 if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -128,7 +129,8 @@ export class HeroBaseProperty extends Component {
         this.initBasePropertyLv();
     }
     initBasePropertyLv() {
-        let config = em.dispatch("getTempData", "HeroBasePropertyLvList");
+        let config = main.savingManager.getTempData("HeroBasePropertyLvList");
+
         if (null == config) {//数据为空时 起用默认值
             config = {
                 percentageBloodLv: 1,
@@ -175,7 +177,7 @@ export class HeroBaseProperty extends Component {
             expAdditionLv: this._expAdditionLv,
             divineStoneAdditionLv: this._divineStoneAdditionLv
         }
-        em.dispatch("savingToTempData", "HeroBasePropertyLvList", list);
+        main.savingManager.savingToTempData("HeroBasePropertyLvList", list);
     }
 
     // ==============外部调用==============
@@ -209,7 +211,8 @@ export class HeroBaseProperty extends Component {
     }
     //获取修为数据
     getTrainingData(key) {
-        let data = em.dispatch("getTempData", "training");
+        let data = main.savingManager.getTempData("training");
+
         if (null !== data) {
             return this._trainingLvList[data.curLv][key];
             // if (data.curLv !== 0) return this._trainingLvList[data.curLv][key];
@@ -272,7 +275,7 @@ export class HeroBaseProperty extends Component {
     }
     // 记录装备数据
     savingEquData() {
-        em.dispatch("savingToTempData", "curEquData", this._heroCurEqu);
+        main.savingManager.savingToTempData("curEquData", this._heroCurEqu);
     }
     // 获取当前玩家的装备 
     getCurHeroEqu(type) {

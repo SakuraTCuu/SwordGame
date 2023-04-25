@@ -12,6 +12,7 @@ import { _decorator, Component, Node, Sprite, find, SpriteFrame, instantiate, La
 import { em } from '../../../script/global/EventManager';
 import { ggd } from '../../../script/global/globalData';
 import { EventId } from '../../../script/global/GameEvent';
+import main from '../../../script/Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('PassRewardLayer')
@@ -84,7 +85,8 @@ export class PassRewardLayer extends Component {
             console.log(data);
             if (data.total > 0) {
                 let prefab = instantiate(this._prefab);
-                let itemData = em.dispatch("getItemDataByIdOrName", data.id);
+                let itemData = main.bagManager.getItemDataByIdOrName(data.id);
+
                 prefab.parent = this._rContent;
                 prefab.getChildByName("name").getComponent(Label).string = itemData.name + "x" + data.total;
                 let sprite = prefab.getChildByName("sprite").getComponent(Sprite);

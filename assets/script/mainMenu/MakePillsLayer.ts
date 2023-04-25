@@ -13,6 +13,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('MakePillsLayer')
@@ -106,7 +107,7 @@ export class MakePillsLayer extends Component {
             pill.parent = this._pillPar;
             pill.getChildByName("sprite").getComponent(Sprite).spriteFrame = this.pillSF[data.imageIndex];
             pill.getChildByName("name").getComponent(Label).string = data.name;
-            let total = em.dispatch("getItemTotalByIdOrName", data.name);
+            let total = main.bagManager.getItemTotalByIdOrName(data.name);
             pill.getChildByName("total").getComponent(Label).string = total;
             pill.data = data;//可以直接通过节点获取
             glf.createButton(this.node, pill, "MakePillsLayer", "onBtnPill");
@@ -117,7 +118,7 @@ export class MakePillsLayer extends Component {
     updatePillList() {
         for (const pill of this._pillPrefabArr) {
             let data = pill.data;
-            let total = em.dispatch("getItemTotalByIdOrName", data.name);
+            let total = main.bagManager.getItemTotalByIdOrName(data.name);
             pill.getChildByName("total").getComponent(Label).string = total;
         }
     }
@@ -170,10 +171,11 @@ export class MakePillsLayer extends Component {
         console.log("this._curPillData ", this._curPillData);
         let m1 = find("/stove/m1", this.node);
         let m2 = find("/stove/m2", this.node);
-        let data1 = em.dispatch("getItemDataByIdOrName", this._curPillData.consumeItemName);
-        let data2 = em.dispatch("getItemDataByIdOrName", "灵石");
-        let t1 = em.dispatch("getItemTotalByIdOrName", this._curPillData.consumeItemName);
-        let t2 = em.dispatch("getItemTotalByIdOrName", "灵石");
+        let data1 = main.bagManager.getItemDataByIdOrName(this._curPillData.consumeItemName);
+        let data2 = main.bagManager.getItemDataByIdOrName("灵石");
+
+        let t1 = main.bagManager.getItemTotalByIdOrName(this._curPillData.consumeItemName);
+        let t2 = main.bagManager.getItemTotalByIdOrName("灵石");
         let s1 = m1.getChildByName("sprite").getComponent(Sprite);
         let s2 = m2.getChildByName("sprite").getComponent(Sprite);
         em.dispatch(EventId.loadRes, "images/items/" + data1.loadUrl + "/spriteFrame", (assets) => s1.spriteFrame = assets);
@@ -211,17 +213,20 @@ export class MakePillsLayer extends Component {
             em.dispatch("initMainMenuByGuideData");
         }
         em.dispatch("playOneShot", "common/炼制丹药");
-        let itemIsEnough = em.dispatch("itemIsEnough", this._curPillData.consumeItemName, this._curPillData.consumeTotal);
-        let lingshiIsEnough = em.dispatch("itemIsEnough", "灵石", this._curPillData.consumeLingshi);
+        
+        let itemIsEnough = main.bagManager.itemIsEnough(this._curPillData.consumeItemName, this._curPillData.consumeTotal);
+        let lingshiIsEnough = main.bagManager.itemIsEnough( "灵石", this._curPillData.consumeLingshi);
+
         if (itemIsEnough && lingshiIsEnough) {
-            em.dispatch("reduceItemFromSS", this._curPillData.consumeItemName, this._curPillData.consumeTotal);
-            em.dispatch("reduceItemFromSS", "灵石", this._curPillData.consumeLingshi);
+            main.bagManager.reduceItemFromBag(this._curPillData.consumeItemName, this._curPillData.consumeTotal);
+            main.bagManager.reduceItemFromBag( "灵石", this._curPillData.consumeLingshi);
+
             console.log(this._curPillData.name + "+1");
-            em.dispatch("addItemToSS", this._curPillData.id, 1);
+            main.bagManager.addItemToBag(this._curPillData.id, 1);
             this.updatePillList();
             this.updateMaterialDemand();
             this.createTipsTex(this._curPillData.name + "+1");
-            let total = em.dispatch("getItemTotalByIdOrName", "灵石");
+            let total = main.bagManager.getItemTotalByIdOrName("灵石");
             find("Canvas/menuLayer/title/lingshiTotalBg/total").getComponent(Label).string = total;
         } else {
             let tips = "";
@@ -258,8 +263,9 @@ export class MakePillsLayer extends Component {
     startMakePillsLayerGuide() {
         this.guideFinger.active = true;
         find("Canvas/menuLayer/guideFinger").active = false;
-        em.dispatch("addItemToSS", "一阶妖丹", 10);
-        em.dispatch("addItemToSS", "灵石", 50);
+        main.bagManager.addItemToBag("一阶妖丹", 10);
+        main.bagManager.addItemToBag("灵石", 50);
+
         let tips = "获得物品一阶妖丹x10、灵石x50";
         em.dispatch("tipsViewShow", tips);
         this.updateMaterialDemand();

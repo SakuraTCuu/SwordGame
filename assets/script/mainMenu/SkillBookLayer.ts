@@ -13,6 +13,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('SkillBookLayer')
@@ -64,7 +65,7 @@ export class SkillBookLayer extends Component {
     }
     // 初始化数据
     initData() {
-        let all = em.dispatch("getTempData", "SkillBookLayer");
+        let all = main.savingManager.getTempData("SkillBookLayer");
         if (all) {
             this._finishBookList = all.finishBookList;
             this._usingBookList = all.usingBookList;
@@ -126,7 +127,7 @@ export class SkillBookLayer extends Component {
                         book.getComponent(Sprite).spriteFrame = this.skillBg[0];
                         book.getChildByName("Label").getComponent(Label).color = new Color(30, 30, 30, 255);
                         // book.getChildByName("Label").getComponent(Label).color = new Color(255, 255, 255, 255);
-                        if (em.dispatch("getItemTotalByIdOrName", data.name) > 0) {
+                        if (main.bagManager.getItemTotalByIdOrName(data.name) > 0) {
                             let anim = book.getComponent(Animation);
                             this.scheduleOnce(() => {
                                 anim.play();
@@ -144,7 +145,7 @@ export class SkillBookLayer extends Component {
                     this._bookPrefabList[data.name] = book;
                 });
                 // let total = Math.ceil(arr.length / 4);//4为适配结果，具体根据效果展示
-                let total = Math.ceil(arr.length/5);//5为适配结果，具体根据效果展示
+                let total = Math.ceil(arr.length / 5);//5为适配结果，具体根据效果展示
                 // let height = find("/type/content", bookClass).getComponent(UITransform).contentSize.y * total + find("/type", bookClass).getComponent(UITransform).contentSize.y;
                 let height = 280 * total + find("/type", bookClass).getComponent(UITransform).contentSize.y;//120 skillBook 预制件的高度
                 bookClass.getComponent(UITransform).setContentSize(bookClass.getComponent(UITransform).contentSize.width, height);
@@ -172,7 +173,7 @@ export class SkillBookLayer extends Component {
         for (const key in this._bookPrefabList) {
             if (Object.prototype.hasOwnProperty.call(this._bookPrefabList, key)) {
                 const book = this._bookPrefabList[key];
-                if (em.dispatch("getItemTotalByIdOrName", key) > 0 && this._finishBookList.indexOf(key) < 0) {
+                if (main.bagManager.getItemTotalByIdOrName(key) > 0 && this._finishBookList.indexOf(key) < 0) {
                     let anim = book.getComponent(Animation);
                     anim.play();
                 }
@@ -233,7 +234,8 @@ export class SkillBookLayer extends Component {
             return;
         }
         // let flag = true;
-        let flag = em.dispatch("reduceItemFromSS", this._curSelectBook, 1);
+        let flag = main.bagManager.reduceItemFromBag(this._curSelectBook, 1);
+
         if (flag) {
             this._finishBookList.push(this._curSelectBook);
             find("/bookDetail/study/Label", this.node).getComponent(Label).string = "已掌握";
@@ -258,7 +260,7 @@ export class SkillBookLayer extends Component {
             finishBookList: this._finishBookList,
             usingBookList: this._usingBookList
         }
-        em.dispatch("savingToTempData", "SkillBookLayer", data);
+        main.savingManager.savingToTempData("SkillBookLayer", data);
     }
     // 初始化携带功法
     initUsingBook() {
@@ -336,18 +338,18 @@ export class SkillBookLayer extends Component {
         let random = Math.random();
         let tips: string;
         if (random > 0.7) {
-            em.dispatch("addItemToSS", "万剑归冢", 1);
+            main.bagManager.addItemToBag("万剑归冢", 1);
             tips = "获得一阶功法：万剑归冢x1";
             this._guideRewardBookName = "万剑归冢";
             this._guideRewardBookType = "神通";
 
         } else if (random > 0.3) {
-            em.dispatch("addItemToSS", "一剑隔世", 1);
+            main.bagManager.addItemToBag("一剑隔世", 1);
             tips = "获得一阶功法：一剑隔世x1";
             this._guideRewardBookName = "一剑隔世";
             this._guideRewardBookType = "绝技";
         } else {
-            em.dispatch("addItemToSS", "剑雨术", 1);
+            main.bagManager.addItemToBag("剑雨术", 1);
             tips = "获得一阶功法：剑雨术x1";
             this._guideRewardBookName = "剑雨术"
             this._guideRewardBookType = "武技";

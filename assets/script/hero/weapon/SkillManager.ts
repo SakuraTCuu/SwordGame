@@ -12,6 +12,7 @@ import { em } from '../../global/EventManager';
 import { ggd } from '../../global/globalData';
 import { glf } from '../../global/globalFun';
 import { EventId } from '../../global/GameEvent';
+import main from '../../Main';
 
 const { ccclass, property } = _decorator;
 
@@ -83,7 +84,9 @@ export class SkillManager extends Component {
         }
     }
     initSkill() {
-        let list = em.dispatch("getTempData", "SkillBookLayer") && em.dispatch("getTempData", "SkillBookLayer").usingBookList;
+        let data = main.savingManager.getTempData("SkillBookLayer");
+        let list = data && data.usingBookList;
+
         if (!list) return;
         for (const type in list) {
             if (Object.prototype.hasOwnProperty.call(list, type)) {
@@ -349,7 +352,8 @@ export class SkillManager extends Component {
     //==================秘法======================
     // 开启所有被动秘法
     openAllSecretSkill() {
-        let list = em.dispatch("getTempData", "SkillBookLayer") && em.dispatch("getTempData", "SkillBookLayer").finishBookList;
+        let data = main.savingManager.getTempData("SkillBookLayer");
+        let list = data && data.finishBookList;
         console.log("openAllSecretSkill", list);
         if (list) {
             list.forEach(skillName => {

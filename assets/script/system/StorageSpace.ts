@@ -1,45 +1,36 @@
-import { _decorator, Component, Node, JsonAsset, game, find, Label, director } from 'cc';
+import { JsonAsset } from 'cc';
 import { em } from '../global/EventManager';
 import { ItemManger } from './ItemManager';
-const { ccclass, property } = _decorator;
+import { director } from 'cc';
+import main from '../Main';
 
-@ccclass('StorageSpace')
-export class StorageSpace extends Component {
+export class StorageSpace {
 
-    @property(JsonAsset)
     itemDataJson: JsonAsset = null;
 
     _itemData = {};
-    
+
     _IM: ItemManger;
 
-    onDestroy() {
-        em.remove("addItemToSS");
-        em.remove("reduceItemFromSS");
-        em.remove("itemIsEnough");
-        em.remove("itemIsValid");
-        em.remove("getItemList");
-        em.remove("getItemDataByIdOrName");
-        em.remove("getItemTotalByIdOrName");
-        em.remove("getAllPills");
-        em.remove("getItemsRewardByAds");
+    constructor() {
+        this.onInit();
     }
-    onLoad() {
-        em.add("addItemToSS", this.addItemToSS.bind(this));
-        em.add("reduceItemFromSS", this.reduceItemFromSS.bind(this));
-        em.add("itemIsEnough", this.itemIsEnough.bind(this));
-        em.add("itemIsValid", this.itemIsValid.bind(this));
-        em.add("getItemList", this.getItemList.bind(this));
-        em.add("getItemDataByIdOrName", this.getItemDataByIdOrName.bind(this));
-        em.add("getItemTotalByIdOrName", this.getItemTotalByIdOrName.bind(this));
-        em.add("getAllPills", this.getAllPills.bind(this));
-        em.add("getItemsRewardByAds", this.getItemsRewardByAds.bind(this));
+
+    layzItemData(data: JsonAsset) {
+        this.itemDataJson = data;
+    }
+
+    onInit() {
         this.initItemData();
         this._IM = new ItemManger();
         // this.schedule(this.showAll,1);
-        director.addPersistRootNode(this.node);//背包物品在各个场景皆可用到 设置为常驻节点
+        // director.addPersistRootNode(this.node);//背包物品在各个场景皆可用到 设置为常驻节点
     }
+
     initItemData() {
+        if (!this.itemDataJson) {
+            return;
+        }
         let all = this.itemDataJson.json;
         all.forEach(element => {
             let id = element.id;
@@ -49,17 +40,19 @@ export class StorageSpace extends Component {
         });
         // console.log("_itemData",this._itemData);
     }
+
     showAll() {
         console.log("_IM", this._IM);
     }
+
     //初始化仓库数据
     initSSData() {
-        let data = em.dispatch("getTempData", "storageSpace");//读取缓存
+        let data = main.savingManager.getTempData("storageSpace");//读取缓存
         if (null !== data) {
             for (const key in data) {
                 if (Object.prototype.hasOwnProperty.call(data, key)) {
                     const element = data[key];
-                    // this.addItemToSS(key, element, false);
+                    // this.addItemToBag(key, element, false);
                     this._IM.addItem(parseInt(key), element);
                 }
             }
@@ -75,50 +68,50 @@ export class StorageSpace extends Component {
     }
     // 添加某些物品
     addSomeItems() {
-        // this.addItemToSS("灵石", 10);
-        // this.addItemToSS( "迷踪步",2);
-        // this.addItemToSS( "万剑归冢",2);
-        // this.addItemToSS( "一阶宝箱",999);
-        // this.addItemToSS( "二阶宝箱",999);
-        // this.addItemToSS( "三阶宝箱",999);
-        // this.addItemToSS( "四阶宝箱",999);
-        // this.addItemToSS("凝气术", 2);
-        // this.addItemToSS("怒狮狂吼", 2);
-        // this.addItemToSS("冰锥术", 2);
-        // this.addItemToSS("剑雨术", 2);
-        // this.addItemToSS("冰河世纪", 2);
-        // this.addItemToSS("一剑隔世", 2);
-        // this.addItemToSS("万剑归冢", 2);
-        // this.addItemToSS("炼气丹", 5000);
+        // this.addItemToBag("灵石", 10);
+        // this.addItemToBag( "迷踪步",2);
+        // this.addItemToBag( "万剑归冢",2);
+        // this.addItemToBag( "一阶宝箱",999);
+        // this.addItemToBag( "二阶宝箱",999);
+        // this.addItemToBag( "三阶宝箱",999);
+        // this.addItemToBag( "四阶宝箱",999);
+        // this.addItemToBag("凝气术", 2);
+        // this.addItemToBag("怒狮狂吼", 2);
+        // this.addItemToBag("冰锥术", 2);
+        // this.addItemToBag("剑雨术", 2);
+        // this.addItemToBag("冰河世纪", 2);
+        // this.addItemToBag("一剑隔世", 2);
+        // this.addItemToBag("万剑归冢", 2);
+        // this.addItemToBag("炼气丹", 5000);
 
-        // this.addItemToSS("移形换影", 1);
-        // this.addItemToSS("火行步", 1);
-        // this.addItemToSS("飞雷神", 1);
-        // this.addItemToSS("末日风暴", 1);
-        // this.addItemToSS("八面危风", 1);
-        // this.addItemToSS("如沐春风", 1);
-        // this.addItemToSS("如沐春风", 1);
-        // this.addItemToSS("灵风指", 1);
-        // this.addItemToSS("御风术", 1);
-        // this.addItemToSS("仙风云体", 1);
+        // this.addItemToBag("移形换影", 1);
+        // this.addItemToBag("火行步", 1);
+        // this.addItemToBag("飞雷神", 1);
+        // this.addItemToBag("末日风暴", 1);
+        // this.addItemToBag("八面危风", 1);
+        // this.addItemToBag("如沐春风", 1);
+        // this.addItemToBag("如沐春风", 1);
+        // this.addItemToBag("灵风指", 1);
+        // this.addItemToBag("御风术", 1);
+        // this.addItemToBag("仙风云体", 1);
 
-        // this.addItemToSS("化神丹", 99);
+        // this.addItemToBag("化神丹", 99);
     }
     //辅助函数 用户测试添加物品
     helpAddItems() {
-        this.addItemToSS("一阶宝箱", 99);
-        this.addItemToSS("二阶宝箱", 99);
-        this.addItemToSS("三阶宝箱", 99);
-        this.addItemToSS("四阶宝箱", 99);
-        this.addItemToSS("五阶宝箱", 99);
-        this.addItemToSS("一阶功法残卷", 99);
-        this.addItemToSS("一阶功法整卷", 99);
+        this.addItemToBag("一阶宝箱", 99);
+        this.addItemToBag("二阶宝箱", 99);
+        this.addItemToBag("三阶宝箱", 99);
+        this.addItemToBag("四阶宝箱", 99);
+        this.addItemToBag("五阶宝箱", 99);
+        this.addItemToBag("一阶功法残卷", 99);
+        this.addItemToBag("一阶功法整卷", 99);
     }
     // 为n种物品添加m个
     helpAddItems2() {
         for (let i = 1; i < 75; i++) {
-            // this.addItemToSS(i,1000);
-            this.addItemToSS(i, 100);
+            // this.addItemToBag(i,1000);
+            this.addItemToBag(i + "", 100);
         };
     }
 
@@ -136,19 +129,27 @@ export class StorageSpace extends Component {
     itemIsValid(id_name) {
         return this._itemData.hasOwnProperty(id_name);
     }
-    //默认记录 添加的物品 isSaving = true；当初始化添加物品时
-    addItemToSS(id_name, total: number) {
-        if (!this._itemData.hasOwnProperty(id_name)) throw "id_name err,id is " + id_name + " item is err";
+
+    /**
+     * 默认记录 添加的物品 isSaving = true；当初始化添加物品时
+     * @param id_name 物品名字
+     * @param total 数量
+     */
+    addItemToBag(id_name: string, total: number) {
+        if (!this._itemData.hasOwnProperty(id_name)) {
+            throw "id_name err,id is " + id_name + " item is err";
+        }
         let id = this._itemData[id_name].id;
         this._IM.addItem(id, total);
-        em.dispatch("savingToTempData", "storageSpace", this.getItemList());
+
+        main.savingManager.savingToTempData("storageSpace", this.getItemList());
 
     }
-    reduceItemFromSS(id_name, total: number) {
+    reduceItemFromBag(id_name, total: number) {
         if (!this._itemData.hasOwnProperty(id_name)) throw "id_name err,id_name is " + id_name + " item is err";
         let id = this._itemData[id_name].id;
         let result = this._IM.reduceItem(id, total);
-        em.dispatch("savingToTempData", "storageSpace", this.getItemList());
+        main.savingManager.savingToTempData("storageSpace", this.getItemList());
         return result;
     }
     itemIsEnough(id_name, total: number) {
@@ -161,7 +162,6 @@ export class StorageSpace extends Component {
     }
     //获取指定id 或 名称的物品 的数量
     getItemTotalByIdOrName(id_name) {
-        // console.log("getItemTotalByIdOrName",id_name);
         // console.log("this._itemData",this._itemData);
         if (!this._itemData.hasOwnProperty(id_name)) throw id_name + " of _itemData is null";
         let id = this._itemData[id_name].id;
@@ -181,40 +181,43 @@ export class StorageSpace extends Component {
     }
     //通过广告获取物品奖励
     getItemsRewardByAds() {
-        let data = em.dispatch("getTempData", "training");//读取缓存
+        let data = main.savingManager.getTempData("training");//读取缓存
         let t1 = 1;
         let t2 = 5 + Math.random() * 5 | 0;//最少5个 最多10个妖丹
         if (!data || data.curLv < 5) {
-            this.addItemToSS("一阶宝箱", t1);
-            this.addItemToSS("炼气丹", t2);
+            this.addItemToBag("一阶宝箱", t1);
+            this.addItemToBag("炼气丹", t2);
             let tips = "获得物品：一阶宝箱x" + t1 + "、炼气丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else if (data.curLv < 15) {
-            this.addItemToSS("二阶宝箱", t1);
-            this.addItemToSS("筑基丹", t2);
+            this.addItemToBag("二阶宝箱", t1);
+            this.addItemToBag("筑基丹", t2);
             let tips = "获得物品：二阶宝箱x" + t1 + "筑基丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else if (data.curLv < 31) {
-            this.addItemToSS("三阶宝箱", t1);
-            this.addItemToSS("金元丹", t2);
+            this.addItemToBag("三阶宝箱", t1);
+            this.addItemToBag("金元丹", t2);
             let tips = "获得物品：三阶宝箱x" + t1 + "金元丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else if (data.curLv < 47) {
-            this.addItemToSS("四阶宝箱", t1);
-            this.addItemToSS("元婴丹", t2);
+            this.addItemToBag("四阶宝箱", t1);
+            this.addItemToBag("元婴丹", t2);
             let tips = "获得物品：四阶宝箱x" + t1 + "元婴丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         } else {
-            this.addItemToSS("五阶宝箱", t1);
-            this.addItemToSS("化神丹", t2);
+            this.addItemToBag("五阶宝箱", t1);
+            this.addItemToBag("化神丹", t2);
             let tips = "获得物品：五阶宝箱x" + t1 + "化神丹x" + t2;
             em.dispatch("tipsViewShow", tips);
         };
-        let ssNode = find("Canvas/menuLayer/HeroInfoLayer/storageSpace");
-        if (ssNode.active) {
-            let script: any = find("Canvas/menuLayer/HeroInfoLayer").getComponent("HeroInfoLayer");
-            script.updateStorageSpace();
-        }
+
+        return;
+        //TODO:  
+        // let ssNode = find("Canvas/menuLayer/HeroInfoLayer/storageSpace");
+        // if (ssNode.active) {
+        //     let script: any = find("Canvas/menuLayer/HeroInfoLayer").getComponent("HeroInfoLayer");
+        //     script.updateStorageSpace();
+        // }
     }
 }
 

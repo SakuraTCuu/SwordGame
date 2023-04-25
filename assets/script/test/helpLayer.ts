@@ -11,19 +11,20 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('helpLayer')
 export class helpLayer extends Component {
     onBtnUnlockAllStages(){
         ggd.stageProgress = 80;
-        em.dispatch("savingGlobalDataToTempData");
+        main.savingManager.savingGlobalDataToTempData();
     }
     // 解锁下一关
     onBtnUnlockNextStages(){
         if(ggd.stageProgress>=80) return;
         ggd.stageProgress++;
-        em.dispatch("savingGlobalDataToTempData");
+        main.savingManager.savingGlobalDataToTempData();
     }
     onBtnOpenHelpLayer(){
         this.node.active = true;

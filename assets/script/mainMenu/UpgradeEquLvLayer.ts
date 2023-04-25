@@ -3,6 +3,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('UpgradeEquLvLayer')
@@ -81,9 +82,9 @@ export class UpgradeEquLvLayer extends Component {
             let prefab = this._itemPrefabArr.shift();
             plm.putToPool("SSLItemPrefab", prefab);
         }
-        let list = em.dispatch("getItemList");
+        let list = main.bagManager.getItemList();
         for (const key in list) {
-            let data = em.dispatch("getItemDataByIdOrName", key);
+            let data = main.bagManager.getItemDataByIdOrName(key);
             if (data.type == "装备") {
                 let total = list[key];
                 let prefab = plm.getFromPool("SSLItemPrefab");
@@ -117,7 +118,7 @@ export class UpgradeEquLvLayer extends Component {
     }
     // 在升阶界面 点击item
     onBtnItemInUpgradeEquLvLayer(e, p) {
-        let data = em.dispatch("getItemDataByIdOrName", p);
+        let data = main.bagManager.getItemDataByIdOrName(p);
         console.log("onBtnItemInUpgradeEquLvLayer", data);
         if (data.lv >= 5) {
             em.dispatch("tipsViewShow", "已达到最大等级，无法升级。");
@@ -155,10 +156,11 @@ export class UpgradeEquLvLayer extends Component {
         for (const key in materials) {
             if (Object.prototype.hasOwnProperty.call(materials, key)) {
                 const total = materials[key];
-                let mData = em.dispatch("getItemDataByIdOrName", key);
+                let mData = main.bagManager.getItemDataByIdOrName(key);
                 console.log("需要" + key + "x" + total);
                 let node = this.materialNode[count];
-                let isEnough = em.dispatch("itemIsEnough", key, total);
+                let isEnough = main.bagManager.itemIsEnough(key, total);
+
                 if (isEnough) node.getComponent(Sprite).material = this.defaultMaterial;
                 else {
                     node.getComponent(Sprite).material = this.grayMaterial;
@@ -192,17 +194,19 @@ export class UpgradeEquLvLayer extends Component {
         for (const key in materials) {
             if (Object.prototype.hasOwnProperty.call(materials, key)) {
                 const total = materials[key];
-                em.dispatch("reduceItemFromSS", key, total);
+                main.bagManager.reduceItemFromBag(key, total);
             }
         }
-        em.dispatch("reduceItemFromSS", this._curSelectItemData.name, 1);
+        main.bagManager.reduceItemFromBag(this._curSelectItemData.name, 1);
+
         let list = { 1: "一阶", 2: "二阶", 3: "三阶", 4: "四阶", 5: "五阶", 6: "六阶", 7: "七阶", 8: "八阶", 9: "九阶" };
         let targetLv = list[this._curSelectItemData.lv + 1];
         let index = this._curSelectItemData.name.indexOf("（");
         let targetName = this._curSelectItemData.name.slice(0, index + 1) + targetLv + "）";
         console.log("targetName", targetName);
 
-        em.dispatch("addItemToSS", targetName, 1);
+        main.bagManager.addItemToBag(targetName, 1);
+
         let gets = {};
         gets[targetName] = 1;
         em.dispatch("showGets", gets);
@@ -216,8 +220,8 @@ export class UpgradeEquLvLayer extends Component {
         let colorStr = this.getColorStrByQuality(data.quality - 1);
         this.maskPar.getChildByName("name").getComponent(RichText).string = colorStr + data.name + "</color>";
         this.maskPar.getChildByName("description").getComponent(RichText).string = data.description;
-        console.log("onBtnEqu",data);
-        
+        console.log("onBtnEqu", data);
+
         this.showEquDetail(data.name);
         this.maskPar.active = true;
     }
@@ -266,7 +270,7 @@ export class UpgradeEquLvLayer extends Component {
         let lvStr = list[curLv + 1];
         if (!lvStr) throw "lvStr is error";
         let nextName = name + "（" + lvStr + "）";
-        return em.dispatch("getItemDataByIdOrName", nextName);
+        return main.bagManager.getItemDataByIdOrName(nextName);
     }
 }
 

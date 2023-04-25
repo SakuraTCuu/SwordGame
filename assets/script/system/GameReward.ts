@@ -1,5 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../global/EventManager';
+import main from '../Main';
 const { ccclass, property } = _decorator;
 
 
@@ -30,7 +31,7 @@ export class GameReward extends Component {
     }
     // 初始化 游戏奖励列表 读取记录列表，并用最新的列表去覆盖。
     initRewardList() {
-        let data = em.dispatch("getTempData", "gameRewardList");
+        let data = main.savingManager.getTempData("gameRewardList");
         if (data) {
             for (const key in data) {
                 if (Object.prototype.hasOwnProperty.call(data, key) && this._rewardList.hasOwnProperty(key)) {
@@ -47,7 +48,7 @@ export class GameReward extends Component {
 
         this.versionUpdateReward();
 
-        em.dispatch("savingToTempData", "gameRewardList", this._rewardList);
+        main.savingManager.savingToTempData( "gameRewardList", this._rewardList);
     }
     // 版本更新补偿奖励发放
     versionUpdateReward() {
@@ -55,7 +56,8 @@ export class GameReward extends Component {
         //版本1.0.3.2的更新补偿奖励
         if (!this._rewardList.versionReward1_0_3_2) {
             this._rewardList.versionReward1_0_3_2 = true;
-            em.dispatch("addItemToSS", "破旧装备箱", 5);
+            main.bagManager.addItemToBag("破旧装备箱", 5);
+
             em.dispatch("showGets", {
                 "破旧装备箱": 5,
             });
@@ -74,10 +76,11 @@ export class GameReward extends Component {
             return;
         }
         this._rewardList.lastTodaySignIn = this._rewardList.today;
-        em.dispatch("addItemToSS", "破旧装备箱", 1);
-        em.dispatch("addItemToSS", "神秘钥匙", 1);
+        main.bagManager.addItemToBag("破旧装备箱", 1);
+        main.bagManager.addItemToBag("神秘钥匙", 1);
+
         em.dispatch("showGets", { "破旧装备箱": 1, "神秘钥匙": 1 });
-        em.dispatch("savingToTempData", "gameRewardList", this._rewardList);
+        main.savingManager.savingToTempData( "gameRewardList", this._rewardList);
     }
     /**
      * @description 获取连续签到天数
@@ -102,12 +105,12 @@ export class GameReward extends Component {
             this._rewardList.sevenDaySignIn.lastSignIn = today;
             this._rewardList.sevenDaySignIn.continueDays++;
             if (this._rewardList.sevenDaySignIn.continueDays > 7) this._rewardList.sevenDaySignIn.continueDays = 1;
-            em.dispatch("savingToTempData", "gameRewardList", this._rewardList);
+            main.savingManager.savingToTempData( "gameRewardList", this._rewardList);
             return true;
         } else {
             this._rewardList.sevenDaySignIn.continueDays = 1;
             this._rewardList.sevenDaySignIn.lastSignIn = today;
-            em.dispatch("savingToTempData", "gameRewardList", this._rewardList);
+            main.savingManager.savingToTempData( "gameRewardList", this._rewardList);
             return true;
         }
     }
@@ -118,7 +121,7 @@ export class GameReward extends Component {
     // 播放装备奖励视频
     afterPlayEquVideo() {
         this._rewardList.todayEquVideoShowTimes++;
-        em.dispatch("savingToTempData", "gameRewardList", this._rewardList);
+        main.savingManager.savingToTempData( "gameRewardList", this._rewardList);
     }
 }
 
