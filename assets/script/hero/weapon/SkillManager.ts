@@ -12,7 +12,6 @@ import { em } from '../../global/EventManager';
 import { ggd } from '../../global/globalData';
 import { glf } from '../../global/globalFun';
 import { EventId } from '../../global/GameEvent';
-import main from '../../Main';
 
 const { ccclass, property } = _decorator;
 
@@ -63,6 +62,18 @@ export class SkillManager extends Component {
         //记录未被击中时长
 
     }
+
+    loadRes(path: string, callback: Function) {
+        app.loader.load("resources", path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return
+            }
+            callback && callback(assets);
+        });
+    }
+
+
     //开始记录未被击中的时长
     startRecodeAvoidTime() {
         this.schedule(() => {
@@ -84,7 +95,7 @@ export class SkillManager extends Component {
         }
     }
     initSkill() {
-        let data = main.savingManager.getTempData("SkillBookLayer");
+        let data = app.storage.getTempData("SkillBookLayer");
         let list = data && data.usingBookList;
 
         if (!list) return;
@@ -95,8 +106,11 @@ export class SkillManager extends Component {
                     let skill = instantiate(this.skillPrefab);
                     skill.parent = this.node;
                     let sprite = skill.getComponent(Sprite);
+
                     let loadUrl = "images/icons/icon_" + skillName + "/spriteFrame";
-                    em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+
+                    this.loadRes(loadUrl, (assets) => sprite.spriteFrame = assets);
+
                     glf.createButton(this.node, skill, "SkillManager", "onBtnSkill", skillName);
                 }
             }
@@ -222,18 +236,21 @@ export class SkillManager extends Component {
     // 三昧真火 --> 武技
     samadhiTrueFire() {
         let url = "/prefabs/hero/weapon/samadhiTrueFire";
-        em.dispatchs(EventId.loadRes, url, (assets) => {
+        this.loadRes(url, (assets) => {
             let prefab = instantiate(assets);
             prefab.getComponent("SamadhiTrueFire").init();
-        })
+        });
+
     }
     // 烈日心决 ---> 心法
     sunHeart() {
         let url = "/prefabs/hero/weapon/sunHeart";
-        em.dispatchs(EventId.loadRes, url, (assets) => {
+
+        this.loadRes(url, (assets) => {
             let prefab = instantiate(assets);
             prefab.parent = em.dispatch("getHeroControlProperty", "node").getChildByName("effect");
-        })
+        });
+
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "sunHeart");
         em.dispatchs("usingHeroControlFun", "updateTempCriticalHitRate", skillData.criticalHitRate);
         this._countdownList.sunHeart = skillData.duration;
@@ -273,10 +290,13 @@ export class SkillManager extends Component {
      */
     fingerLikeWind() {
         console.log("使用灵风指");
-        em.dispatchs(EventId.loadRes, "/prefabs/hero/weapon/fingerLikeWind", (assets) => {
+
+        let url = "/prefabs/hero/weapon/fingerLikeWind";
+        this.loadRes(url, (assets) => {
             let prefab = instantiate(assets);
             prefab.getComponent("FingerLikeWind").init();
         });
+
     }
     /**
      * @description: 心法 如沐春风 持续回血，提升百分比伤害，提升暴击率
@@ -328,7 +348,8 @@ export class SkillManager extends Component {
     }
     //雷云术
     thundercloud() {
-        em.dispatchs(EventId.loadRes, "/prefabs/hero/weapon/thundercloud", (assets) => {
+        let url = "/prefabs/hero/weapon/thundercloud";
+        this.loadRes(url, (assets) => {
             let prefab = instantiate(assets);
             let layer = find("Canvas/bulletLayer");
             prefab.parent = layer;
@@ -336,6 +357,7 @@ export class SkillManager extends Component {
             prefab.setWorldPosition(wp);
             prefab.getComponent("Thundercloud").init();
         });
+
     }
     // 奔雷术
     thunderRunning() {
@@ -352,7 +374,7 @@ export class SkillManager extends Component {
     //==================秘法======================
     // 开启所有被动秘法
     openAllSecretSkill() {
-        let data = main.savingManager.getTempData("SkillBookLayer");
+        let data = app.storage.getTempData("SkillBookLayer");
         let list = data && data.finishBookList;
         console.log("openAllSecretSkill", list);
         if (list) {

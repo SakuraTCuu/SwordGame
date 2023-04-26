@@ -1,6 +1,6 @@
 import { _decorator, Component, Node, find, Vec3, tween, Label, Tween } from 'cc';
 import { em } from '../global/EventManager';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 // 主菜单新手引导
@@ -52,7 +52,7 @@ export class MainMenuGuide extends Component {
     }
 
     start() {
-        let data = main.savingManager.getTempData("guideData");
+        let data = app.storage.getTempData("guideData");
         if (data) {
             for (const key in data) {//通过赋值的方式存取，可以在添加新属性时解决冲突问题
                 if (Object.prototype.hasOwnProperty.call(data, key) && this._guideData.hasOwnProperty(key)) {
@@ -60,7 +60,7 @@ export class MainMenuGuide extends Component {
                 }
             }
         }
-        main.savingManager.savingToTempData("guideData", this._guideData);
+        app.storage.savingToTempData("guideData", this._guideData);
         this.initMainMenuByGuideData();
     }
 
@@ -76,7 +76,7 @@ export class MainMenuGuide extends Component {
             this.guideTipsBg.active = true;
             this._guideData.SelectStageLayer = true;
 
-            main.savingManager.savingToTempData("guideData", this._guideData);
+            app.storage.savingToTempData("guideData", this._guideData);
         } else if (!this._guideData.HeroInfoLayer) {
             this.hideBtnsFromIndexStart(2);
             Tween.stopAllByTag(1);
@@ -117,7 +117,7 @@ export class MainMenuGuide extends Component {
     setGuideData(key, value = true) {
         if (this._guideData.hasOwnProperty(key)) {
             this._guideData[key] = value;
-            main.savingManager.savingToTempData("guideData", this._guideData);
+            app.storage.savingToTempData("guideData", this._guideData);
         } else {
             throw "set guide data error." + key + " is invalid";
         }

@@ -1,6 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../global/EventManager';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('AddItemsLayer')
@@ -25,12 +25,12 @@ export class AddItemsLayer extends Component {
             em.dispatch("tipsViewShow", "数量输入错误，请重新输入");
             return;
         };
-        let isValid = main.bagManager.itemIsValid(this._curItemIdString);
+        let isValid = app.bag.itemIsValid(this._curItemIdString);
         if (!isValid) {
             em.dispatch("tipsViewShow", "物品名称输入错误，请重新输入");
             return;
         }
-        main.bagManager.addItemToBag(this._curItemIdString, num);
+        app.bag.addItemToBag(this._curItemIdString, num);
         em.dispatch("tipsViewShow", "获得物品：" + this._curItemIdString + "x" + num);
     }
     onBtnOpenAddItemLayer() {

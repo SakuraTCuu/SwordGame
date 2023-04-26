@@ -4,7 +4,7 @@ import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { LevelManager } from '../system/LevelManager';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('TrainingLayer')
@@ -56,6 +56,17 @@ export class TrainingLayer extends Component {
         }
         this.updatePillsContent();
     }
+
+    loadRes(path: string, callback: Function) {
+        app.loader.load('resources', path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            callback && callback(assets);
+        });
+    }
+
     // 刷新药物列表
     updatePillsContent() {
         console.log("updatePillsContent");
@@ -63,7 +74,7 @@ export class TrainingLayer extends Component {
             let prefab = this._itemPrefabArr.shift();
             plm.putToPool("TLPillPrefab", prefab);
         }
-        let pillList = main.bagManager.getAllPills();
+        let pillList = app.bag.getAllPills();
         let count = 0;
         for (const id in pillList) {
             if (Object.prototype.hasOwnProperty.call(pillList, id)) {
@@ -71,12 +82,16 @@ export class TrainingLayer extends Component {
                 // let pill = instantiate(this.pillPrefab);
                 let pill = plm.getFromPool("TLPillPrefab");
                 pill.parent = this.pillPar;
-                let data = main.bagManager.getItemDataByIdOrName(id);
+                let data = app.bag.getItemDataByIdOrName(id);
                 pill.getChildByName("name").getComponent(Label).string = data.name;
                 pill.getChildByName("total").getComponent(Label).string = total;
                 let sprite = pill.getChildByName("sprite").getComponent(Sprite);
                 let loadUrl = "images/items/" + data.loadUrl + "/spriteFrame";
-                em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+
+                this.loadRes(loadUrl, (assets) => {
+                    sprite.spriteFrame = assets;
+                });
+
                 glf.createButton(this.node, pill, "TrainingLayer", "onBtnUsingPill", data.name);
                 this._itemPrefabArr.push(pill);
                 count++;
@@ -93,7 +108,7 @@ export class TrainingLayer extends Component {
     }
     // 初始化修行等级
     initTrainingLv() {
-        let data = main.savingManager.getTempData("training");//读取缓存
+        let data = app.storage.getTempData("training");//读取缓存
         if (null === data) {
             this._curTrainingExp = 0;
             this._curTrainingLv = 0;
@@ -121,12 +136,12 @@ export class TrainingLayer extends Component {
             "curExp": this._curTrainingExp,
             "curLv": this._curTrainingLv
         }
-        main.savingManager.savingToTempData("training", data);
+        app.storage.savingToTempData("training", data);
     }
     //使用丹药
     onBtnUsingPill(e, p) {
         em.dispatch("playOneShot", "common/吃药");
-        main.bagManager.reduceItemFromBag(p, 1);//使用丹药
+        app.bag.reduceItemFromBag(p, 1);//使用丹药
         this.updatePillsContent();
         let exp: number;
         switch (p) {
@@ -255,7 +270,7 @@ export class TrainingLayer extends Component {
         em.dispatch("openGuideTips", guideTips);
         find("Canvas/menuLayer/guideFinger").active = false;
 
-        main.bagManager.addItemToBag("炼气丹", 1);
+        app.bag.addItemToBag("炼气丹", 1);
 
         let tips = "获得物品炼气丹x1";
         em.dispatch("tipsViewShow", tips);

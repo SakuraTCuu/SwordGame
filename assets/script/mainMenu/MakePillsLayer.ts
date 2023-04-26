@@ -13,7 +13,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('MakePillsLayer')
@@ -99,6 +99,17 @@ export class MakePillsLayer extends Component {
         plm.addPoolToPools("tipsTex", tipsTexPool, this.tipsPrefab);
         this.initStoveBtn();
     }
+
+    loadRes(path: string, callback: Function) {
+        app.loader.load('resources', path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            callback && callback(assets);
+        });
+    }
+
     // 初始化炼丹列表
     initPillList() {
         this._pillListConfig.forEach((data, index) => {
@@ -107,7 +118,7 @@ export class MakePillsLayer extends Component {
             pill.parent = this._pillPar;
             pill.getChildByName("sprite").getComponent(Sprite).spriteFrame = this.pillSF[data.imageIndex];
             pill.getChildByName("name").getComponent(Label).string = data.name;
-            let total = main.bagManager.getItemTotalByIdOrName(data.name);
+            let total = app.bag.getItemTotalByIdOrName(data.name);
             pill.getChildByName("total").getComponent(Label).string = total;
             pill.data = data;//可以直接通过节点获取
             glf.createButton(this.node, pill, "MakePillsLayer", "onBtnPill");
@@ -118,7 +129,7 @@ export class MakePillsLayer extends Component {
     updatePillList() {
         for (const pill of this._pillPrefabArr) {
             let data = pill.data;
-            let total = main.bagManager.getItemTotalByIdOrName(data.name);
+            let total = app.bag.getItemTotalByIdOrName(data.name);
             pill.getChildByName("total").getComponent(Label).string = total;
         }
     }
@@ -171,15 +182,19 @@ export class MakePillsLayer extends Component {
         console.log("this._curPillData ", this._curPillData);
         let m1 = find("/stove/m1", this.node);
         let m2 = find("/stove/m2", this.node);
-        let data1 = main.bagManager.getItemDataByIdOrName(this._curPillData.consumeItemName);
-        let data2 = main.bagManager.getItemDataByIdOrName("灵石");
+        let data1 = app.bag.getItemDataByIdOrName(this._curPillData.consumeItemName);
+        let data2 = app.bag.getItemDataByIdOrName("灵石");
 
-        let t1 = main.bagManager.getItemTotalByIdOrName(this._curPillData.consumeItemName);
-        let t2 = main.bagManager.getItemTotalByIdOrName("灵石");
+        let t1 = app.bag.getItemTotalByIdOrName(this._curPillData.consumeItemName);
+        let t2 = app.bag.getItemTotalByIdOrName("灵石");
         let s1 = m1.getChildByName("sprite").getComponent(Sprite);
         let s2 = m2.getChildByName("sprite").getComponent(Sprite);
-        em.dispatch(EventId.loadRes, "images/items/" + data1.loadUrl + "/spriteFrame", (assets) => s1.spriteFrame = assets);
-        em.dispatch(EventId.loadRes, "images/items/" + data2.loadUrl + "/spriteFrame", (assets) => s2.spriteFrame = assets);
+        
+        let path1 = "images/items/" + data1.loadUrl + "/spriteFrame";
+        let path2 = "images/items/" + data2.loadUrl + "/spriteFrame"
+        this.loadRes(path1, (assets) => s1.spriteFrame = assets);
+        this.loadRes(path2, (assets) => s2.spriteFrame = assets);
+       
         let l1 = m1.getChildByName("Label").getComponent(Label);
         let l2 = m2.getChildByName("Label").getComponent(Label);
         let l12 = m1.getChildByName("Label2").getComponent(Label);
@@ -214,19 +229,19 @@ export class MakePillsLayer extends Component {
         }
         em.dispatch("playOneShot", "common/炼制丹药");
         
-        let itemIsEnough = main.bagManager.itemIsEnough(this._curPillData.consumeItemName, this._curPillData.consumeTotal);
-        let lingshiIsEnough = main.bagManager.itemIsEnough( "灵石", this._curPillData.consumeLingshi);
+        let itemIsEnough = app.bag.itemIsEnough(this._curPillData.consumeItemName, this._curPillData.consumeTotal);
+        let lingshiIsEnough = app.bag.itemIsEnough( "灵石", this._curPillData.consumeLingshi);
 
         if (itemIsEnough && lingshiIsEnough) {
-            main.bagManager.reduceItemFromBag(this._curPillData.consumeItemName, this._curPillData.consumeTotal);
-            main.bagManager.reduceItemFromBag( "灵石", this._curPillData.consumeLingshi);
+            app.bag.reduceItemFromBag(this._curPillData.consumeItemName, this._curPillData.consumeTotal);
+            app.bag.reduceItemFromBag( "灵石", this._curPillData.consumeLingshi);
 
             console.log(this._curPillData.name + "+1");
-            main.bagManager.addItemToBag(this._curPillData.id, 1);
+            app.bag.addItemToBag(this._curPillData.id, 1);
             this.updatePillList();
             this.updateMaterialDemand();
             this.createTipsTex(this._curPillData.name + "+1");
-            let total = main.bagManager.getItemTotalByIdOrName("灵石");
+            let total = app.bag.getItemTotalByIdOrName("灵石");
             find("Canvas/menuLayer/title/lingshiTotalBg/total").getComponent(Label).string = total;
         } else {
             let tips = "";
@@ -263,8 +278,8 @@ export class MakePillsLayer extends Component {
     startMakePillsLayerGuide() {
         this.guideFinger.active = true;
         find("Canvas/menuLayer/guideFinger").active = false;
-        main.bagManager.addItemToBag("一阶妖丹", 10);
-        main.bagManager.addItemToBag("灵石", 50);
+        app.bag.addItemToBag("一阶妖丹", 10);
+        app.bag.addItemToBag("灵石", 50);
 
         let tips = "获得物品一阶妖丹x10、灵石x50";
         em.dispatch("tipsViewShow", tips);

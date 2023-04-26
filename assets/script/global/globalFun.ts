@@ -4,7 +4,6 @@ import { gUrl } from "./GameUrl";
 import { ggd } from "./globalData";
 import { hr } from "./HttpRequest";
 import { EventId } from "./GameEvent";
-import main from "../Main";
 
 export { glf }
 
@@ -101,7 +100,7 @@ const glf = {
     afterPlayAdComplete() {
         switch (ggd.curAdRewardType) {
             case "getItems":
-                main.bagManager.getItemsRewardByAds();
+                app.bag.getItemsRewardByAds();
                 break;
             case "rebirthHero":
                 em.dispatch("rebirthHero");
@@ -120,16 +119,16 @@ const glf = {
                 console.log("领取装备箱子");
                 let random = Math.random();
                 if (random > 0.995) {
-                    main.bagManager.addItemToBag("史诗装备箱", 1);
+                    app.bag.addItemToBag("史诗装备箱", 1);
                     em.dispatch("showGets", { "史诗装备箱": 1 });
                 } else if (random > 0.98) {
-                    main.bagManager.addItemToBag("传说装备箱", 1);
+                    app.bag.addItemToBag("传说装备箱", 1);
                     em.dispatch("showGets", { "传说装备箱": 1 });
                 } else if (random > 0.8) {
-                    main.bagManager.addItemToBag("稀有装备箱", 1);
+                    app.bag.addItemToBag("稀有装备箱", 1);
                     em.dispatch("showGets", { "稀有装备箱": 1 });
                 } else {
-                    main.bagManager.addItemToBag("实用装备箱", 1);
+                    app.bag.addItemToBag("实用装备箱", 1);
                     em.dispatch("showGets", { "实用装备箱": 1 });
                 }
                 em.dispatch("usingGameRewardFun", "afterPlayEquVideo");

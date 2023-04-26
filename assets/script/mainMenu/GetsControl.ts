@@ -2,7 +2,7 @@ import { _decorator, Component, Node, find, NodePool, Label, Sprite, Color } fro
 import { em } from '../global/EventManager';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('GetsControl')
@@ -45,7 +45,7 @@ export class GetsControl extends Component {
         for (const key in items) {
             if (Object.prototype.hasOwnProperty.call(items, key)) {
                 const total = items[key];
-                let data = main.bagManager.getItemDataByIdOrName(key);
+                let data = app.bag.getItemDataByIdOrName(key);
 
                 // let prefab = instantiate(itemPrefab);
                 let prefab = plm.getFromPool("SSLGetsItemPrefab");
@@ -55,7 +55,11 @@ export class GetsControl extends Component {
                 let loadUrl: string = data.loadUrl;
                 if (!data.loadUrl) loadUrl = "item_default";
                 loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-                em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+
+                app.loader.load('resources', loadUrl, (err, assets) => {
+                    sprite.spriteFrame = assets
+                });
+                
                 let color = this.getColorStrByQuality(data.quality);
                 let label = prefab.getChildByName("name").getComponent(Label);
                 label.color = color;

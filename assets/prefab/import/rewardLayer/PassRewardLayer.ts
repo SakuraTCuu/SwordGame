@@ -12,7 +12,6 @@ import { _decorator, Component, Node, Sprite, find, SpriteFrame, instantiate, La
 import { em } from '../../../script/global/EventManager';
 import { ggd } from '../../../script/global/globalData';
 import { EventId } from '../../../script/global/GameEvent';
-import main from '../../../script/Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('PassRewardLayer')
@@ -79,26 +78,34 @@ export class PassRewardLayer extends Component {
         em.dispatch("createTipsTex", result);
     }
 
-    showPassReward(all, string,isDouble=false) {
+    showPassReward(all, string, isDouble = false) {
         // console.log("showPassReward",all);
         all.forEach(data => {
             console.log(data);
             if (data.total > 0) {
                 let prefab = instantiate(this._prefab);
-                let itemData = main.bagManager.getItemDataByIdOrName(data.id);
+                let itemData = app.bag.getItemDataByIdOrName(data.id);
 
                 prefab.parent = this._rContent;
                 prefab.getChildByName("name").getComponent(Label).string = itemData.name + "x" + data.total;
                 let sprite = prefab.getChildByName("sprite").getComponent(Sprite);
                 let loadUrl = "images/items/" + itemData.loadUrl + "/spriteFrame";
-                em.dispatchs(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+
+                app.loader.load("resources", loadUrl, (err, assets) => {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    sprite.spriteFrame = assets
+                });
+
                 prefab.active = true;
             }
         });
         this.descriptionLabel.string = string;
         this.killCountLabel.string = em.dispatch("geCurStageKillInfo");
         this.curStageLabel.string = "第" + ggd.curStage + "关";
-        if(isDouble) this.doubleTips.active = true;
+        if (isDouble) this.doubleTips.active = true;
         else this.doubleTips.active = false;
         ggd.stopAll = true;
         this.node.active = true;

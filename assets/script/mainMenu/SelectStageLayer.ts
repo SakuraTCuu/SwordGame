@@ -13,7 +13,7 @@ import { _decorator, Component, Node, Prefab, instantiate, Label, find, director
 import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('SelectStageLayer')
@@ -231,7 +231,7 @@ export class SelectCheckpointLayer extends Component {
     // 解锁下一关
     onBtnChangeStage() {
         ggd.stageProgress++;
-        main.savingManager.savingGlobalDataToTempData();
+        app.storage.savingGlobalDataToTempData();
     }
 }
 

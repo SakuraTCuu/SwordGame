@@ -130,7 +130,9 @@ export class MonsterManager extends Component {
     }
     // 初始化动画剪辑
     initAnimClips() {
-        em.dispatch(EventId.loadDir, "/anim/enemy/monster", (arr) => {
+
+        let path = "/anim/enemy/monster";
+        app.loader.loadDir("resources", path, (err, arr: any) => {
             arr.forEach(clip => {
                 this._monsterAnimClips[clip.name] = clip;
             });

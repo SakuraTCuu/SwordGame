@@ -14,7 +14,7 @@ import { gUrl } from '../global/GameUrl';
 import { hr } from '../global/HttpRequest';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('PrizeHallLayer')
@@ -60,15 +60,24 @@ export class PrizeHallLayer extends Component {
         for (let i = 0; i < data.prize.length; i++) {
             let prize = data.prize[i];
             let total = data.total[i];
-            let prizeData = main.bagManager.getItemDataByIdOrName(prize);
-            
-            main.bagManager.addItemToBag(prize, total);
+            let prizeData = app.bag.getItemDataByIdOrName(prize);
+
+            app.bag.addItemToBag(prize, total);
 
             let item = plm.getFromPool("PrizeHallItem");
             item.parent = this._itemContent;
             let sprite = item.getChildByName("Sprite").getComponent(Sprite);
+
             let loadUrl = "images/items/" + prizeData.loadUrl + "/spriteFrame";
-            em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+
+            app.loader.load('resources', loadUrl, (err, assets) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                sprite.spriteFrame = assets
+            });
+
             item.getChildByName("Label").getComponent(Label).string = prizeData.name + "\n" + "X" + total;
             item.active = true;
             item.parent = this._itemContent;

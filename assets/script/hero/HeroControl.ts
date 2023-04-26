@@ -174,7 +174,12 @@ export class HeroControl extends Component {
         ]
         for (let i = 0; i < total; i++) {
             let pos = posArr[i];
-            em.dispatchs(EventId.loadRes, loadUrl, assets => {
+
+            app.loader.load("resources", loadUrl, (err, assets) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
                 let prefab = instantiate(this.itemInPlaying);
                 prefab.parent = find("Canvas/bulletLayer");
                 prefab.setPosition(pos.x, pos.y, 0);
@@ -1102,7 +1107,13 @@ export class HeroControl extends Component {
     usingSkillMoveLikeShadow() {
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "moveLikeShadow");
         let value = this.getMaxBlood() * skillData.damageTimes;
-        em.dispatchs(EventId.loadRes, "/prefabs/hero/weapon/moveLikeShadow", (assets) => {
+
+        let path = "/prefabs/hero/weapon/moveLikeShadow";
+        app.loader.load("resources", path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
             let prefab = instantiate(assets);
             let wp = this.getHeroWorldPos();
             prefab.parent = find("Canvas/puppetLayer");

@@ -13,7 +13,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('SkillBookLayer')
@@ -63,9 +63,20 @@ export class SkillBookLayer extends Component {
         this.initUsingBook();
 
     }
+
+    loadRes(path: string, callback: Function) {
+        app.loader.load('resources', path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            callback && callback(assets);
+        });
+    }
+
     // 初始化数据
     initData() {
-        let all = main.savingManager.getTempData("SkillBookLayer");
+        let all = app.storage.getTempData("SkillBookLayer");
         if (all) {
             this._finishBookList = all.finishBookList;
             this._usingBookList = all.usingBookList;
@@ -75,16 +86,17 @@ export class SkillBookLayer extends Component {
     dynamicLoadPrefabs() {
         let dir1 = "prefabs/mainMenu/skillBookClass";
         let dir2 = "prefabs/mainMenu/skillBook";
-        em.dispatch(EventId.loadRes, dir1, (assets) => {
+        this.loadRes(dir1, (assets) => {
             this._skillBookClass = assets;
             this._loadingList._skillBookClass = true;
             this.initBookListView();
         });
-        em.dispatch(EventId.loadRes, dir2, (assets) => {
+        this.loadRes(dir2, (assets) => {
             this._skillBook = assets;
             this._loadingList._skillBook = true;
             this.initBookListView();
         });
+
     }
     //初始化秘籍列表显示
     initBookListView() {
@@ -122,12 +134,16 @@ export class SkillBookLayer extends Component {
                 arr.forEach(data => {
                     let book = instantiate(this._skillBook);
                     let loadUrl = "images/icons/icon_" + data.name2 + "/spriteFrame";
-                    em.dispatch(EventId.loadRes, loadUrl, (assets) => book.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets);
+
+                    this.loadRes(loadUrl, (assets) => {
+                        book.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets
+                    });
+
                     if (this._finishBookList.indexOf(data.name) < 0) {//未学习的功法
                         book.getComponent(Sprite).spriteFrame = this.skillBg[0];
                         book.getChildByName("Label").getComponent(Label).color = new Color(30, 30, 30, 255);
                         // book.getChildByName("Label").getComponent(Label).color = new Color(255, 255, 255, 255);
-                        if (main.bagManager.getItemTotalByIdOrName(data.name) > 0) {
+                        if (app.bag.getItemTotalByIdOrName(data.name) > 0) {
                             let anim = book.getComponent(Animation);
                             this.scheduleOnce(() => {
                                 anim.play();
@@ -173,7 +189,7 @@ export class SkillBookLayer extends Component {
         for (const key in this._bookPrefabList) {
             if (Object.prototype.hasOwnProperty.call(this._bookPrefabList, key)) {
                 const book = this._bookPrefabList[key];
-                if (main.bagManager.getItemTotalByIdOrName(key) > 0 && this._finishBookList.indexOf(key) < 0) {
+                if (app.bag.getItemTotalByIdOrName(key) > 0 && this._finishBookList.indexOf(key) < 0) {
                     let anim = book.getComponent(Animation);
                     anim.play();
                 }
@@ -234,7 +250,7 @@ export class SkillBookLayer extends Component {
             return;
         }
         // let flag = true;
-        let flag = main.bagManager.reduceItemFromBag(this._curSelectBook, 1);
+        let flag = app.bag.reduceItemFromBag(this._curSelectBook, 1);
 
         if (flag) {
             this._finishBookList.push(this._curSelectBook);
@@ -260,7 +276,7 @@ export class SkillBookLayer extends Component {
             finishBookList: this._finishBookList,
             usingBookList: this._usingBookList
         }
-        main.savingManager.savingToTempData("SkillBookLayer", data);
+        app.storage.savingToTempData("SkillBookLayer", data);
     }
     // 初始化携带功法
     initUsingBook() {
@@ -271,7 +287,11 @@ export class SkillBookLayer extends Component {
                 if ("" !== skillName) {
                     let sprite = find("usingBook/" + type, this.node).getChildByName("sprite").getComponent(Sprite);
                     let loadUrl = "images/icons/icon_" + skillName + "/spriteFrame";
-                    em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+                    
+                    this.loadRes(loadUrl, (assets) => {
+                        sprite.spriteFrame = assets;
+                    });
+
                 }
             }
         }
@@ -297,7 +317,11 @@ export class SkillBookLayer extends Component {
                 prefab.parent = par;
                 prefab.getChildByName("name").getComponent(Label).string = data.name;
                 let loadUrl = "images/icons/icon_" + data.name2 + "/spriteFrame";
-                em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+                
+                this.loadRes(loadUrl, (assets) => {
+                    sprite.spriteFrame = assets;
+                });
+
                 glf.createButton(this.node, prefab, "SkillBookLayer", "switchBook", type + "@" + data.name2);
             };
         });
@@ -315,7 +339,11 @@ export class SkillBookLayer extends Component {
         let skillName = ps[1]
         let sprite = find("usingBook/" + type, this.node).getChildByName("sprite").getComponent(Sprite);
         let loadUrl = "images/icons/icon_" + skillName + "/spriteFrame";
-        em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets);
+        
+        this.loadRes(loadUrl, (assets) => {
+            sprite.spriteFrame = assets;
+        });
+
         this._usingBookList[type] = skillName;
         console.log("this._usingBookList", this._usingBookList);
         this.closeSwitchBook();
@@ -338,18 +366,18 @@ export class SkillBookLayer extends Component {
         let random = Math.random();
         let tips: string;
         if (random > 0.7) {
-            main.bagManager.addItemToBag("万剑归冢", 1);
+            app.bag.addItemToBag("万剑归冢", 1);
             tips = "获得一阶功法：万剑归冢x1";
             this._guideRewardBookName = "万剑归冢";
             this._guideRewardBookType = "神通";
 
         } else if (random > 0.3) {
-            main.bagManager.addItemToBag("一剑隔世", 1);
+            app.bag.addItemToBag("一剑隔世", 1);
             tips = "获得一阶功法：一剑隔世x1";
             this._guideRewardBookName = "一剑隔世";
             this._guideRewardBookType = "绝技";
         } else {
-            main.bagManager.addItemToBag("剑雨术", 1);
+            app.bag.addItemToBag("剑雨术", 1);
             tips = "获得一阶功法：剑雨术x1";
             this._guideRewardBookName = "剑雨术"
             this._guideRewardBookType = "武技";

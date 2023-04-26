@@ -1,13 +1,4 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-08-11 09:31:53
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-09-08 14:21:13
- * @FilePath: \copy9train\assets\script\system\TipView.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
+
 import { _decorator, Component, Node, tween, Sprite, Color, Vec3, Label } from 'cc';
 import { em } from '../global/EventManager';
 const { ccclass, property } = _decorator;

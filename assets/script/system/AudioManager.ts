@@ -1,13 +1,3 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-10-09 17:52:38
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-10-26 15:35:14
- * @FilePath: \copy9train\assets\script\system\AudioManager.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, game, AudioSource, AudioClip, input, Input, director } from 'cc';
 import { em } from '../global/EventManager';
 import { EventId } from '../global/GameEvent';
@@ -20,7 +10,7 @@ export class AudioManager extends Component {
     @property(AudioSource)
     bgmPlayer;
     @property(AudioSource)
-    effectPlayer;
+    effectPlayer: AudioClip = null;
 
     onDestroy() {
         em.remove("switchMainBgm");
@@ -39,28 +29,41 @@ export class AudioManager extends Component {
     start() {
         this.switchMainBgm("/audio/music/刀剑如梦");
     }
+
     // 切换bgm
-    switchMainBgm(url){
+    switchMainBgm(url) {
         this.bgmPlayer.stop();
-        em.dispatch(EventId.loadRes, url, (clip) => {
+
+        app.loader.load('resources', url, (err, clip) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
             this.bgmPlayer.clip = clip;
             this.bgmPlayer.play();
         });
+  
     }
     //播放音效
     playOneShot(url) {
-        em.dispatch(EventId.loadRes, "/audio/effect/"+url, (clip) => {
+        let path = "/audio/effect/" + url;
+        app.loader.load('resources', path, (err, clip) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
             this.effectPlayer.playOneShot(clip);
         });
+      
     }
     //静音
-    muteAudio(){
-        this.effectPlayer.mute = false;
+    muteAudio() {
+        // this.effectPlayer.mute = false;
         this.bgmPlayer.mute = false;
     }
     //恢复音效
-    resumeAudio(){
-        this.effectPlayer.mute = true;
+    resumeAudio() {
+        // this.effectPlayer.mute = true;
         this.bgmPlayer.mute = true;
     }
 }

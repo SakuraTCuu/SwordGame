@@ -3,7 +3,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('MergeEquLayer')
@@ -44,14 +44,25 @@ export class MergeEquLayer extends Component {
         this.mergeDetailLabel.string = "";
         this.totalLabel.string = "";
     }
+
+    loadRes(path: string, callback: Function) {
+        app.loader.load('resources', path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            callback && callback(assets);
+        });
+    }
+
     updateEquList() {
         while (this._itemPrefabArr.length > 0) {
             let prefab = this._itemPrefabArr.shift();
             plm.putToPool("SSLItemPrefab", prefab);
         }
-        let list = main.bagManager.getItemList();
+        let list = app.bag.getItemList();
         for (const key in list) {
-            let data = main.bagManager.getItemDataByIdOrName(key);
+            let data = app.bag.getItemDataByIdOrName(key);
             if (data.type == "装备") {
                 let total = list[key];
                 let prefab = plm.getFromPool("SSLItemPrefab");
@@ -61,10 +72,14 @@ export class MergeEquLayer extends Component {
                 let sprite = prefab.getChildByName("sprite").getComponent(Sprite);
                 let loadUrl: string = data.loadUrl;
                 if (!data.loadUrl) loadUrl = "item_default";
+
+
                 loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-                em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets, () => {
-                    em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
-                });
+                // em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets, () => {
+                //     em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
+                // });
+                this.loadRes(loadUrl, (assets) => sprite.spriteFrame = assets);
+
                 // prefab.getChildByName("total").getComponent(Label).string = "X" + total;
                 prefab.getChildByName("total").getComponent(Label).string = total;
                 // prefab.getChildByName("name").getComponent(Label).string = data.name;
@@ -76,7 +91,7 @@ export class MergeEquLayer extends Component {
     }
     // 合成
     onBtnItemInMergeLayer(e, p) {
-        let data = main.bagManager.getItemDataByIdOrName(p);
+        let data = app.bag.getItemDataByIdOrName(p);
 
         if (data.quality >= 5) {
             em.dispatch("tipsViewShow", "当前品质为最高品质，不可提升");
@@ -93,15 +108,22 @@ export class MergeEquLayer extends Component {
         let loadUrl: string = data.loadUrl;
         if (!data.loadUrl) loadUrl = "item_default";
         loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-        em.dispatch(EventId.loadRes, loadUrl, (assets) => {
+
+        // em.dispatch(EventId.loadRes, loadUrl, (assets) => {
+        //     this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        //     this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        // }, () => {
+        //     em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => {
+        //         this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        //         this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        //     });
+        // });
+
+        this.loadRes(loadUrl, (assets) => {
             this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
             this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
-        }, () => {
-            em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => {
-                this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
-                this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
-            });
         });
+
         //初始化阶
         let list = { 1: "一阶", 2: "二阶", 3: "三阶", 4: "四阶", 5: "五阶", 6: "六阶", 7: "七阶", 8: "八阶", 9: "九阶" };
         // this.curSelect.getChildByName("Label").getComponent(Label).string = list[data.lv];
@@ -118,7 +140,7 @@ export class MergeEquLayer extends Component {
         if (curTotal >= needTotal) {
             console.log("合成");
             this.consumeEqu(this.curSelect.data.name, needTotal);
-            main.bagManager.addItemToBag(this.target.data.name, 1);
+            app.bag.addItemToBag(this.target.data.name, 1);
             let gets = {};
             gets[this.target.data.name] = 1;
             em.dispatch("showGets", gets);
@@ -133,14 +155,14 @@ export class MergeEquLayer extends Component {
         let lvArr = ["（一阶）", "（二阶）", "（三阶）", "（四阶）", "（五阶）", "（六阶）", "（七阶）", "（八阶）", "（九阶）"];
         for (const lv of lvArr) {
             let name = curName.slice(0, index) + lv;
-            let total = main.bagManager.getItemTotalByIdOrName(name);
+            let total = app.bag.getItemTotalByIdOrName(name);
             if (total > 0) {
                 if (needTotal <= total) {
-                    main.bagManager.reduceItemFromBag(name, needTotal);
+                    app.bag.reduceItemFromBag(name, needTotal);
                     break;
                 } else {
                     needTotal -= total;
-                    main.bagManager.reduceItemFromBag(name, total);
+                    app.bag.reduceItemFromBag(name, total);
                 }
             }
         }
@@ -153,7 +175,7 @@ export class MergeEquLayer extends Component {
         let string = "";
         for (const lv of lvArr) {
             let name = curName.slice(0, index) + lv;
-            let total = main.bagManager.getItemTotalByIdOrName(name);
+            let total = app.bag.getItemTotalByIdOrName(name);
             if (total > 0) string = string + name + "x" + total + "\n";
         }
         this.mergeDetailLabel.string = string;
@@ -165,7 +187,7 @@ export class MergeEquLayer extends Component {
         let total = 0;
         for (const lv of lvArr) {
             let name = curName.slice(0, index) + lv;
-            total += main.bagManager.getItemTotalByIdOrName(name);
+            total += app.bag.getItemTotalByIdOrName(name);
         }
         return total;
     }
@@ -181,7 +203,7 @@ export class MergeEquLayer extends Component {
         if (!pre) throw "target is no existent";
         let targetName = pre + curName.slice(2);
 
-        return main.bagManager.getItemDataByIdOrName(targetName);
+        return app.bag.getItemDataByIdOrName(targetName);
     }
     // 初始化物品等级
     initPrefabLv(prefab, data) {

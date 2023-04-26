@@ -176,15 +176,18 @@ export class weaponManager extends Component {
     }
     //加载预制件
     loadPrefab(fileName, callback = null) {
-        let defaultUrl = "/prefabs/hero/weapon/"
+        let path = "/prefabs/hero/weapon/" + fileName;
         // let prefabString = "_" + fileName + "Prefab";
-        em.dispatchs(EventId.loadRes, defaultUrl + fileName, (assets) => {
-            if (callback) callback(assets);
-            else {
+
+        app.loader.load("resources", path, (err, assets) => {
+            if (callback) {
+                callback(assets);
+            } else {
                 // this[prefabString] = assets;
                 plm.addPoolToPools(fileName, new NodePool(), assets);
             }
         });
+  
     }
     // 初始化选择武器界面的广告
     initSelectWeaponAd() {
@@ -196,11 +199,11 @@ export class weaponManager extends Component {
             find("Canvas/heroLayer/GameUILayer/selectWeapon/updateAll").active = false;
         }
     }
-    getAllUpgradeReward(){
+    getAllUpgradeReward() {
         ggd.curAdRewardType = "getAllUpgradeReward";
         glf.playAd();
     }
-    updateUpgradeReward(){
+    updateUpgradeReward() {
         ggd.curAdRewardType = "updateUpgradeReward";
         glf.playAd();
     }
@@ -958,8 +961,16 @@ export class weaponManager extends Component {
             let node = this.btnNodes[i];
             let name = randomArr[i];
             let sprite = node.getChildByName("mask").getChildByName("icon").getComponent(Sprite);
-            // em.dispatch(EventId.loadRes, "images/weapons/" + name + "/spriteFrame", (assets) => sprite.spriteFrame = assets);
-            em.dispatchs(EventId.loadRes, "images/weapons/icon_" + name + "/spriteFrame", (assets) => sprite.spriteFrame = assets);
+
+            let path = "images/weapons/icon_" + name + "/spriteFrame";
+            app.loader.load("resources", path, (err, assets) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                sprite.spriteFrame = assets
+            });
+
             //添加回调函数寻址方式
             glf.createButton(this.node, node, "WeaponManager", "getUpgradeReward", name);
             // 初始化描述

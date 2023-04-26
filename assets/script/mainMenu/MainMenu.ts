@@ -3,7 +3,7 @@ import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('MainMenu')
@@ -100,7 +100,7 @@ export class MainMenu extends Component {
     }
 
     initLvInfo() {
-        let data = main.savingManager.getTempData("training");//读取缓存
+        let data = app.storage.getTempData("training");//读取缓存
         if (null === data) {
             this._levelLabel.string = "江湖好手";
         } else {
@@ -110,7 +110,7 @@ export class MainMenu extends Component {
     }
 
     initLingshiTotal() {
-        let total = main.bagManager.getItemTotalByIdOrName("灵石");
+        let total = app.bag.getItemTotalByIdOrName("灵石");
         this._lingshiTotalLabel.string = total;
     }
 

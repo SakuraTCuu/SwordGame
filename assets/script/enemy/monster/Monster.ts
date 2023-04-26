@@ -181,7 +181,12 @@ export class Monster extends Component {
             this.node.getComponent(Animation).defaultClip = clip;
             this.node.getComponent(Animation).play();
         } else {
-            em.dispatchs(EventId.loadRes, "/anim/enemy/monster/" + animKey, (assets) => {
+            let path = "/anim/enemy/monster/" + animKey;
+            app.loader.load("resources", path, (err, assets) => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
                 this._moveAnimClip = assets;
                 this.node.getComponent(Animation).defaultClip = assets;
                 this.node.getComponent(Animation).play();

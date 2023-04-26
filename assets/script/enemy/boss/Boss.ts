@@ -65,7 +65,13 @@ export class Boss extends Component {
     }
     // 初始化boss移动动画
     initBossMoveAnim(animKey) {
-        em.dispatchs(EventId.loadRes, "/anim/enemy/monster/" + animKey, (assets) => {
+        let path = "/anim/enemy/monster/" + animKey;
+
+        app.loader.load("resources", path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
             this._sprite.getComponent(Animation).defaultClip = assets;
             this._sprite.getComponent(Animation).play();
         });
@@ -84,7 +90,7 @@ export class Boss extends Component {
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
     }
-    onDestroy(){
+    onDestroy() {
         console.log("关闭所有回调");
         this.unscheduleAllCallbacks();
     }
@@ -160,9 +166,15 @@ export class Boss extends Component {
     }
     // 动态加载预制件
     loadPrefab(fileName, callback = null) {
-        let defaultUrl = "/prefabs/enemy/";
-        em.dispatchs(EventId.loadRes, defaultUrl + fileName, (assets) => {
-            if (callback) callback(assets);
+        let path = "/prefabs/enemy/" + fileName;
+        app.loader.load("resources", path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            if (callback) {
+                callback(assets);
+            }
         });
     }
     // ==========================boss冲刺攻击==========================
@@ -194,7 +206,7 @@ export class Boss extends Component {
         let prefab = instantiate(this._sprintTipsPrefab);
         let anim = prefab.getComponent(Animation);
         anim.on("finished", () => {
-            if(this.node) this.startSprint(prefab, endCb, ingCb, ingGap);
+            if (this.node) this.startSprint(prefab, endCb, ingCb, ingGap);
         });
         prefab.getComponent(UITransform).setContentSize(dis, this.node.getChildByName("sprite").getComponent(UITransform).width - 20);
         this.changeRotationByDir(prefab, this._sprintDir);

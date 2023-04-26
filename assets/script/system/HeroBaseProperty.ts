@@ -1,7 +1,7 @@
 
 import { _decorator, Component, Node, JsonAsset, game, director } from 'cc';
 import { em } from '../global/EventManager';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('HeroBaseProperty')
@@ -115,7 +115,7 @@ export class HeroBaseProperty extends Component {
     }
     // 初始化英雄当前装备
     initHeroCurEqu() {
-        let data = main.savingManager.getTempData("curEquData");
+        let data = app.storage.getTempData("curEquData");
         if (data) {
             for (const key in data) {
                 if (Object.prototype.hasOwnProperty.call(data, key)) {
@@ -129,7 +129,7 @@ export class HeroBaseProperty extends Component {
         this.initBasePropertyLv();
     }
     initBasePropertyLv() {
-        let config = main.savingManager.getTempData("HeroBasePropertyLvList");
+        let config = app.storage.getTempData("HeroBasePropertyLvList");
 
         if (null == config) {//数据为空时 起用默认值
             config = {
@@ -177,7 +177,7 @@ export class HeroBaseProperty extends Component {
             expAdditionLv: this._expAdditionLv,
             divineStoneAdditionLv: this._divineStoneAdditionLv
         }
-        main.savingManager.savingToTempData("HeroBasePropertyLvList", list);
+        app.storage.savingToTempData("HeroBasePropertyLvList", list);
     }
 
     // ==============外部调用==============
@@ -211,7 +211,7 @@ export class HeroBaseProperty extends Component {
     }
     //获取修为数据
     getTrainingData(key) {
-        let data = main.savingManager.getTempData("training");
+        let data = app.storage.getTempData("training");
 
         if (null !== data) {
             return this._trainingLvList[data.curLv][key];
@@ -275,7 +275,7 @@ export class HeroBaseProperty extends Component {
     }
     // 记录装备数据
     savingEquData() {
-        main.savingManager.savingToTempData("curEquData", this._heroCurEqu);
+        app.storage.savingToTempData("curEquData", this._heroCurEqu);
     }
     // 获取当前玩家的装备 
     getCurHeroEqu(type) {

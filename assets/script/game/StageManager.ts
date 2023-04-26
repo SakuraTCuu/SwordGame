@@ -4,7 +4,6 @@ import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
 import { Queue } from '../global/Queue';
-import main from '../Main';
 const { ccclass, property } = _decorator;
 
 @ccclass('StageManager')
@@ -267,13 +266,13 @@ export class StageManager extends Component {
         // 添加奖励到背包
         passReward.forEach(data => {
             if (data.total > 0) {
-                main.bagManager.addItemToBag(data.id, data.total);
+                app.bag.addItemToBag(data.id, data.total);
             }
         });
         //更新关卡进度
         if (isPass && ggd.curStage + 1 > ggd.stageProgress) {
             ggd.stageProgress = ggd.curStage + 1;
-            main.savingManager.savingGlobalDataToTempData();
+            app.storage.savingGlobalDataToTempData();
         }
     }
     //通过当前数据创建怪物

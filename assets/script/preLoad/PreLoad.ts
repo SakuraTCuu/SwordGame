@@ -1,14 +1,17 @@
-import { _decorator, Component, director, Sprite, Label, Game, game, find, sys, Settings, profiler, EditBox, Node } from 'cc';
+import { _decorator, Component, director, Sprite, Label, Game, game, find, sys, Settings, profiler, EditBox, Node, Asset } from 'cc';
 import { em } from '../global/EventManager';
 import { gUrl } from '../global/GameUrl';
 import { ggd } from '../global/globalData';
 import { hr } from '../global/HttpRequest';
 import { EventId } from '../global/GameEvent';
+import IView from '../Interfaces/IView';
+import PreLoadRes from './PreLoadRes';
 
 const { ccclass, property } = _decorator;
 
 @ccclass('PreLoad')
-export class PreLoad extends Component {
+export class PreLoad extends IView {
+
     @property({
         type: Label,
         displayName: "进度条背景图"
@@ -38,6 +41,12 @@ export class PreLoad extends Component {
         displayName: "进度条节点"
     })
     progressNode: Node = null;
+
+    @property({
+        type: Label,
+        displayName: "进度条文本描述"
+    })
+    descLabel: Label = null;
 
     @property({
         type: Node,
@@ -72,9 +81,7 @@ export class PreLoad extends Component {
     _curAccountString: string;
     _curPasswordString: string;
 
-    onLoad() {
-        em.add(EventId.updateLoadingProgress, this.updateLoadingProgress, this);
-        em.add(EventId.loadingComplete, this.showLoginLayer, this);
+    protected onRegister?(...r: any[]): void {
 
         this.gameName.active = true;
         this.progressNode.active = true;
@@ -83,19 +90,31 @@ export class PreLoad extends Component {
         director.preloadScene("mainMenu");
     }
 
-    onDestroy() {
+    protected onUnRegister?(...r: any[]): void {
         if (em.has(EventId.hideBanner)) {
             em.dispatchs(EventId.hideBanner);
         }
     }
 
-    start() {
-        // profiler.hideStats();//关闭fps
+    onTick(delta: number): void {
+
+    }
+
+    protected start(): void {
+        new PreLoadRes(this).load();
+    }
+
+    /**
+     * 展示加载的资源
+     * @param str 
+     */
+    showDescLabel(str: string) {
+        this.descLabel.string = str;
     }
 
     //刷新加载进度
     updateLoadingProgress(fillRange) {
-        if (fillRange <= this.fillSprite.fillRange) return;
+        // if (fillRange <= this.fillSprite.fillRange) return;
         this.fillSprite.fillRange = fillRange;
         this.progressLabel.string = (fillRange * 100).toFixed(2) + "%";
     }

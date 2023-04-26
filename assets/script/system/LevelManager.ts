@@ -1,13 +1,3 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-11-11 17:57:36
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-11-25 17:34:04
- * @FilePath: \to-be-immortal\assets\script\system\LevelManager.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 export { LevelManager };
 
 /**

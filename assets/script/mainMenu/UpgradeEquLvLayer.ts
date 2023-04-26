@@ -3,7 +3,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
-import main from '../Main';
+;
 const { ccclass, property } = _decorator;
 
 @ccclass('UpgradeEquLvLayer')
@@ -58,6 +58,17 @@ export class UpgradeEquLvLayer extends Component {
     onDisable() {
         this.recoveryDefault();
     }
+
+    loadRes(path: string, callback: Function) {
+        app.loader.load('resources', path, (err, assets) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            callback && callback(assets);
+        });
+    }
+
     // 恢复默认状态
     recoveryDefault() {
         for (const node of this.materialNode) {
@@ -82,9 +93,9 @@ export class UpgradeEquLvLayer extends Component {
             let prefab = this._itemPrefabArr.shift();
             plm.putToPool("SSLItemPrefab", prefab);
         }
-        let list = main.bagManager.getItemList();
+        let list = app.bag.getItemList();
         for (const key in list) {
-            let data = main.bagManager.getItemDataByIdOrName(key);
+            let data = app.bag.getItemDataByIdOrName(key);
             if (data.type == "装备") {
                 let total = list[key];
                 let prefab = plm.getFromPool("SSLItemPrefab");
@@ -95,9 +106,15 @@ export class UpgradeEquLvLayer extends Component {
                 let loadUrl: string = data.loadUrl;
                 if (!data.loadUrl) loadUrl = "item_default";
                 loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-                em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets, () => {
-                    em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
+
+
+                // em.dispatch(EventId.loadRes, loadUrl, (assets) => sprite.spriteFrame = assets, () => {
+                //     em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => sprite.spriteFrame = assets);
+                // });
+                this.loadRes(loadUrl, (assets) => {
+                    sprite.spriteFrame = assets;
                 });
+
                 // prefab.getChildByName("total").getComponent(Label).string = "X" + total;
                 prefab.getChildByName("total").getComponent(Label).string = total;
                 // prefab.getChildByName("name").getComponent(Label).string = data.name;
@@ -118,7 +135,7 @@ export class UpgradeEquLvLayer extends Component {
     }
     // 在升阶界面 点击item
     onBtnItemInUpgradeEquLvLayer(e, p) {
-        let data = main.bagManager.getItemDataByIdOrName(p);
+        let data = app.bag.getItemDataByIdOrName(p);
         console.log("onBtnItemInUpgradeEquLvLayer", data);
         if (data.lv >= 5) {
             em.dispatch("tipsViewShow", "已达到最大等级，无法升级。");
@@ -136,15 +153,22 @@ export class UpgradeEquLvLayer extends Component {
         let loadUrl: string = data.loadUrl;
         if (!data.loadUrl) loadUrl = "item_default";
         loadUrl = "images/items/" + loadUrl + "/spriteFrame";
-        em.dispatch(EventId.loadRes, loadUrl, (assets) => {
+
+        // em.dispatch(EventId.loadRes, loadUrl, (assets) => {
+        //     this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        //     this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        // }, () => {
+        //     em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => {
+        //         this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        //         this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
+        //     });
+        // });
+
+        this.loadRes(loadUrl, (assets) => {
             this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
             this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
-        }, () => {
-            em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => {
-                this.curSelect.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
-                this.target.getChildByName("Sprite").getComponent(Sprite).spriteFrame = assets;
-            });
         });
+
         //初始化阶
         let list = { 1: "一阶", 2: "二阶", 3: "三阶", 4: "四阶", 5: "五阶", 6: "六阶", 7: "七阶", 8: "八阶", 9: "九阶" };
         this.curSelect.getChildByName("Label").getComponent(Label).string = list[data.lv];
@@ -156,10 +180,10 @@ export class UpgradeEquLvLayer extends Component {
         for (const key in materials) {
             if (Object.prototype.hasOwnProperty.call(materials, key)) {
                 const total = materials[key];
-                let mData = main.bagManager.getItemDataByIdOrName(key);
+                let mData = app.bag.getItemDataByIdOrName(key);
                 console.log("需要" + key + "x" + total);
                 let node = this.materialNode[count];
-                let isEnough = main.bagManager.itemIsEnough(key, total);
+                let isEnough = app.bag.itemIsEnough(key, total);
 
                 if (isEnough) node.getComponent(Sprite).material = this.defaultMaterial;
                 else {
@@ -168,13 +192,19 @@ export class UpgradeEquLvLayer extends Component {
                 }
                 node.getChildByName("Label").getComponent(Label).string = "x" + total;
                 let loadUrl = "images/items/" + mData.loadUrl + "/spriteFrame";
-                em.dispatch(EventId.loadRes, loadUrl, (assets) => {
+                
+                // em.dispatch(EventId.loadRes, loadUrl, (assets) => {
+                //     node.getComponent(Sprite).spriteFrame = assets;
+                // }, () => {
+                //     em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => {
+                //         node.getComponent(Sprite).spriteFrame = assets;
+                //     });
+                // });
+
+                this.loadRes(loadUrl, (assets) => {
                     node.getComponent(Sprite).spriteFrame = assets;
-                }, () => {
-                    em.dispatch(EventId.loadRes, "images/items/item_default/spriteFrame", (assets) => {
-                        node.getComponent(Sprite).spriteFrame = assets;
-                    });
                 });
+
                 count++;
             };
         };
@@ -194,10 +224,10 @@ export class UpgradeEquLvLayer extends Component {
         for (const key in materials) {
             if (Object.prototype.hasOwnProperty.call(materials, key)) {
                 const total = materials[key];
-                main.bagManager.reduceItemFromBag(key, total);
+                app.bag.reduceItemFromBag(key, total);
             }
         }
-        main.bagManager.reduceItemFromBag(this._curSelectItemData.name, 1);
+        app.bag.reduceItemFromBag(this._curSelectItemData.name, 1);
 
         let list = { 1: "一阶", 2: "二阶", 3: "三阶", 4: "四阶", 5: "五阶", 6: "六阶", 7: "七阶", 8: "八阶", 9: "九阶" };
         let targetLv = list[this._curSelectItemData.lv + 1];
@@ -205,7 +235,7 @@ export class UpgradeEquLvLayer extends Component {
         let targetName = this._curSelectItemData.name.slice(0, index + 1) + targetLv + "）";
         console.log("targetName", targetName);
 
-        main.bagManager.addItemToBag(targetName, 1);
+        app.bag.addItemToBag(targetName, 1);
 
         let gets = {};
         gets[targetName] = 1;
@@ -270,7 +300,7 @@ export class UpgradeEquLvLayer extends Component {
         let lvStr = list[curLv + 1];
         if (!lvStr) throw "lvStr is error";
         let nextName = name + "（" + lvStr + "）";
-        return main.bagManager.getItemDataByIdOrName(nextName);
+        return app.bag.getItemDataByIdOrName(nextName);
     }
 }
 
