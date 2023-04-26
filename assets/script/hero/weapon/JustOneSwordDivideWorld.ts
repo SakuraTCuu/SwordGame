@@ -12,6 +12,7 @@ import { _decorator, Component, Node, Vec2 } from 'cc';
 import { em } from '../../global/EventManager';
 import { attackInterval, tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('JustOneSwordDivideWorld')
@@ -23,7 +24,7 @@ export class JustOneSwordDivideWorld extends Weapon {
     playThisWeaponAudio(total) {
         for (let i = 0; i < total; i++) {
             this.scheduleOnce(() => {
-                em.dispatch("playOneShot", "battle/spell");
+                app.audio.playSFX(Constant.Audio.SPELL_SFX);
             }, i);
         }
 

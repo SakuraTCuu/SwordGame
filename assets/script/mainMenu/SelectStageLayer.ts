@@ -13,6 +13,7 @@ import { _decorator, Component, Node, Prefab, instantiate, Label, find, director
 import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
+import { Constant } from '../Common/Constant';
 ;
 const { ccclass, property } = _decorator;
 
@@ -217,7 +218,8 @@ export class SelectCheckpointLayer extends Component {
 
             director.loadScene("game", () => {
                 // em.dispatch("switchMainBgm","/audio/music/风声");
-                em.dispatch("switchMainBgm", "/audio/music/不谓侠");
+                app.audio.playBGM(Constant.Audio.LEVEL_BGM);
+                // em.dispatch("switchMainBgm", "/audio/music/不谓侠");
             });
         }
         else {

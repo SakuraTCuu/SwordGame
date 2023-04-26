@@ -14,6 +14,7 @@ import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import { Constant } from '../Common/Constant';
 ;
 const { ccclass, property } = _decorator;
 
@@ -226,7 +227,9 @@ export class HeroInfoLayer extends Component {
         }
     }
     onSelectBtn(e, p) {
-        if (e !== null) em.dispatch("playOneShot", "common/通用按键");
+        if (e !== null) {
+            app.audio.playSFX(Constant.Audio.CLICK_SFX);
+        }
         this.updateBtnSF(parseInt(p) - 1);
 
         switch (p) {

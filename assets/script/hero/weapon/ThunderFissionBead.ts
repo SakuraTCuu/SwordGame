@@ -14,7 +14,6 @@ export class ThunderFissionBead extends Weapon {
         this._canSplitTimes = splitTimes;
         this._flyDir = dir;
         this.initSkillData();
-        //em.dispatch("playOneShot","battle/bullet");
         //每秒检测一次是否超过距离
         this.isExceedMaxDistance(500, 1);
         this.node.getComponent(Animation).play();

@@ -4,6 +4,7 @@ import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { LevelManager } from '../system/LevelManager';
 import { EventId } from '../global/GameEvent';
+import { Constant } from '../Common/Constant';
 ;
 const { ccclass, property } = _decorator;
 
@@ -140,7 +141,8 @@ export class TrainingLayer extends Component {
     }
     //使用丹药
     onBtnUsingPill(e, p) {
-        em.dispatch("playOneShot", "common/吃药");
+        app.audio.playSFX(Constant.Audio.TAKE_PILLS);
+        
         app.bag.reduceItemFromBag(p, 1);//使用丹药
         this.updatePillsContent();
         let exp: number;
@@ -225,7 +227,8 @@ export class TrainingLayer extends Component {
     }
     playUpgradeAnim() {
         console.log("播放突破动画");
-        em.dispatch("playOneShot", "common/突破");
+        app.audio.playSFX(Constant.Audio.BREAKTHROUGH);
+
         let anim = find("training/animPar", this.node).getComponent(Animation);
         anim.play();
     }

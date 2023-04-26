@@ -3,6 +3,7 @@ import { em } from '../global/EventManager';
 import { ggd } from '../global/globalData';
 import { glf } from '../global/globalFun';
 import { EventId } from '../global/GameEvent';
+import { Constant } from '../Common/Constant';
 ;
 const { ccclass, property } = _decorator;
 
@@ -118,31 +119,45 @@ export class MainMenu extends Component {
         this.updateBtnSF(parseInt(p) - 1);
         switch (p) {
             case "1":
-                if (e !== null) em.dispatch("playOneShot", "common/进入试炼场");
+                if (e !== null){
+                    app.audio.playSFX(Constant.Audio.INTO_PROVING_GROUND_SFX);
+                } 
                 this.openLayer(this._SSLNode);
                 break;
             case "2":
-                if (e !== null) em.dispatch("playOneShot", "common/点击人物界面");
+                if (e !== null) {
+                    app.audio.playSFX(Constant.Audio.CLICK_FIGURE_SFX);
+                }
                 this.openLayer(this._HILNode);
                 break;
             case "3":
-                if (e !== null) em.dispatch("playOneShot", "common/点击修行界面");
+                if (e !== null) {
+                    app.audio.playSFX(Constant.Audio.CLICK_PRACTICE_SFX);
+                }
                 this.openLayer(this._TLNode);
                 break;
             case "4":
-                if (e !== null) em.dispatch("playOneShot", "common/点击炼丹界面");
+                if (e !== null){
+                    app.audio.playSFX(Constant.Audio.CLICK_ALCHEMY_SFX);
+                } 
                 this.openLayer(this._MPNode);
                 break;
             case "5":
-                if (e !== null) em.dispatch("playOneShot", "common/点击秘籍界面");
+                if (e !== null) {
+                    app.audio.playSFX(Constant.Audio.CLICK_CHEATS_SFX);
+                }
                 this.openLayer(this._SBNode);
                 break;
             case "6":
-                // if (e !== null) em.dispatch("playOneShot", "common/点击秘籍界面");
+                // if (e !== null){
+                    // app.audio.playSFX(Constant.Audio.CLICK_CHEATS_SFX);
+                // } 
                 this.openLayer(this._PHNode);
                 break;
             case "7":
-                // if (e !== null) em.dispatch("playOneShot", "common/点击秘籍界面");
+               // if (e !== null){
+                    // app.audio.playSFX(Constant.Audio.CLICK_CHEATS_SFX);
+                // } 
                 this.openLayer(this._AINode);
                 break;
 

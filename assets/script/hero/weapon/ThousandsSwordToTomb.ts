@@ -13,6 +13,7 @@ import { em } from '../../global/EventManager';
 import { ggd, groupIndex, tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('ThousandsSwordToTomb')
@@ -83,7 +84,8 @@ export class ThousandsSwordToTomb extends Weapon {
     }
     playDestroyAnim() {
         if (this._isPlayAnim) return;
-        em.dispatch("playOneShot","battle/砸地");
+        
+        app.audio.playSFX(Constant.Audio.HIT_GROUND_SFX);
         this._isPlayAnim = true;
         let color = new Color(255, 255, 255, 255);
         tween(this.node).by(.5, { position: new Vec3(0, 0, 0) }, {

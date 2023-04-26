@@ -12,6 +12,7 @@ import { _decorator } from 'cc';
 import { em } from '../../global/EventManager';
 import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass } = _decorator;
 
 @ccclass('Spell')
@@ -23,7 +24,7 @@ export class Spell extends Weapon {
         // this.schedule(this.playSpellAudio,1);
     }
     playSpellAudio(){
-        em.dispatch("playOneShot","battle/spell");
+        app.audio.playSFX(Constant.Audio.SPELL_SFX);
     }
 }
 

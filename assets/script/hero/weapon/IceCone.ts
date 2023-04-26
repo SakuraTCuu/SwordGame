@@ -13,13 +13,15 @@ import { em } from '../../global/EventManager';
 import { tagData } from '../../global/globalData';
 import { Sword } from './Sword';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('IceCone')
 export class IceCone extends Weapon {
     init(skillData,flyDir) {
         this.initSkillData(skillData,flyDir);
-        em.dispatch("playOneShot","battle/frozen");
+
+        app.audio.playSFX(Constant.Audio.FROZEN_SFX);
     }
     initSkillData(data, flyDir) {
         this._damage = data.damage;

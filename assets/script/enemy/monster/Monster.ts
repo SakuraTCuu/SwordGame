@@ -7,6 +7,7 @@ import Simulator from '../../RVO/Simulator';
 import Vector2 from '../../RVO/Vector2';
 import { monsterData } from './MonsterData';
 import { EventId } from '../../global/GameEvent';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 //
 @ccclass('Monster')
@@ -214,7 +215,6 @@ export class Monster extends Component {
     //更新血量
     updateBlood(changeValue: number, backDis: number = 0) {
         // console.log("monster更新血量");
-        // em.dispatch("playOneShot", "battle/怪物受击");
         this._curBlood += changeValue;
         if (this._curBlood <= 0) {
             // // 死亡材质效果,留给boss 使用
@@ -582,7 +582,7 @@ export class Monster extends Component {
     }
     // 添加 debuff frozen
     addDebuffFrozen(t) {
-        em.dispatch("playOneShot", "battle/frozen");
+        app.audio.playSFX(Constant.Audio.FROZEN_SFX);
         this._debuffList.frozen.state = true;
         this._debuffList.frozen.duration = t;
         this.frozenEffect();

@@ -24,7 +24,6 @@ export class Sword extends Weapon {
         // this.initBoxCollider(tagData[weaponName]);
         this.initBoxCollider(tagData[weaponName],{x:-7,y:-8});
         this.changeBulletRotationByFlyDir();
-        //em.dispatch("playOneShot","battle/bullet");
     }
     colliderMonster(other) {
         if (this.isStopRun(other)) return;

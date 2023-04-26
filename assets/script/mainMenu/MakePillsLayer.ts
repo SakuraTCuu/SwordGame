@@ -13,6 +13,7 @@ import { em } from '../global/EventManager';
 import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { EventId } from '../global/GameEvent';
+import { Constant } from '../Common/Constant';
 ;
 const { ccclass, property } = _decorator;
 
@@ -162,7 +163,7 @@ export class MakePillsLayer extends Component {
         let node = e.target;
         this._curPillData = node.data;
         console.log("_curPillData", this._curPillData);
-        em.dispatch("playOneShot", "common/通用按键");
+        app.audio.playSFX(Constant.Audio.CLICK_SFX);
         this.updatePillState(node);
         this.updateMaterialDemand();
     }
@@ -227,7 +228,7 @@ export class MakePillsLayer extends Component {
             em.dispatch("setGuideData", "MakePillsLayer", true);
             em.dispatch("initMainMenuByGuideData");
         }
-        em.dispatch("playOneShot", "common/炼制丹药");
+        app.audio.playSFX(Constant.Audio.REFINING_ELIXIR);
         
         let itemIsEnough = app.bag.itemIsEnough(this._curPillData.consumeItemName, this._curPillData.consumeTotal);
         let lingshiIsEnough = app.bag.itemIsEnough( "灵石", this._curPillData.consumeLingshi);

@@ -15,7 +15,7 @@ export default class PreLoadRes {
 
     _resList: Array<ResItem> = [
         { id: 0, path: "anim", desc: "动画资源", type: AnimationClip },
-        { id: 1, path: "audio", desc: "音频资源", type: AudioClip },
+        // { id: 1, path: "audio", desc: "音频资源", type: AudioClip },
         { id: 2, path: "data", desc: "配表资源", type: JsonAsset },
         { id: 3, path: "images", desc: "图片资源", type: SpriteFrame },
         { id: 4, path: "prefabs", desc: "预制资源", type: Prefab },

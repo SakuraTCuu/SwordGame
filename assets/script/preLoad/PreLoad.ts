@@ -6,6 +6,7 @@ import { hr } from '../global/HttpRequest';
 import { EventId } from '../global/GameEvent';
 import IView from '../Interfaces/IView';
 import PreLoadRes from './PreLoadRes';
+import { Constant } from '../Common/Constant';
 
 const { ccclass, property } = _decorator;
 
@@ -102,6 +103,7 @@ export class PreLoad extends IView {
 
     protected start(): void {
         new PreLoadRes(this).load();
+        app.audio.playBGM(Constant.Audio.HOME_BGM);
     }
 
     /**

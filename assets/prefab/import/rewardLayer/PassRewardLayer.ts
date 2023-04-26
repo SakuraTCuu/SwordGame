@@ -12,6 +12,7 @@ import { _decorator, Component, Node, Sprite, find, SpriteFrame, instantiate, La
 import { em } from '../../../script/global/EventManager';
 import { ggd } from '../../../script/global/globalData';
 import { EventId } from '../../../script/global/GameEvent';
+import { Constant } from '../../../script/Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('PassRewardLayer')
@@ -130,7 +131,8 @@ export class PassRewardLayer extends Component {
         if (total <= 0) {
             console.log("跳转到菜单界面");
             director.loadScene("mainMenu", () => {
-                em.dispatch("switchMainBgm", "/audio/music/刀剑如梦");
+                // em.dispatch("switchMainBgm", "/audio/music/刀剑如梦");
+                app.audio.playBGM(Constant.Audio.HOME_BGM);
             });
         } else this.scheduleOnce(() => {
             this.enterMainMenu();

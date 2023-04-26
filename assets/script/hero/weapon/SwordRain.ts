@@ -19,7 +19,6 @@ export class SwordRain extends Weapon {
 
     init(skillData) {
         this.initSkillData(skillData);
-        //em.dispatch("playOneShot","battle/bullet");
     }
     initSkillData(data) {
         this._damage = data.damage;

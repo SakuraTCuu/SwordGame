@@ -22,7 +22,6 @@ export class SpiritBullet extends Weapon {
         this.initCircleCollider(tagData.sword);
         // this.initBoxCollider((tagData.sword));
         this.changeBulletRotationByFlyDir();
-        //em.dispatch("playOneShot","battle/bullet");
     }
     colliderMonster(other) {
         if (this.isStopRun(other)) return;

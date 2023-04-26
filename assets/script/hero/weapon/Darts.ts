@@ -26,7 +26,6 @@ export class Darts extends Weapon {
         let weaponName: string = data.name;
         this.initBoxCollider(tagData[weaponName]);
         this._isCanSplit = isCanSplit;
-        //em.dispatch("playOneShot","battle/bullet");
     }
     colliderMonster(other) {
         if (this.isStopRun(other)) return;
