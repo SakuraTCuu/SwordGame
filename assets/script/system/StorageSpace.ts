@@ -12,11 +12,14 @@ export class StorageSpace {
 
     _itemData = {};
 
-    _IM: ItemManger;
+    _itemManager: ItemManger;
 
     constructor() { }
 
     lazyInitialize() {
+
+        this._itemManager = main.itemManger;
+
         em.add(EventId.loadingComplete, this.lazyInitItemData, this);
     }
 
@@ -34,7 +37,6 @@ export class StorageSpace {
         // });
 
         this.initItemData();
-        this._IM = new ItemManger();
         // this.schedule(this.showAll,1);
     }
 
@@ -53,7 +55,7 @@ export class StorageSpace {
     }
 
     showAll() {
-        console.log("_IM", this._IM);
+        console.log("_itemManager", this._itemManager);
     }
 
     //初始化仓库数据
@@ -64,7 +66,7 @@ export class StorageSpace {
                 if (Object.prototype.hasOwnProperty.call(data, key)) {
                     const element = data[key];
                     // this.addItemToBag(key, element, false);
-                    this._IM.addItem(parseInt(key), element);
+                    this._itemManager.addItem(parseInt(key), element);
                 }
             }
         }
@@ -153,7 +155,7 @@ export class StorageSpace {
             throw "id_name err,id is " + id_name + " item is err";
         }
         let id = this._itemData[id_name].id;
-        this._IM.addItem(id, total);
+        this._itemManager.addItem(id, total);
 
         main.savingManager.savingToTempData("storageSpace", this.getItemList());
 
@@ -161,17 +163,17 @@ export class StorageSpace {
     reduceItemFromBag(id_name, total: number) {
         if (!this._itemData.hasOwnProperty(id_name)) throw "id_name err,id_name is " + id_name + " item is err";
         let id = this._itemData[id_name].id;
-        let result = this._IM.reduceItem(id, total);
+        let result = this._itemManager.reduceItem(id, total);
         main.savingManager.savingToTempData("storageSpace", this.getItemList());
         return result;
     }
     itemIsEnough(id_name, total: number) {
         if (!this._itemData.hasOwnProperty(id_name)) throw "id_name err,id_name is " + id_name + " item is err";
         let id = this._itemData[id_name].id;
-        return this._IM.itemIsEnough(id, total);
+        return this._itemManager.itemIsEnough(id, total);
     }
     getItemList() {
-        return this._IM._itemList;
+        return this._itemManager._itemList;
     }
     //获取指定id 或 名称的物品 的数量
     getItemTotalByIdOrName(id_name) {
@@ -182,15 +184,15 @@ export class StorageSpace {
             return null;
         }
         let id = this._itemData[id_name].id;
-        return this._IM.getItemTotal(id);
+        return this._itemManager.getItemTotal(id);
     }
     //获取已拥有的 所有丹药
     getAllPills() {
         let list = {};
-        for (const id in this._IM._itemList) {
-            if (Object.prototype.hasOwnProperty.call(this._IM._itemList, id)) {
+        for (const id in this._itemManager._itemList) {
+            if (Object.prototype.hasOwnProperty.call(this._itemManager._itemList, id)) {
                 if (this._itemData[id].type2 == "丹药") {
-                    list[id] = this._IM._itemList[id];
+                    list[id] = this._itemManager._itemList[id];
                 };
             }
         }

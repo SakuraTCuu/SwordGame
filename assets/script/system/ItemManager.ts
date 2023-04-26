@@ -1,19 +1,15 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-06 17:21:02
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-09-29 17:04:50
- * @FilePath: \copy9train\assets\script\system\ItemManager.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
-export { ItemManger }
-
 //物品管理系统 
-class ItemManger {
+export class ItemManger {
+
     _itemList = {};
+
     constructor() { }
+
+
+    public lazyInitialize() {
+        this._itemList = {};
+    }
+
     // 添加物品
     addItem(id: number, total: number) {
         if (this._itemList.hasOwnProperty(id)) {
@@ -22,10 +18,12 @@ class ItemManger {
             this.addNewItemToList(id, total);
         }
     }
+
     // 添加新物品
     addNewItemToList(id: number, total: number) {
         this._itemList[id] = total;
     }
+
     /**
      * @description: 减少指定id物品的数量
      * @param {number} id 需要减少的物品id
@@ -35,25 +33,35 @@ class ItemManger {
     reduceItem(id: number, total: number) {
         if (this._itemList.hasOwnProperty(id)) {
             //判断是否够删除
-            if (!this.itemIsEnough(id,total)) return false;
+            if (!this.itemIsEnough(id, total)) {
+                return false;
+            }
             this._itemList[id] -= total;
-            if (this._itemList[id] === 0) this.clearItemFromList(id);
+            if (this._itemList[id] === 0) {
+                this.clearItemFromList(id);
+            }
         } else {
             return false;
         }
         return true;
     }
+
     //判断物品数量是否足够
-    itemIsEnough(id,total){
-        return this._itemList.hasOwnProperty(id)&&this._itemList[id] >= total;
+    itemIsEnough(id, total) {
+        return this.getItemTotal(id) >= total;
     }
+
     // 清空物品
     clearItemFromList(id: number) {
         delete this._itemList[id];
     }
+
     //获取物品数量
     getItemTotal(id) {
-        if (this._itemList.hasOwnProperty(id)) return this._itemList[id]
-        else return 0;
+        if (this._itemList.hasOwnProperty(id)) {
+            return this._itemList[id]
+        }
+        return 0;
     }
+
 }

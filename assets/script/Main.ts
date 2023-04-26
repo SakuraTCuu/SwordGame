@@ -4,6 +4,7 @@ import { SavingManager } from './system/SavingManager';
 import { StorageSpace } from './system/StorageSpace';
 import { Director } from 'cc';
 import { Scene } from 'cc';
+import { ItemManger } from './system/ItemManager';
 
 class Main {
 
@@ -12,6 +13,8 @@ class Main {
   readonly savingManager: SavingManager = new SavingManager();
 
   readonly dynamicLoading: DynamicLoading = new DynamicLoading();
+
+  readonly itemManger: ItemManger = new ItemManger();
 
   constructor() {
     this.init();
@@ -32,6 +35,7 @@ director.once(Director.EVENT_AFTER_SCENE_LAUNCH, (scene: Scene) => {
   main.bagManager.lazyInitialize();
   main.dynamicLoading.lazyInitialize();
   main.savingManager.lazyInitialize();
+  main.itemManger.lazyInitialize();
 });
 
   // App初始化
