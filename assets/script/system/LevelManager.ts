@@ -16,25 +16,24 @@ class LevelManager {
     curExp: number;
     maxExp: number;
     levelMappingExpList: object;
-    constructor(obj:{level:number,maxLevel:number,curExp:number,levelMappingExpList:any}) {
+    constructor(obj: { level: number, maxLevel: number, curExp: number, levelMappingExpList: any }) {
         this.level = obj.level;
         this.maxLevel = obj.maxLevel;
         this.curExp = obj.curExp;
         this.levelMappingExpList = obj.levelMappingExpList; //可以单独拿出来
         this.maxExp = this.levelMappingExpList[this.maxLevel - 1].exp;
-        console.log("levelManager",this);
-        
+        console.log("levelManager", this);
+
     }
     /**
      * @method addExp 增加经验
      * @return {boolean} 是否升级；
      */
-    addExp(num:number) {
+    addExp(num: number) {
         // console.log("this.curExp ",this.curExp );
         // console.log("this.maxExp  ",this.maxExp  );
         // console.log("num",num);
-        
-        
+
         //新增 最大等级限制
         if (this.curExp >= this.maxExp || this.level >= this.maxLevel) return console.log("经验已满");
         this.curExp += num;
@@ -47,15 +46,17 @@ class LevelManager {
             return true;
         };
     }
+
     // 是否能够升级
     isUpgrade() {
         return this.curExp >= this.levelMappingExpList[this.level].exp;
     }
+
     // 升级
     upgrade() {
         let len = this.maxLevel;
         let start = this.level + 1;
-        let afterLv:number;
+        let afterLv: number;
         for (let i = start; i < len; i++) {
             // let exp = this.levelMappingExpList[i].exp;
             let exp = this.levelMappingExpList[i - 1].exp;
@@ -69,17 +70,18 @@ class LevelManager {
         this.level = afterLv;
         console.log("等级+" + addNum);
     }
+    
     //获取经验进度
     getExpProgress() {
-        if (this.level == 1) return this.curExp / this.levelMappingExpList[this.level ].exp;
+        if (this.level == 1) return this.curExp / this.levelMappingExpList[this.level].exp;
         else {
             let fontLvExp = this.levelMappingExpList[this.level - 1].exp;
-            let curLvExp = this.levelMappingExpList[this.level -0].exp;
+            let curLvExp = this.levelMappingExpList[this.level - 0].exp;
             // console.log("fontLvExp",fontLvExp);
             // console.log("curLvExp",curLvExp);
             // console.log("this.curExp - fontLvExp",this.curExp - fontLvExp);
             // console.log("curLvExp - fontLvExp",curLvExp - fontLvExp);
-            return (this.curExp - fontLvExp)/(curLvExp - fontLvExp);
+            return (this.curExp - fontLvExp) / (curLvExp - fontLvExp);
         };
     }
     // 返回当前等级

@@ -2,6 +2,7 @@ import Loader from "../Libs/Loader/Loader";
 import LoaderKeeper from "../Libs/Loader/LoaderKeeper";
 import { Component, _decorator } from "cc"
 import ITicker from "./ITicker"
+import { Constant } from "../Common/Constant";
 
 const { ccclass } = _decorator
 
@@ -20,6 +21,19 @@ export default abstract class IBaseComponent extends Component implements ITicke
         const l = this.loader = Loader.Instance.createSubLoader();
         this.node.addComponent(LoaderKeeper).init(l);
         return l;
+    }
+
+    /**订阅一个消息 */
+    subscribe(eventName: Constant.EventId, cb: Function, target?: any, isOnce?: boolean) {
+        app.notice.on(eventName, cb as any, target, isOnce);
+    }
+
+    dispatch(eventName: Constant.EventId, ...args: any) {
+        app.notice.emit(eventName, ...args);
+    }
+
+    unsubscribe(eventName: Constant.EventId, cb?: Function, target?: any) {
+        app.notice.off(eventName, cb as any, target);
     }
 
     onLoad() {

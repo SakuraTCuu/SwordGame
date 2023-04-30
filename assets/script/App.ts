@@ -19,6 +19,7 @@ import { BagService } from './Services/BagService';
 import { ItemDataService } from './Services/ItemDataService';
 import { StorageService } from './Services/StorageService';
 import LoaderService from './Services/LoaderService';
+import { StaticDataService } from './Services/StaticDataService';
 
 class App extends IFrameWork {
 
@@ -26,6 +27,11 @@ class App extends IFrameWork {
    * 背包数据
    */
   public readonly bag = BagService.instance
+
+  /**
+   * 游戏静态数据
+   */
+  public readonly staticData = StaticDataService.instance
 
   /**
    * 本地存储
@@ -75,14 +81,12 @@ class App extends IFrameWork {
    */
   public readonly cmd = CommandService.instance
 
-
   /**
    *平台
    *
    * @memberof App
    */
   public readonly platform = PlatformService.instance
-
 
   /**
    * 多语言
@@ -140,26 +144,11 @@ class App extends IFrameWork {
   * @memberof App
   */
   public readonly ui = UIService.instance
-
-
-  constructor() {
-    super();
-    this.init();
-  }
-
-  init() {
-
-  }
-
 }
-
-const main = new App();
-export default main;
 
 declare global {
   const app: App;
 }
-
 
 if (typeof app == typeof undefined) {
 

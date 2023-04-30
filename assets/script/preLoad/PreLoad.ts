@@ -1,11 +1,6 @@
-import { _decorator, Component, director, Sprite, Label, Game, game, find, sys, Settings, profiler, EditBox, Node, Asset } from 'cc';
-import { em } from '../global/EventManager';
-import { gUrl } from '../global/GameUrl';
+import { _decorator, Component, director, Sprite, Label, Game, game, find, sys, Settings, profiler, EditBox, Node, Asset, AnimationClip, AssetManager, JsonAsset, Prefab, SpriteFrame } from 'cc';
 import { ggd } from '../global/globalData';
-import { hr } from '../global/HttpRequest';
-import { EventId } from '../global/GameEvent';
 import IView from '../Interfaces/IView';
-import PreLoadRes from './PreLoadRes';
 import { Constant } from '../Common/Constant';
 
 const { ccclass, property } = _decorator;
@@ -49,38 +44,7 @@ export class PreLoad extends IView {
     })
     descLabel: Label = null;
 
-    @property({
-        type: Node,
-        displayName: "登录Layer"
-    })
-    loginLayer: Node = null;
-
-    @property({
-        type: EditBox,
-        displayName: "账户名输入框"
-    })
-    accountEditBox: EditBox = null;
-
-    @property({
-        type: EditBox,
-        displayName: "密码输入框"
-    })
-    pwdEditBox: EditBox = null;
-
-    @property({
-        type: Node,
-        displayName: "loading"
-    })
-    loading: Node = null;
-
-    @property({
-        type: Label,
-        displayName: "loadingLabel"
-    })
-    loadingLabel: Label = null;
-
-    _curAccountString: string;
-    _curPasswordString: string;
+    _resList = Constant.Res.ResourcesList;
 
     protected onRegister?(...r: any[]): void {
 
@@ -88,167 +52,55 @@ export class PreLoad extends IView {
         this.progressNode.active = true;
         this.versionCode.string = ggd.versionCode;
 
-        director.preloadScene("mainMenu");
+        app.scene.preloadScene("mainMenu");
+        // director.preloadScene("mainMenu");
     }
 
     protected onUnRegister?(...r: any[]): void {
-        if (em.has(EventId.hideBanner)) {
-            em.dispatchs(EventId.hideBanner);
-        }
+        this.dispatch(Constant.EventId.hideBanner);
     }
 
-    onTick(delta: number): void {
-
-    }
+    onTick(delta: number): void { }
 
     protected start(): void {
-        new PreLoadRes(this).load();
+        this.loadRes();
         app.audio.playBGM(Constant.Audio.HOME_BGM);
     }
 
-    /**
-     * 展示加载的资源
-     * @param str 
-     */
-    showDescLabel(str: string) {
-        this.descLabel.string = str;
+    async loadRes() {
+        for (let i = 0; i < this._resList.length; i++) {
+            let resItem = this._resList[i];
+
+            console.log(`开始加载: ${resItem.path}`);
+
+            this.descLabel.string = `正在加载${resItem.desc}...`;
+
+            await app.loader.loadDirAsync(
+                Constant.Res.ResBundleName,
+                resItem.path,
+                resItem.type,
+                this.updateLoadingProgress.bind(this)
+            );
+            console.log(`${resItem.path} 加载完成`);
+        }
+
+        console.log("所有资源加载完成");
+
+        this.gameName.active = false;
+        this.progressNode.active = false;
+
+        //打开登录界面
+        this.dispatch(Constant.EventId.loadingComplete);
     }
 
-    //刷新加载进度
-    updateLoadingProgress(fillRange) {
+    /**
+     * 加载进度
+     */
+    updateLoadingProgress(finished: number, total: number, item: AssetManager.RequestItem | any) {
+        let fillRange = finished / total;
         // if (fillRange <= this.fillSprite.fillRange) return;
         this.fillSprite.fillRange = fillRange;
         this.progressLabel.string = (fillRange * 100).toFixed(2) + "%";
     }
-
-    //进入主界面场景
-    enterMainMenuScene() {
-        director.loadScene("mainMenu");
-    }
-
-    showLoginLayer() {
-        // let platform = "wx";
-        // if (platform=="wx") {
-        //     this.onBtnAsVisitor();
-        //     return;
-        // }
-
-        this.gameName.active = false;
-        this.progressNode.active = false;
-        this.loginLayer.active = true;
-
-        //通过本地缓存信息显示登录信息
-        let data: any = sys.localStorage.getItem("loginInfo");
-        if (!data) {
-            return;
-        }
-
-        console.log("账号密码输入框显示data 还没写");
-        console.log("data", data);
-        data = JSON.parse(data);
-        this.accountEditBox.string = data.account;
-        this.pwdEditBox.string = data.password;
-
-        this._curAccountString = data.account;
-        this._curPasswordString = data.password;
-
-    }
-
-    inputAccount(box) {
-        this._curAccountString = box.string;
-    }
-
-    inputPassword(box) {
-        this._curPasswordString = box.string;
-    }
-
-    onBtnLogin() {
-        let url = gUrl.list.login;
-        let data = {
-            "loginIdentity": this._curAccountString,
-            "credential": this._curPasswordString,
-        }
-        let cb = this.loginComplete.bind(this);
-        let eb = this.loginError.bind(this);
-        let tb = this.loginTimeout.bind(this);
-        hr.post(url, data, cb, eb, tb);
-        this.loadingLabel.string = "登录中...";
-        this.loading.active = true;
-    }
-
-    loginComplete(res) {
-
-        this.loading.active = false;
-        console.log("loginComplete", res);
-
-        if (res.code == 200) {
-            ggd.userInfo.isVisitor = false;
-            ggd.userInfo.token = res.data.token;
-            ggd.userInfo.accountMetadata = res.data.accountMetadata;
-            // ggd.userInfo.token = res.data.data.token;
-            // ggd.userInfo.accountMetadata = res.data.data.accountMetadata;
-            //存储当前账号密码
-            let data = {
-                "account": this._curAccountString,
-                "password": this._curPasswordString
-            };
-            sys.localStorage.setItem("loginInfo", JSON.stringify(data));
-            this.enterMainMenuScene();
-        } else {
-            em.dispatchs(EventId.tipsViewShow, res.message);
-        }
-    }
-
-    loginError() {
-        this.loading.active = false;
-        em.dispatchs(EventId.tipsViewShow, "网络异常，请重试或通过游客登录。");
-    }
-
-    loginTimeout() {
-        this.loading.active = false;
-        em.dispatchs(EventId.tipsViewShow, "网络延迟，请重试或通过游客登录。");
-    }
-
-    onBtnRegister() {
-        let url = gUrl.list.register;
-        let data = {
-            "nickname": this._curAccountString,
-            "password": this._curPasswordString,
-        }
-        let cb = this.registerComplete.bind(this);
-        let eb = this.registerComplete.bind(this);
-        let tb = this.registerTimeout.bind(this);
-        hr.post(url, data, cb, eb, tb);
-
-        this.loadingLabel.string = "注册中...";
-        this.loading.active = true;
-    }
-
-    registerComplete(res) {
-        console.log("registerComplete", res);
-        if (res.code == 200) {
-            this.loading.active = false;
-            em.dispatchs(EventId.tipsViewShow, "注册成功，请登录");
-        } else {
-            this.loading.active = false;
-            em.dispatchs(EventId.tipsViewShow, res.message);
-        }
-    }
-
-    registerError() {
-        this.loading.active = false;
-        em.dispatchs(EventId.tipsViewShow, "网络异常，请重试或通过游客登录。");
-    }
-
-    registerTimeout() {
-        this.loading.active = false;
-        em.dispatchs(EventId.tipsViewShow, "网络延迟，请重试或通过游客登录。");
-    }
-
-    onBtnAsVisitor() {
-        ggd.userInfo.isVisitor = true;
-        this.enterMainMenuScene();
-    }
-
 }
 

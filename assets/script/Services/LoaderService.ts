@@ -68,7 +68,6 @@ export default class LoaderService implements IService {
         this.loader.load.apply(this.loader, args);
     }
     public async loadAsync<T extends Asset>(path: string, type: AssetType<T>, onProgress?: ProgressCallback | null) {
-
         return this.loader.loadAsync(path, type, onProgress);
     }
 
@@ -83,7 +82,6 @@ export default class LoaderService implements IService {
     public loadDir<T extends Asset>(...args: any) {
 
         this.loader.loadDir.apply(this.loader, args);
-        // this.loader.loadDir.apply(this.loader, args);
     }
 
     public async loadDirAsync<T extends Asset>(bundle: string, dir: string, type: AssetType<T> | null, onProgress: ProgressCallback | null, onComplete?: CompleteCallback<T[]> | null) {
@@ -93,7 +91,7 @@ export default class LoaderService implements IService {
     public loadRemote<T extends Asset>(url: string, options: IRemoteOptions | null, onComplete?: CompleteCallback<T> | null): void;
     public loadRemote<T extends Asset>(url: string, onComplete?: CompleteCallback<T> | null): void;
     public loadRemote<T extends Asset>(...args: any): void {
-        this.loader.loadRemote(args);
+        this.loader.loadRemote.apply(this.loader, args);
     }
 
     public async loadRemoteAsync<T extends Asset>(dir: string, type: AssetType<T> | null, onProgress: ProgressCallback | null, onComplete: CompleteCallback<T[]> | null) {
@@ -110,6 +108,12 @@ export default class LoaderService implements IService {
     public resLoad<T extends Asset>(paths: string | string[], type: AssetType<T> | null, onComplete?: CompleteCallback<T> | null): void;
 
     public resLoad(...args) {
-        this.loader.load.apply(this.loader, ['reosurces', ...args]);
+        this.loader.load('reosurces', ...args);
+        // this.loader.load.apply(this.loader, ['reosurces', ...args]);
     }
+
+    public async resLoadAsync<T extends Asset>(path: string, type: AssetType<T>, onProgress?: ProgressCallback | null) {
+        return this.loader.loadAsync(path, type, onProgress);
+    }
+ 
 }

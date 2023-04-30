@@ -2,6 +2,7 @@ import { JsonAsset } from 'cc';
 import { em } from '../global/EventManager';
 import Singleton from '../Decorators/Singleton';
 import IService from '../Interfaces/IService';
+import { Constant } from '../Common/Constant';
 
 /**
  * 背包服务
@@ -10,8 +11,6 @@ import IService from '../Interfaces/IService';
 export class BagService implements IService {
 
     public static readonly instance: BagService;
-
-    _resPath = "data/others/item";
 
     _itemDataJson: JsonAsset = null;
 
@@ -22,7 +21,7 @@ export class BagService implements IService {
     }
 
     public async lazyInitialize(): Promise<void> {
-        this._itemDataJson = await app.loader.loadAsync(this._resPath, JsonAsset) as JsonAsset;
+        this._itemDataJson = await app.loader.loadAsync(Constant.Path.ItemPath, JsonAsset) as JsonAsset;
 
         this.initItemData();
     }

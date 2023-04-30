@@ -1,6 +1,6 @@
 import IService from "../Interfaces/IService";
 import Singleton from "../Decorators/Singleton";
-import { EventTarget } from "cc";
+import { EventTarget, __private } from "cc";
 
 @Singleton
 export default class NotificationService extends EventTarget implements IService {
@@ -9,7 +9,9 @@ export default class NotificationService extends EventTarget implements IService
 
     public async initialize() {
     }
+
     public async lazyInitialize() {
     }
 
 }
+

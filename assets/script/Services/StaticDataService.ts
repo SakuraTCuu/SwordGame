@@ -1,187 +1,143 @@
 
-import { _decorator, Component, Node, JsonAsset, game, director } from 'cc';
+import { _decorator, Component, Node, JsonAsset, game, director, resources } from 'cc';
 import { em } from '../global/EventManager';
-;
-const { ccclass, property } = _decorator;
+import IService from '../Interfaces/IService';
+import { Constant } from '../Common/Constant';
+import HeroPropertyRuntimeData from '../Role/Hero/HeroPropertyRuntimeData';
+import Singleton from '../Decorators/Singleton';
 
-@ccclass('HeroBaseProperty')
-export class HeroBaseProperty extends Component {
-    @property(JsonAsset)
-    heroPropertyDataJson;
-    @property(JsonAsset)
-    trainingLvListJson;
-    @property(JsonAsset)
-    skillBookListJson;
-    @property(JsonAsset)
-    bossDataListJson;
-    @property(JsonAsset)
-    equQualityListJson;
-    @property(JsonAsset)
-    equEffectListJson;
-    @property(JsonAsset)
-    equLevelListJsonArr: JsonAsset[] = [];
+@Singleton
+export class StaticDataService implements IService {
 
-    _heroData;
+    public static readonly instance: StaticDataService;
 
-    _trainingLvList;
-    _skillBookList = {};
-    _bossDataList = {};
-    _equQualityList = {};
-    _equLevelList = {};
-    _equEffectList = {};
-    _percentageBloodLv: number;
-    _percentageDamageLv: number;
-    _moveSpeedLv: number;
-    _percentageMoveSpeedLv: number;
-    _criticalHitRateLv: number;
-    _bonusBulletTotalLv: number;
-    _bonusBulletMoveSpeedLv: number;
-    _bonusBulletAttackTimesLv: number;
-    _recoveryHealthyLv: number;
-    _expAdditionLv: number;
-    _divineStoneAdditionLv: number;
+    heroStaticData: any = {};
+    trainingLvData = {};
+    skillBookData = {};
+    bossData = {};
+    equQualityData = {};
+    equLevelData = {};
+    equEffectData = {};
 
-    //玩家当前装备
-    _heroCurEqu = {
-        "法器": "",
-        "防具": "",
-        "鞋": "",
+    heroPropertyRuntimeData: HeroPropertyRuntimeData = null;
+
+    public async initialize(): Promise<void> {
+
+    }
+
+    public async lazyInitialize(): Promise<void> {
+        let heroPropertyDataJson = await app.loader.loadAsync(Constant.Path.HeroPropertyDataJson, JsonAsset) as JsonAsset;
+        let trainingLvListJson = await app.loader.loadAsync(Constant.Path.TrainingLvListJson, JsonAsset) as JsonAsset;
+        let skillBookListJson = await app.loader.loadAsync(Constant.Path.SkillBookListJson, JsonAsset) as JsonAsset;
+        let bossDataListJson = await app.loader.loadAsync(Constant.Path.BossDataListJson, JsonAsset) as JsonAsset;
+        let equQualityListJson = await app.loader.loadAsync(Constant.Path.EquQualityListJson, JsonAsset) as JsonAsset;
+        let equEffectListJson = await app.loader.loadAsync(Constant.Path.EquEffectListJson, JsonAsset) as JsonAsset;
+        let equEffectLevelListJson = await app.loader.loadAsync(Constant.Path.EquEffectLevelListJson, JsonAsset) as JsonAsset;
+        let equArmorListJson = await app.loader.loadAsync(Constant.Path.EquArmorListJson, JsonAsset) as JsonAsset;
+        let equShoeListJson = await app.loader.loadAsync(Constant.Path.EquShoeListJson, JsonAsset) as JsonAsset;
+
+        //英雄属性表
+        if (heroPropertyDataJson) {
+            this.heroStaticData = heroPropertyDataJson?.json[0];
+        }
+
+        //修仙境界表
+        if (trainingLvListJson) {
+            this.trainingLvData = trainingLvListJson.json;
+        }
+
+        // 初始化功法秘籍数据
+        if (skillBookListJson) {
+            let all = skillBookListJson.json;
+            all.forEach(element => {
+                // let id = element.id;
+                let name = element.name;
+                let name2 = element.name2;
+                // this.skillBookData[id] = element;
+                this.skillBookData[name] = element;
+                this.skillBookData[name2] = element;
+            });
+        }
+
+        // 初始化boss配置列表
+        if (bossDataListJson) {
+            let all = bossDataListJson.json;
+            all.forEach(element => {
+                let id = element.id;
+                this.bossData[id] = element;
+            });
+        }
+
+        //装备品级属性
+        if (equQualityListJson) {
+            let equQualityJson = equQualityListJson.json;
+            equQualityJson.forEach(element => {
+                let name = element.name;
+                this.equQualityData[name] = element;
+            });
+        }
+
+        //法器词条
+        if (equEffectListJson) {
+            let all3 = equEffectListJson.json;
+            all3.forEach(element => {
+                let id = element.id;
+                this.equEffectData[id] = element;
+            });
+        }
+
+        //法器等级属性表
+        if (equEffectLevelListJson) {
+            let all = equEffectLevelListJson.json;
+            all.forEach(element => {
+                let id = element.id;
+                this.equLevelData[id] = element;
+            });
+        }
+
+        //防具
+        if (equArmorListJson) {
+            let all = equArmorListJson.json;
+            all.forEach(element => {
+                let id = element.id;
+                this.equLevelData[id] = element;
+            });
+        }
+
+        //鞋具
+        if (equShoeListJson) {
+            let all = equShoeListJson.json;
+            all.forEach(element => {
+                let id = element.id;
+                this.equLevelData[id] = element;
+            });
+        }
+
+        //初始化英雄属性
+        this.initHeroData();
+
+        em.add("usingHeroBasePropertyFun", this.usingHeroBasePropertyFun.bind(this));
     }
 
     onDestroy() {
         em.remove("usingHeroBasePropertyFun");
     }
 
-    onLoad() {
-        this._heroData = this.heroPropertyDataJson.json[0];
-        this._trainingLvList = this.trainingLvListJson.json;
-        this.initSkillBookData();
-        this.initBossConfigList();
-        this.initEquData();
-        // em.add("usingHeroBasePropertyFun", this.usingHeroBasePropertyFun.bind(this));
-        director.addPersistRootNode(this.node);//背包物品在各个场景皆可用到 设置为常驻节点
-    }
+    initHeroData() {
+        let heroProperty = app.storage.getTempData("HeroBasePropertyLvList") || {};
+        let equData = app.storage.getTempData("curEquData") || {};
 
-    start() {
-        this.initHeroCurEqu();
-        // this.getBasePropertyValueByEqu();
-    }
-    
-    // 初始化功法秘籍数据
-    initSkillBookData() {
-        let all = this.skillBookListJson.json;
-        all.forEach(element => {
-            // let id = element.id;
-            let name = element.name;
-            let name2 = element.name2;
-            // this._skillBookList[id] = element;
-            this._skillBookList[name] = element;
-            this._skillBookList[name2] = element;
-        });
-    }
-
-    // 初始化boss配置列表
-    initBossConfigList() {
-        let all = this.bossDataListJson.json;
-        all.forEach(element => {
-            let id = element.id;
-            this._bossDataList[id] = element;
-        });
-        // console.log("_bossDataList",this._bossDataList);
-    }
-    // 初始化装备数据
-    initEquData() {
-        let all1 = this.equQualityListJson.json;
-        let all2: any = (() => {
-            let arr = [];
-            this.equLevelListJsonArr.forEach((list) => {
-                arr = arr.concat(list.json);
-            });
-            return arr;
-        })();
-        let all3 = this.equEffectListJson.json;
-        // console.log("all1", all1);
-        // console.log("all2", all2);
-        // console.log("all3", all3);
-
-        all1.forEach(element => {//初始化品级
-            let name = element.name;
-            this._equQualityList[name] = element;
-        });
-        all2.forEach(element => {//初始化等级
-            let name = element.name;
-            this._equLevelList[name] = element;
-        });
-        all3.forEach(element => {//初始化词条
-            let id = element.id;
-            this._equEffectList[id] = element;
-        });
-    }
-    // 初始化英雄当前装备
-    initHeroCurEqu() {
-        let data = app.storage.getTempData("curEquData");
-        if (data) {
-            for (const key in data) {
-                if (Object.prototype.hasOwnProperty.call(data, key)) {
-                    const element = data[key];
-                    if (this._heroCurEqu.hasOwnProperty(key)) this._heroCurEqu[key] = element;
-                }
-            }
+        let heroData = {
+            ...heroProperty,
+            ...equData,
         }
+
+        this.heroPropertyRuntimeData = new HeroPropertyRuntimeData(heroData);
     }
-    onEnable() {
-        this.initBasePropertyLv();
-    }
-    initBasePropertyLv() {
-        let config = app.storage.getTempData("HeroBasePropertyLvList");
-
-        if (null == config) {//数据为空时 起用默认值
-            config = {
-                percentageBloodLv: 1,
-                percentageDamageLv: 1,
-                percentageMoveSpeedLv: 1,
-                moveSpeedLv: 1,
-                criticalHitRateLv: 1,
-                bonusBulletTotalLv: 1,
-                bonusBulletMoveSpeedLv: 1,
-                bonusBulletAttackTimesLv: 1,
-                recoveryHealthyLv: 1,
-                expAdditionLv: 1,
-                divineStoneAdditionLv: 10
-            };
-        }
-        this._percentageBloodLv = config.percentageBloodLv;
-        this._percentageDamageLv = config.percentageDamageLv;
-        this._percentageMoveSpeedLv = config.percentageMoveSpeedLv;
-        this._moveSpeedLv = config.moveSpeedLv;
-        this._criticalHitRateLv = config.criticalHitRateLv;
-        this._bonusBulletTotalLv = config.bonusBulletTotalLv;
-        this._bonusBulletMoveSpeedLv = config.bonusBulletMoveSpeedLv;
-        this._bonusBulletAttackTimesLv = config.bonusBulletAttackTimesLv;
-        this._recoveryHealthyLv = config.recoveryHealthyLv;
-        this._expAdditionLv = config.expAdditionLv;
-        this._divineStoneAdditionLv = config.divineStoneAdditionLv;
-
-
-    }
-
 
     savingLvData() {
         // 基础属性等级清单
-        let list = {
-            percentageBloodLv: this._percentageBloodLv,
-            percentageDamageLv: this._percentageDamageLv,
-            moveSpeedLv: this._moveSpeedLv,
-            percentageMoveSpeedLv: this._percentageMoveSpeedLv,
-            criticalHitRateLv: this._criticalHitRateLv,
-            bonusBulletTotalLv: this._bonusBulletTotalLv,
-            bonusBulletMoveSpeedLv: this._bonusBulletMoveSpeedLv,
-            bonusBulletAttackTimesLv: this._bonusBulletAttackTimesLv,
-            recoveryHealthyLv: this._recoveryHealthyLv,
-            expAdditionLv: this._expAdditionLv,
-            divineStoneAdditionLv: this._divineStoneAdditionLv
-        }
-        app.storage.savingToTempData("HeroBasePropertyLvList", list);
+        app.storage.savingToTempData("HeroBasePropertyLvList", this.heroPropertyRuntimeData);
     }
 
     // ==============外部调用==============
@@ -189,61 +145,67 @@ export class HeroBaseProperty extends Component {
         if (this[string] && typeof this[string] == "function") return this[string](...param);
         else throw string + " is not fun or undefined";
     }
+
     //获取玩家当前某属性的值
     getHeroBaseProperty(property) {
-        if (!this._heroData.hasOwnProperty(property)) throw "不存在属性" + property;
+        if (!this.heroStaticData.hasOwnProperty(property)) throw "不存在属性" + property;
         let lv = this["_" + property + "Lv"];
-        if (!lv) return this._heroData[property][0];
-        else return this._heroData[property][lv - 1];
+        if (!lv) return this.heroStaticData[property][0];
+        else return this.heroStaticData[property][lv - 1];
     }
     // 获取玩家某属性值的升级详情
     getHeroBasePropertyLvDetail(property) {
-        if (!this._heroData.hasOwnProperty(property)) throw "不存在属性" + property;
-        return this._heroData[property];
+        if (!this.heroStaticData.hasOwnProperty(property)) throw "不存在属性" + property;
+        return this.heroStaticData[property];
     }
+
     // 获取玩家某属性的当前等级
     getHeroBasePropertyCurLv(property) {
-        if (!this._heroData.hasOwnProperty(property)) throw "不存在属性" + property;
+        if (!this.heroStaticData.hasOwnProperty(property)) throw "不存在属性" + property;
         // console.log("property",property,this["_" + property + "Lv"]);
         return this["_" + property + "Lv"];
     }
+
     //升级基础属性值
     upgradeBaseProperty(property) {
-        if (!this._heroData.hasOwnProperty(property)) throw "不存在属性" + property;
-        this["_" + property + "Lv"]++;
+        if (!this.heroStaticData.hasOwnProperty(property)) throw "不存在属性" + property;
+        // this["_" + property + "Lv"]++;
+        this.heroPropertyRuntimeData[property]++;
         this.savingLvData();//
     }
+
     //获取修为数据
     getTrainingData(key) {
         let data = app.storage.getTempData("training");
 
         if (null !== data) {
-            return this._trainingLvList[data.curLv][key];
-            // if (data.curLv !== 0) return this._trainingLvList[data.curLv][key];
-            // if (data.curLv !== 0) return this._trainingLvList[data.curLv - 1][key];
+            return this.trainingLvData[data.curLv][key];
+            // if (data.curLv !== 0) return this.trainingLvData[data.curLv][key];
+            // if (data.curLv !== 0) return this.trainingLvData[data.curLv - 1][key];
             // else return 0;
         } else {
-            return this._trainingLvList[0][key];
+            return this.trainingLvData[0][key];
         }
     }
     //===================功法秘籍相关===================
     // 获取所有和功法秘籍相关的数据
     getAllAboutSkillBook() {
-        return this.skillBookListJson.json;
+        return this.skillBookData;
     }
+
     getSkillBookDataByIdOrName(id_name) {
-        if (this._skillBookList.hasOwnProperty(id_name)) return this._skillBookList[id_name];
-        else throw id_name + " of _skillBookList is null";
+        if (this.skillBookData.hasOwnProperty(id_name)) return this.skillBookData[id_name];
+        else throw id_name + " of skillBookData is null";
     }
     //===================装备相关===================
     // 获取完整的装备信息
     getAllEquData() {
-        return this._heroCurEqu;
+        return this.heroPropertyRuntimeData;
     }
     // 获取指定部位装备名称
     getEquNameByType(type) {
-        if (!this._heroCurEqu.hasOwnProperty(type)) throw "当前装备类型 " + type + " 不存在";
-        return this._heroCurEqu[type];
+        if (!this.heroPropertyRuntimeData.hasOwnProperty(type)) throw "当前装备类型 " + type + " 不存在";
+        return this.heroPropertyRuntimeData[type];
     }
     //通过装备名称 获取装备属性
     getEquDataByName(nameString: string) {
@@ -253,8 +215,8 @@ export class HeroBaseProperty extends Component {
         if (qIndex < 0) return null;
         let qKey = nameString.slice(0, qIndex);
         let lKey = nameString.slice(2);
-        let qValue = this._equQualityList[qKey];
-        let lValue = this._equLevelList[lKey];
+        let qValue = this.equQualityData[qKey];
+        let lValue = this.equLevelData[lKey];
         // console.log("qKey",qKey);
         // console.log("lKey",lKey);
         // console.log("qValue",qValue);
@@ -273,17 +235,17 @@ export class HeroBaseProperty extends Component {
     }
     // 切换装备
     switchEqu(type, equString) {
-        if (!this._heroCurEqu.hasOwnProperty(type)) throw "当前装备类型 " + type + " 不存在";
-        this._heroCurEqu[type] = equString;
+        if (!this.heroPropertyRuntimeData.hasOwnProperty(type)) throw "当前装备类型 " + type + " 不存在";
+        this.heroPropertyRuntimeData[type] = equString;
         this.savingEquData();
     }
     // 记录装备数据
     savingEquData() {
-        app.storage.savingToTempData("curEquData", this._heroCurEqu);
+        app.storage.savingToTempData("curEquData", this.heroPropertyRuntimeData.getEquData());
     }
     // 获取当前玩家的装备 
     getCurHeroEqu(type) {
-        if (this._heroCurEqu.hasOwnProperty(type)) return this._heroCurEqu[type];
+        if (this.heroPropertyRuntimeData.hasOwnProperty(type)) return this.heroPropertyRuntimeData[type];
         else throw "type is error,cur type is " + type;
     }
     // 获取玩家当前使用法器数据
@@ -293,15 +255,15 @@ export class HeroBaseProperty extends Component {
     }
     // 获取当前玩家的法器类型
     getCurHeroUsingWeaponType() {
-        let nameString = this._heroCurEqu.法器;
+        let nameString = this.heroPropertyRuntimeData.法器;
         if (!nameString) return "";
         let qIndex = nameString.indexOf("（");
         return nameString.slice(2, qIndex);
     }
     // 获取装备词条信息
     getEquEffectData(id) {
-        if (!this._equEffectList.hasOwnProperty(id)) throw "词条" + id + "不存在";
-        return this._equEffectList[id];
+        if (!this.equEffectData.hasOwnProperty(id)) throw "词条" + id + "不存在";
+        return this.equEffectData[id];
     }
     //获取当前玩家通过装备获取的属性值
     getBasePropertyValueByEqu() {
@@ -324,10 +286,12 @@ export class HeroBaseProperty extends Component {
             //debuff
             slowPer: 0,//减速百分比
         };
-        console.log("this._heroCurEqu", this._heroCurEqu);
 
-        for (const key in this._heroCurEqu) {
-            const equName = this._heroCurEqu[key];
+        let equUsingData = this.heroPropertyRuntimeData.getEquData();
+        console.log("this.heroPropertyRuntimeData", equUsingData);
+
+        for (const key in equUsingData) {
+            const equName = equUsingData[key];
             if (!equName) continue;
             let equData = this.getEquDataByName(equName);
             let lData = equData.lData;
@@ -462,8 +426,8 @@ export class HeroBaseProperty extends Component {
 
     //===================boss配置相关===============
     getBossDataById(id) {
-        if (this._bossDataList.hasOwnProperty(id)) return this._bossDataList[id];
-        else throw id + " of _bossDataList is null";
+        if (this.bossData.hasOwnProperty(id)) return this.bossData[id];
+        else throw id + " of bossData is null";
     }
 }
 

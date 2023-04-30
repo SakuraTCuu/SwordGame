@@ -1,8 +1,6 @@
 import { Button, Component, Contact2DType, EventHandler, native, Node, PhysicsSystem2D } from "cc";
 import { em } from "./EventManager";
-import { gUrl } from "./GameUrl";
 import { ggd } from "./globalData";
-import { hr } from "./HttpRequest";
 import { EventId } from "./GameEvent";
 
 export { glf }

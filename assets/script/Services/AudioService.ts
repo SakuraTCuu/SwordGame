@@ -70,7 +70,6 @@ export default class AudioService implements IService {
             resources.loadDir(this.audioPath, (err, resource) => {
                 for (let index = 0; index < resource.length; index++) {
                     const audio = (resource as AudioClip[])[index];
-                    console.log(audio._nativeAsset);
                     this.register(audio.name, audio);
                 }
 

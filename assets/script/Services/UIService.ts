@@ -1,4 +1,4 @@
-import { BlockInputEvents, error, instantiate, isValid, log, Node, Prefab, resources, tween, UIOpacityComponent, utils, Widget } from "cc";
+import { BlockInputEvents, error,EventTarget, instantiate, isValid, log, Node, Prefab, resources, tween, UIOpacityComponent, utils, Widget } from "cc";
 
 import IService from "../Interfaces/IService";
 import Singleton from "../Decorators/Singleton";
@@ -42,7 +42,6 @@ export default class UIService extends EventTarget implements IService, ITicker 
         if (appNode == null) {
             console.log("没有Mega节点");
             return;
-            throw new Error("没有Mega节点")
         }
         this.modal = appNode;
         app.ticker.register(this);
