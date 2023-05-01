@@ -3,11 +3,9 @@ import { plm } from '../../global/PoolManager';
 import { monsterData } from './MonsterData';
 import { em } from '../../global/EventManager';
 import QuadtreeRect from '../../plugin/Quadtree';
-import { ggConfig, ggd } from '../../global/globalData';
-import { Queue } from '../../global/Queue';
 import Simulator from '../../RVO/Simulator';
 import RVOConfig from '../../RVO/RVOConfig';
-import { EventId } from '../../global/GameEvent';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('MonsterManager')
@@ -96,13 +94,13 @@ export class MonsterManager extends Component {
     }
     // 刷新四叉树
     updateQuadtree() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let wp = em.dispatch("getHeroWorldPos");
         this._quadtree = new QuadtreeRect({
-            x: wp.x - ggConfig.quadTreeRange.w / 2,
-            y: wp.y - ggConfig.quadTreeRange.h / 2,
-            width: ggConfig.quadTreeRange.w,//750
-            height: ggConfig.quadTreeRange.h,//1334
+            x: wp.x - Constant.GlobalGameConfig.quadTreeRange.w / 2,
+            y: wp.y - Constant.GlobalGameConfig.quadTreeRange.h / 2,
+            width: Constant.GlobalGameConfig.quadTreeRange.w,//750
+            height: Constant.GlobalGameConfig.quadTreeRange.h,//1334
         });
         for (let i = 0; i < this.node.children.length; i++) {
             let par = this.node.children[i];
@@ -110,8 +108,8 @@ export class MonsterManager extends Component {
                 let collider = child.getComponent(BoxCollider2D);
                 // let wp = child.getWorldPosition();
                 let rect = collider.worldAABB;
-                if (Math.abs((wp.x - rect.x - rect.width / 2)) > ggConfig.quadTreeRange.w / 2) continue;
-                if (Math.abs((wp.y - rect.y - rect.height / 2)) > ggConfig.quadTreeRange.h / 2) continue;
+                if (Math.abs((wp.x - rect.x - rect.width / 2)) > Constant.GlobalGameConfig.quadTreeRange.w / 2) continue;
+                if (Math.abs((wp.y - rect.y - rect.height / 2)) > Constant.GlobalGameConfig.quadTreeRange.h / 2) continue;
                 this._quadtree.insert(rect);
             }
         };
@@ -269,15 +267,15 @@ export class MonsterManager extends Component {
         initOffset = this.addRandomOffset(initOffset);
         // console.log("initOffset",initOffset);
         queue.forEach(pos => {
-            if (ggConfig.framingInitMonster) this._waitCreateQueue.push({ monsterId, pos, initOffset });
+            if (Constant.GlobalGameConfig.framingInitMonster) this._waitCreateQueue.push({ monsterId, pos, initOffset });
             else this.createMonster(monsterId, pos, initOffset);
         });
     }
     update() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this.updateQuadtree();
         Simulator.Instance.doStep();
-        if (!ggConfig.framingInitMonster) return;
+        if (!Constant.GlobalGameConfig.framingInitMonster) return;
         if (this._waitCreateQueue.length > 0) {
             // console.log("分帧生成", this._waitCreateQueue);
             let max = 1;
@@ -297,7 +295,7 @@ export class MonsterManager extends Component {
         prefab.parent = this.getParNodeByKey(data.color);
         prefab.setWorldPosition(initOffset.x + wp.x + pos[0], initOffset.y + wp.y + pos[1], 0);
         prefab.active = true;
-        prefab.getComponent("Monster").init(data, id, this.monsterStrongJson.json["stage" + ggd.curStage]);//初始化碰撞脚本血量
+        prefab.getComponent("Monster").init(data, id, this.monsterStrongJson.json["stage" + Constant.GlobalGameData.curStage]);//初始化碰撞脚本血量
     }
     /**
      * @description: 增加随机偏移量 

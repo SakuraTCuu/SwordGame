@@ -10,8 +10,8 @@
  */
 import { _decorator } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('Sword')
@@ -21,8 +21,8 @@ export class Sword extends Weapon {
     init(data, lv, flyDir: { x: number, y: number }) {
         this.initWeaponInfo(lv, data, flyDir);
         let weaponName: string = data.name;
-        // this.initBoxCollider(tagData[weaponName]);
-        this.initBoxCollider(tagData[weaponName],{x:-7,y:-8});
+        // this.initBoxCollider(Constant.Tag[weaponName]);
+        this.initBoxCollider(Constant.Tag[weaponName],{x:-7,y:-8});
         this.changeBulletRotationByFlyDir();
     }
     colliderMonster(other) {

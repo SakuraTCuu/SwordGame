@@ -1,5 +1,5 @@
-import { log } from "cc";
 
+let log = console.log;
 /**
  * 队列
  *
@@ -28,7 +28,8 @@ export default class Queue<T> {
 	 */
 	dequeue() {
 		if (this.isEmpty()) {
-			throw new Error("This queue is empty");
+			log("This queue is empty");
+			return null;
 		} else {
 			return this.items.shift();
 		}
@@ -105,7 +106,7 @@ export default class Queue<T> {
 	 * @returns
 	 * @memberof Queue
 	 */
-	display() {
+	toString() {
 		let tmp = "";
 		for (let index = 0; index < this.items.length; index++) {
 			tmp += JSON.stringify(this.items[index]) + "\n";

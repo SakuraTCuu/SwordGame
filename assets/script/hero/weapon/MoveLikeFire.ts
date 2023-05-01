@@ -10,8 +10,8 @@
  */
 import { _decorator, Component, Node, Animation } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('MoveLikeFire')
@@ -30,7 +30,7 @@ export class MoveLikeFire extends Weapon {
         this._attackInterval = 0.3;//
         this._weaponName = data.name2;
         this.clearCacheData();
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
         let anim = this.node.getComponent(Animation);
         anim.play();
     }

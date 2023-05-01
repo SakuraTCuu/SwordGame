@@ -1,7 +1,8 @@
 import { _decorator, Component, Node, BoxCollider2D, find } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, tagData } from '../../global/globalData';
+
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('FlySword')
@@ -19,16 +20,16 @@ export class FlySword extends Weapon {
     init(data, lv) {
         this.initWeaponInfo(lv, data);
         let weaponName: string = data.name;
-        // this.initBoxCollider(tagData.sword);
+        // this.initBoxCollider(Constant.Tag.sword);
         let changeSize = {
             x:-20,
             y:-20
         }
-        this.initBoxCollider(tagData.sword,changeSize);
+        this.initBoxCollider(Constant.Tag.sword,changeSize);
     }
     seekNearestEnemy() {
 
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (this._flyState !== 0) return;
         let tree = em.dispatch("getCurMonsterQuadtree");
         let collider = this.node.getComponent(BoxCollider2D);
@@ -47,7 +48,7 @@ export class FlySword extends Weapon {
         else if (this._flyState == 2) this.flyToHero(dt);
     }
     flyToTp(dt) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         // let dis = dt*this._moveSpeed;
         let cp = this.node.getWorldPosition();
         //四叉树位置锁定修正
@@ -69,7 +70,7 @@ export class FlySword extends Weapon {
         }
     }
     flyToHero(dt) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let cp = this.node.getWorldPosition();
         let hwp = em.dispatch("getHeroWorldPos");
         let x = hwp.x - cp.x;

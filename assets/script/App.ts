@@ -1,4 +1,4 @@
-import { director, Director, Game, game, log, Scene, sys } from 'cc';
+import { director, Director, dynamicAtlasManager, Game, game, log, Scene, sys } from 'cc';
 
 import IFrameWork from "./Interfaces/IFrameWork";
 import ViewService from "./Services/ViewService";
@@ -149,6 +149,9 @@ class App extends IFrameWork {
 declare global {
   const app: App;
 }
+
+// 关闭动态和图
+dynamicAtlasManager.enabled = false;
 
 if (typeof app == typeof undefined) {
 

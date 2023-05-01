@@ -9,9 +9,9 @@
  */
 import { _decorator, Component, Node, Sprite, Prefab, instantiate, Label, find } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd } from '../../global/globalData';
-import { glf } from '../../global/globalFun';
-import { EventId } from '../../global/GameEvent';
+
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
 
 const { ccclass, property } = _decorator;
 
@@ -77,7 +77,7 @@ export class SkillManager extends Component {
     //开始记录未被击中的时长
     startRecodeAvoidTime() {
         this.schedule(() => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             this._avoidAttackingTotalTime++;
             this.updateBeAttackedListCountdown();
         }, 1);
@@ -111,7 +111,7 @@ export class SkillManager extends Component {
 
                     this.loadRes(loadUrl, (assets) => sprite.spriteFrame = assets);
 
-                    glf.createButton(this.node, skill, "SkillManager", "onBtnSkill", skillName);
+                    Utils.createButton(this.node, skill, "SkillManager", "onBtnSkill", skillName);
                 }
             }
         }
@@ -137,7 +137,7 @@ export class SkillManager extends Component {
         let curTime = 0;
         label.string = totalTime;
         let cd = setInterval(() => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             curTime += interval;
             sprite.fillRange = (1 - curTime / totalTime);
             label.string = (totalTime - curTime).toFixed(2);
@@ -185,7 +185,7 @@ export class SkillManager extends Component {
         em.dispatchs("usingHeroControlFun", "isOpenCollectGas", true);
         let t = skillData.duration;
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             t--;
             if (t <= 0) {
                 this.unschedule(fun);
@@ -261,7 +261,7 @@ export class SkillManager extends Component {
     }
     // 烈日心决倒计时运行
     sunHeartCountdownRun() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._countdownList.sunHeart--;
         let skillData = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", "sunHeart");
         em.dispatchs("usingHeroControlFun", "updatePercentageBloodProgress", -skillData.damageTimes);
@@ -308,7 +308,7 @@ export class SkillManager extends Component {
         em.dispatchs("usingHeroControlFun", "isOpenLikeSpringBreeze", true);
         let t = skillData.duration;
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             em.dispatchs("usingHeroControlFun", "updatePercentageBloodProgress", skillData.baseDamage);
             t--;
             if (t <= 0) {

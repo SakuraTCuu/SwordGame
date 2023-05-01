@@ -10,7 +10,7 @@
  */
 import { _decorator, Component, Node, Vec2, math, tween, Vec3, Sprite, Color, color, UITransform, BoxCollider2D, Contact2DType } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, groupIndex, tagData } from '../../global/globalData';
+
 import { plm } from '../../global/PoolManager';
 import { Weapon } from './Weapon';
 import { Constant } from '../../Common/Constant';
@@ -50,7 +50,7 @@ export class ThousandsSwordToTomb extends Weapon {
 
 
         this.clearCacheData();
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
         this.changeBulletRotationByFlyDir();
     }
     initBoxCollider(tag: number, changeSize: { x, y } = { x: 0, y: 0 }) {
@@ -59,14 +59,14 @@ export class ThousandsSwordToTomb extends Weapon {
         let collider = this.node.getComponent(BoxCollider2D);
         if (!collider) collider = this.node.addComponent(BoxCollider2D);
         collider.tag = tag;
-        collider.group = groupIndex.heroWeapon;
+        collider.group = Constant.GroupIndex.heroWeapon;
         // console.log("collider", collider);
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
     }
     weaponMove(deltaTime: number) {
         // return;
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._flyDir) return;
         if (this._moveDistance <= 0) {
             this.playDestroyAnim();

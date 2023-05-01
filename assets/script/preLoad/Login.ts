@@ -1,8 +1,7 @@
 import { _decorator, Component, director, EditBox, Label, Node, sys } from 'cc';
 import IView from '../Interfaces/IView';
-import { gUrl } from '../global/GameUrl';
 import { hr } from '../global/HttpRequest';
-import { ggd } from '../global/globalData';
+
 import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 
@@ -98,7 +97,7 @@ export class Login extends IView {
     }
 
     onBtnLogin() {
-        let url = gUrl.list.login;
+        let url = Constant.URL.Login;
         let data = {
             "loginIdentity": this._curAccountString,
             "credential": this._curPasswordString,
@@ -117,11 +116,11 @@ export class Login extends IView {
         console.log("loginComplete", res);
 
         if (res.code == 200) {
-            ggd.userInfo.isVisitor = false;
-            ggd.userInfo.token = res.data.token;
-            ggd.userInfo.accountMetadata = res.data.accountMetadata;
-            // ggd.userInfo.token = res.data.data.token;
-            // ggd.userInfo.accountMetadata = res.data.data.accountMetadata;
+            Constant.GlobalGameData.userInfo.isVisitor = false;
+            Constant.GlobalGameData.userInfo.token = res.data.token;
+            Constant.GlobalGameData.userInfo.accountMetadata = res.data.accountMetadata;
+            // Constant.GlobalGameData.userInfo.token = res.data.data.token;
+            // Constant.GlobalGameData.userInfo.accountMetadata = res.data.data.accountMetadata;
             //存储当前账号密码
             let data = {
                 "account": this._curAccountString,
@@ -145,7 +144,7 @@ export class Login extends IView {
     }
 
     onBtnRegister() {
-        let url = gUrl.list.register;
+        let url = Constant.URL.Register;
         let data = {
             "nickname": this._curAccountString,
             "password": this._curPasswordString,
@@ -181,7 +180,7 @@ export class Login extends IView {
     }
 
     onBtnAsVisitor() {
-        ggd.userInfo.isVisitor = true;
+        Constant.GlobalGameData.userInfo.isVisitor = true;
         this.enterMainMenuScene();
     }
 

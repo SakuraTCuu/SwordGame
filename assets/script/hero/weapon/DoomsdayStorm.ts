@@ -1,7 +1,8 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, tagData } from '../../global/globalData';
+
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('DoomsdayStorm')
@@ -27,11 +28,11 @@ export class DoomsdayStorm extends Weapon {
         this._attackInterval = 0.3;
         this._weaponName = data.name2;
         // this.clearCacheData();
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
     }
     weaponMove(deltaTime: number) {
         // return;
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._flyDir) return;
         if (this._moveDistance <= 0) {
             // this.playDestroyAnim();

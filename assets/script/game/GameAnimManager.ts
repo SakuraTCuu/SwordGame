@@ -10,7 +10,7 @@
  */
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../global/EventManager';
-import { ggd } from '../global/globalData';
+import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameAnimManager')
@@ -29,7 +29,7 @@ export class GameAnimManager extends Component {
     }
     //添加动画组件到list
     addAnimToList(anim: Animation) {
-        if(ggd.stopAll) anim.pause();
+        if(Constant.GlobalGameData.stopAll) anim.pause();
         this._animList.push(anim);
     }
     // 从list 移除anim

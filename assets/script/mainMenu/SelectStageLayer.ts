@@ -11,9 +11,9 @@
  */
 import { _decorator, Component, Node, Prefab, instantiate, Label, find, director, input, Input, JsonAsset, UITransform, utils, UI, Sprite, Material, ScrollView } from 'cc';
 import { em } from '../global/EventManager';
-import { ggd } from '../global/globalData';
-import { glf } from '../global/globalFun';
+
 import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -66,14 +66,14 @@ export class SelectCheckpointLayer extends Component {
         //刷新材质
         this.scheduleOnce(() => {
             for (const prefab of this._prefabArr) {
-                if (prefab.stageNum > ggd.stageProgress) {
+                if (prefab.stageNum > Constant.GlobalGameData.stageProgress) {
                     prefab.getComponent(Sprite).material = this.grayMaterial;
                 } else {
                     prefab.getComponent(Sprite).material = this.defaultMaterial;
                 }
             }
         }, 0);
-        let percentage = (ggd.stageProgress - 1) / ggd.totalStage;
+        let percentage = (Constant.GlobalGameData.stageProgress - 1) / Constant.GlobalGameData.totalStage;
         this.node.getChildByName("bg").getComponent(ScrollView).scrollToPercentVertical(1 - percentage, 0.1);
     }
     //获取关卡总数
@@ -97,7 +97,7 @@ export class SelectCheckpointLayer extends Component {
             let stageNum = i + 1;
             prefab.stageNum = stageNum;
 
-            if (prefab.stageNum > ggd.stageProgress) {
+            if (prefab.stageNum > Constant.GlobalGameData.stageProgress) {
                 prefab.getChildByName("btnBg").getChildByName("stageLock").active = true;
                 prefab.getComponent(Sprite).material = this.grayMaterial;
             } else {
@@ -106,11 +106,11 @@ export class SelectCheckpointLayer extends Component {
             }
             prefab.getChildByName("Label").getComponent(Label).string = "第" + stageNum + "关";
             let btNode = prefab.getChildByName("btnBg");
-            glf.createButton(this.node, btNode, "SelectStageLayer", "onBtnEnter");
+            Utils.createButton(this.node, btNode, "SelectStageLayer", "onBtnEnter");
             this._prefabArr.push(prefab);
             // this.showStageDetail(stageNum);
             let detail = prefab.getChildByName("detail");
-            glf.createButton(this.node, detail, "SelectStageLayer", "showStageDetail");
+            Utils.createButton(this.node, detail, "SelectStageLayer", "showStageDetail");
         };
         let UIT = this.prefabPar.getComponent(UITransform);
         let toBottom = 200;
@@ -127,7 +127,7 @@ export class SelectCheckpointLayer extends Component {
         this.stageDetail.active = true;
         let stageNum = prefab.stageNum;
         let des: string = "";
-        if (stageNum > ggd.stageProgress) des = "尚未可知。"
+        if (stageNum > Constant.GlobalGameData.stageProgress) des = "尚未可知。"
         else des = this.getStageDesByStageNum(stageNum);
         find("bg/title", this.stageDetail).getComponent(Label).string = "第" + stageNum + "关";
         find("bg/content", this.stageDetail).getComponent(Label).string = des;
@@ -194,7 +194,7 @@ export class SelectCheckpointLayer extends Component {
                 prefab.getChildByName("Label").getComponent(Label).string = "第" + prefab.stageNum + "关";
             }
             //刷新材质
-            if (prefab.stageNum > ggd.stageProgress) {
+            if (prefab.stageNum > Constant.GlobalGameData.stageProgress) {
                 prefab.getChildByName("btnBg").getChildByName("stageLock").active = true;
                 prefab.getComponent(Sprite).material = this.grayMaterial;
             } else {
@@ -210,9 +210,9 @@ export class SelectCheckpointLayer extends Component {
         if (this._isLoading) return;
         this._isLoading = true;
         console.log("进入关卡" + p);
-        if (p <= ggd.totalStage) {
+        if (p <= Constant.GlobalGameData.totalStage) {
             this.openLoading();
-            ggd.curStage = parseInt(p);
+            Constant.GlobalGameData.curStage = parseInt(p);
             // director.loadScene("game");
             console.log("切换音效");
 
@@ -232,7 +232,7 @@ export class SelectCheckpointLayer extends Component {
     }
     // 解锁下一关
     onBtnChangeStage() {
-        ggd.stageProgress++;
+        Constant.GlobalGameData.stageProgress++;
         app.storage.savingGlobalDataToTempData();
     }
 }

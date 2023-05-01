@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, BoxCollider2D, UITransform, Size } from 'cc';
-import { groupIndex } from '../global/globalData';
+import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('ItemInPlaying')
@@ -12,7 +12,7 @@ export class ItemInPlaying extends Component {
         let itemSize = new Size(UIT.contentSize.x , UIT.contentSize.y);
         collider.size = itemSize;
         collider.tag = tag;
-        collider.group = groupIndex.itemInPlaying;
+        collider.group = Constant.GroupIndex.itemInPlaying;
     }
 }
 

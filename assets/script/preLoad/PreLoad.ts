@@ -1,5 +1,5 @@
 import { _decorator, Component, director, Sprite, Label, Game, game, find, sys, Settings, profiler, EditBox, Node, Asset, AnimationClip, AssetManager, JsonAsset, Prefab, SpriteFrame } from 'cc';
-import { ggd } from '../global/globalData';
+
 import IView from '../Interfaces/IView';
 import { Constant } from '../Common/Constant';
 
@@ -50,7 +50,7 @@ export class PreLoad extends IView {
 
         this.gameName.active = true;
         this.progressNode.active = true;
-        this.versionCode.string = ggd.versionCode;
+        this.versionCode.string = Constant.GlobalGameData.versionCode;
 
         app.scene.preloadScene("mainMenu");
         // director.preloadScene("mainMenu");

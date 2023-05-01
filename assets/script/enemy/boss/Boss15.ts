@@ -10,12 +10,7 @@
  */
 import { _decorator, Component, Node, Prefab, find, instantiate, approx, Vec2, NodePool } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd } from '../../global/globalData';
-import { glf } from '../../global/globalFun';
 import { plm } from '../../global/PoolManager';
-import { Queue } from '../../global/Queue';
-import { BlackHole } from '../skill/BlackHole';
-import { DarkMask } from '../skill/DarkMask';
 import { Boss } from './Boss';
 const { ccclass, property } = _decorator;
 

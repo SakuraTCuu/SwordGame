@@ -1,12 +1,10 @@
 import { _decorator, Component, Node, Material, Sprite, BoxCollider2D, UITransform, Size, Contact2DType, Collider2D, Rect, Animation, warn, AnimationClip, find, Vec2, Color } from 'cc';
 import { em } from '../../global/EventManager';
-import { attackInterval, ggd, groupIndex, tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import RVOMath from '../../RVO/RVOMath';
 import Simulator from '../../RVO/Simulator';
 import Vector2 from '../../RVO/Vector2';
 import { monsterData } from './MonsterData';
-import { EventId } from '../../global/GameEvent';
 import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 //
@@ -145,7 +143,7 @@ export class Monster extends Component {
     }
     //怪物存在倒计时 当时间小于等于0时，怪物消失
     durationCountdown() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._remainingDuration -= 10;
         this.runOthers();
         if (this._remainingDuration <= 0) {
@@ -205,9 +203,9 @@ export class Monster extends Component {
         this._monsterSize = new Size(UIT.contentSize.x / 2, UIT.contentSize.y / 2);
         // this._monsterSize = new Size(UIT.contentSize.width/ 2, UIT.contentSize.height / 2);
 
-        collider.tag = tagData.monster;
+        collider.tag = Constant.Tag.monster;
         collider.size = this._monsterSize;
-        collider.group = groupIndex.enemy;
+        collider.group = Constant.GroupIndex.enemy;
 
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
 
@@ -375,21 +373,21 @@ export class Monster extends Component {
         // console.log("onBeginContact");
         // return;
         // if(em.dispatch("getMonsterMovingState")) return;
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (this._banTouch) return;
         // 只在两个碰撞体开始接触时被调用一次
         if (self.tag == other.tag) return;//同类型碰撞 忽略
         switch (other.tag) {
-            case tagData.hero:
+            case Constant.Tag.hero:
                 this.monsterAttackByCollide(self, other);
                 break;
-            case tagData.puppet:
+            case Constant.Tag.puppet:
                 this.monsterAttackByCollide(self, other, "puppet");
                 break;
-            case tagData.friend1Skill1:
+            case Constant.Tag.friend1Skill1:
                 this.friendAttackMonsterByFriend1Skill1(self, other);
                 break;
-            case tagData.obstacle:
+            case Constant.Tag.obstacle:
                 // this.ejectMonsterInObstacle(self.worldAABB, other.worldAABB);
                 break;
             default://怪物与武器的碰撞在weapon类中处理，这里只处理monster与其他类型的碰撞，如hero、friendSkill
@@ -412,7 +410,7 @@ export class Monster extends Component {
     }
     // 怪物通过碰撞攻击英雄
     monsterAttackByCollide(self, other, type = "hero") {
-        if (ggd.stopAll) {
+        if (Constant.GlobalGameData.stopAll) {
             this.scheduleOnce(() => {
                 this._canAttack = true;
                 this.monsterAttackByCollide(self, other, type);
@@ -442,7 +440,7 @@ export class Monster extends Component {
     }
     //被宝宝技能击中
     friendAttackMonsterByFriend1Skill1(self, other) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this.rectIsIntersectsRect(self.worldAABB, other.worldAABB)) return;
         let damage = 5;
         em.dispatch("createDamageTex", self.node, damage, { x: 0, y: 20 });
@@ -450,7 +448,7 @@ export class Monster extends Component {
         this.collectToTarget(self, other);
         this.scheduleOnce(() => {
             this.friendAttackMonsterByFriend1Skill1(self, other);
-        }, attackInterval.f1s1);
+        }, Constant.AttackInterval.f1s1);
     }
     update(dt) {
         //effect4  加速冲向某个方向
@@ -511,7 +509,7 @@ export class Monster extends Component {
         this.node.getComponent(Animation).pause();
     }
     resumeAnim() {
-        if (ggd.stopAll) return;//防止暂停后被击中 调用恢复函数 。恢复了 动画状态
+        if (Constant.GlobalGameData.stopAll) return;//防止暂停后被击中 调用恢复函数 。恢复了 动画状态
         if (this.isStrongControlled()) return;
         this.node.getComponent(Animation).resume();
     }
@@ -555,7 +553,7 @@ export class Monster extends Component {
     }
     // 减去 debuff timid
     reduceDebuffTimid() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._debuffList.timid.duration--;
         if (this._debuffList.timid.duration <= 0) {
             this._debuffList.timid.state = false;
@@ -572,7 +570,7 @@ export class Monster extends Component {
     }
     // 减去 debuff paralysis
     reduceDebuffParalysis() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._debuffList.paralysis.duration--;
         if (this._debuffList.paralysis.duration <= 0) {
             this._debuffList.paralysis.state = false;
@@ -590,7 +588,7 @@ export class Monster extends Component {
         this.schedule(this.reduceDebuffFrozen, 1);
     }
     reduceDebuffFrozen() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._debuffList.frozen.duration--;
 
         if (this._debuffList.frozen.duration <= 0) {

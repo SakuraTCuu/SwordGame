@@ -1,7 +1,8 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, tagData } from '../../global/globalData';
+
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('Thundercloud')
@@ -25,7 +26,7 @@ export class Thundercloud extends Weapon {
             x: -30,
             y: -50
         }
-        this.initBoxCollider(tagData.sword, changeSize);
+        this.initBoxCollider(Constant.Tag.sword, changeSize);
     }
     recoveryToPool() {
         this.removeAnimFromList();
@@ -33,7 +34,7 @@ export class Thundercloud extends Weapon {
     }
     weaponMove(dt) {
         // return
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let targetPos = em.dispatch("getTargetWorldPos");
         let curPos = this.node.getWorldPosition();
         let x = targetPos.x - curPos.x;

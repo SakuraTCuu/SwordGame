@@ -1,6 +1,6 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../global/EventManager';
-import { glf } from '../global/globalFun';
+import Utils from '../Common/Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('AD_SDK')
@@ -16,7 +16,7 @@ export class AD_SDK extends Component {
     }
     //创建播放广告事件
     createPlayADEvent(btnNode, string) {
-        glf.createButton(this.node, btnNode, "AD_SDK", "onBtnShowADs" + string);
+        Utils.createButton(this.node, btnNode, "AD_SDK", "onBtnShowADs" + string);
     }
     onBtnShowADsGameMonetize() {
         if (typeof sdk !== 'undefined' && sdk.showBanner !== 'undefined') {

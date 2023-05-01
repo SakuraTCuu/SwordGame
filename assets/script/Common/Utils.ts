@@ -1,14 +1,10 @@
 import { Button, Component, Contact2DType, EventHandler, native, Node, PhysicsSystem2D } from "cc";
-import { em } from "./EventManager";
-import { ggd } from "./globalData";
-import { EventId } from "./GameEvent";
+import { Constant } from "./Constant";
+import { em } from "../global/EventManager";
 
-export { glf }
-
-
-const glf = {
+export default class Utils {
     //创建组件提供的按钮 或 修改内部调用 
-    createButton: (scriptNode: Node, buttonNode: Node, scriptName: string, callbackName: string, param: string = '') => {
+    static createButton(scriptNode: Node, buttonNode: Node, scriptName: string, callbackName: string, param: string = '') {
         let flag = scriptNode && buttonNode && scriptName && callbackName;
         // console.log("scriptNode", scriptNode);
         // console.log("buttonNode", buttonNode);
@@ -30,14 +26,14 @@ const glf = {
         // console.log("button", button);
         // button.clickEvents.push(buttonHandler);
         // console.log("创建成功");
-    },
+    }
     /**
      * @description: 获取圆四周的点 
      * @param {number} r 圆的半径
      * @param {number} total 圆的总数
      * @注 圆的总数必须是四的倍数
      */
-    getCirclePos(r: number, total: number) {
+    static getCirclePos(r: number, total: number) {
         if (total < 4) throw "圆上点数过少 请输入大于4的数字"
         if (total % 4 !== 0) throw "生成的在圆上的点的总数错误，不是4的倍数" + total;
         let quarter = total / 4;
@@ -49,12 +45,12 @@ const glf = {
         };
         arr.push([0, r], [0, -r], [r, 0], [-r, 0]);
         return arr;
-    },
+    }
     /**
      * @description: 获取时间详情
      * 
      */
-    getTimeDetail() {
+    static getTimeDetail() {
         var newDate = new Date();
         //保留两位有效数字
         let getTimeData = function (time) {
@@ -63,9 +59,9 @@ const glf = {
         return newDate.getFullYear() + "." + (newDate.getMonth() + 1) + "." + newDate.getDate() + "  " +
             getTimeData(newDate.getHours()) + ":" + getTimeData(newDate.getMinutes()) +
             ":" + getTimeData(newDate.getSeconds());
-    },
+    }
     //获得三角形队列
-    getTriangleRow(rowTotal) {
+    static getTriangleRow(rowTotal) {
         let initPos = { x: 0, y: 0 };
         let arr = [];
         let unitGap = 50;
@@ -81,22 +77,22 @@ const glf = {
             }
         }
         return arr;
-    },
-    playAd() {
-        switch (ggd.platform) {
+    }
+    static playAd() {
+        switch (Constant.GlobalGameData.platform) {
             case "GooglePlay":
                 native.reflection.callStaticMethod("com/cocos/game/AppActivity", "createAds", "()V");
                 break;
             case "wxGame":
-                em.dispatchs(EventId.showWxVideoAd);
+                em.dispatchs(Constant.EventId.showWxVideoAd);
                 break;
             default:
                 break;
         }
-    },
+    }
     // 广告播放成功后的回调
-    afterPlayAdComplete() {
-        switch (ggd.curAdRewardType) {
+    static afterPlayAdComplete() {
+        switch (Constant.GlobalGameData.curAdRewardType) {
             case "getItems":
                 app.bag.getItemsRewardByAds();
                 break;
@@ -133,17 +129,17 @@ const glf = {
                 em.dispatch("usingHeroInfoLayerFun", "isShowAdBtn");
                 break;
             default:
-                em.dispatch("tipsViewShow", "参数类型错误：" + ggd.curAdRewardType);
+                em.dispatch("tipsViewShow", "参数类型错误：" + Constant.GlobalGameData.curAdRewardType);
                 break;
         }
 
         // let url = gUrl.list.adClickCount;
         // let data = null;
         // hr.post(url, data, () => { });
-    },
+    }
     // 广告播放失败后的回调
-    afterPlayAdError() {
-        switch (ggd.curAdRewardType) {
+    static afterPlayAdError() {
+        switch (Constant.GlobalGameData.curAdRewardType) {
             case "getItems":
                 em.dispatch("tipsViewShow", "获取奖励失败");
                 break;
@@ -163,12 +159,12 @@ const glf = {
                 em.dispatch("tipsViewShow", "刷新奖励失败");
                 break;
             default:
-                em.dispatch("tipsViewShow", "参数类型错误：" + ggd.curAdRewardType);
+                em.dispatch("tipsViewShow", "参数类型错误：" + Constant.GlobalGameData.curAdRewardType);
                 break;
         }
-    },
+    }
     //获取两点间的飞行方向
-    getTwoPointFlyDir(p1, p2) {
+    static getTwoPointFlyDir(p1, p2) {
         // console.log("p1",p1);
         // console.log("p2",p2);
         let x = p1.x - p2.x;
@@ -191,13 +187,13 @@ const glf = {
             dir.y = Math.abs(y) / y;
         }
         return dir;
-    },
+    }
     //两点间的距离是否大于某值
-    towPointDisGreaterThanValue(p1, p2, v) {
+    static towPointDisGreaterThanValue(p1, p2, v) {
         let x = p1.x - p2.x;
         let y = p1.y - p2.y;
         return x * x + y * y > v;
-    },
+    }
 }
 
 

@@ -1,8 +1,7 @@
 import { _decorator, Component, Node, director, sys } from 'cc';
 import { em } from '../global/EventManager';
-import { ggConfig, ggd } from '../global/globalData';
-import { glf } from '../global/globalFun';
-import { EventId } from '../global/GameEvent';
+import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('WX_GAME')
@@ -12,10 +11,10 @@ export class WX_GAME extends Component {
     _bannerAd = null;
     _curAdIndex = 0;
     onLoad() {
-        if (!ggd.isOpenAd) return;//没开启 直接停止初始化
-        em.add(EventId.showWxVideoAd, this.showWxVideoAd.bind(this));
-        em.add(EventId.showBanner, this.showBanner.bind(this));
-        em.add(EventId.hideBanner, this.hideBanner.bind(this));
+        if (!Constant.GlobalGameData.isOpenAd) return;//没开启 直接停止初始化
+        em.add(Constant.EventId.showWxVideoAd, this.showWxVideoAd.bind(this));
+        em.add(Constant.EventId.showBanner, this.showBanner.bind(this));
+        em.add(Constant.EventId.hideBanner, this.hideBanner.bind(this));
         // em.add("initRewardAdByPlayTimes", this.initRewardAdByPlayTimes.bind(this));
         //如果是微信小游戏
         if (sys.platform == sys.Platform.WECHAT_GAME) {
@@ -170,7 +169,7 @@ export class WX_GAME extends Component {
                 default:
                     break;
             }
-            glf.afterPlayAdError();
+            Utils.afterPlayAdError();
         })
 
         this._videoAd.onClose(res => {
@@ -178,19 +177,19 @@ export class WX_GAME extends Component {
             // 小于 2.1.0 的基础库版本，res 是一个 undefined
             if (res && res.isEnded || res === undefined) {
                 // 正常播放结束，可以下发游戏奖励
-                glf.afterPlayAdComplete();
+                Utils.afterPlayAdComplete();
             }
             else {
                 // 播放中途退出，不下发游戏奖励
                 console.log("播放中途退出，不下发游戏奖励");/*  */
-                glf.afterPlayAdError();
+                Utils.afterPlayAdError();
             }
         });
     }
     //通过播放次数初始化广告
     initRewardAdByPlayTimes() {
         let index = this.getIndexByPlayTimes();
-        let adUnitId = ggConfig.adUnitIds[index];
+        let adUnitId = Constant.GlobalGameConfig.adUnitIds[index];
 
         // 创建激励视频广告实例，提前初始化
         this._videoAd = wx.createRewardedVideoAd({
@@ -242,31 +241,31 @@ export class WX_GAME extends Component {
                 default:
                     break;
             }
-            glf.afterPlayAdError();
+            Utils.afterPlayAdError();
         })
 
         this._videoAd.onClose(res => {
             // 用户点击了【关闭广告】按钮
             // 小于 2.1.0 的基础库版本，res 是一个 undefined
             if (res && res.isEnded || res === undefined) {
-                ggd.playAdTimes++;
+                Constant.GlobalGameData.playAdTimes++;
                 let index = this.getIndexByPlayTimes();
                 if (index !== this._curAdIndex) this.initRewardAdByPlayTimes();
                 // 正常播放结束，可以下发游戏奖励
-                glf.afterPlayAdComplete();
+                Utils.afterPlayAdComplete();
             }
             else {
                 // 播放中途退出，不下发游戏奖励
                 console.log("播放中途退出，不下发游戏奖励");/*  */
-                glf.afterPlayAdError();
+                Utils.afterPlayAdError();
             }
         });
     }
     // 通过播放次数获得下标
     getIndexByPlayTimes() {
         let index = 0;
-        if (ggd.playAdTimes > 3) index = 1;
-        if (ggd.playAdTimes > 6) index = 2;
+        if (Constant.GlobalGameData.playAdTimes > 3) index = 1;
+        if (Constant.GlobalGameData.playAdTimes > 6) index = 2;
         return index;
     }
 

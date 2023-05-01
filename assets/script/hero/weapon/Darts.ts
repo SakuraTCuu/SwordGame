@@ -10,9 +10,10 @@
  */
 import { Color, find, Vec2, _decorator } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, tagData } from '../../global/globalData';
+
 import { plm } from '../../global/PoolManager';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass } = _decorator;
 
 @ccclass('Darts')
@@ -24,7 +25,7 @@ export class Darts extends Weapon {
     init(data, lv, flyDir: { x: number, y: number }, isCanSplit: boolean = false) {
         this.initWeaponInfo(lv, data, flyDir);
         let weaponName: string = data.name;
-        this.initBoxCollider(tagData[weaponName]);
+        this.initBoxCollider(Constant.Tag[weaponName]);
         this._isCanSplit = isCanSplit;
     }
     colliderMonster(other) {

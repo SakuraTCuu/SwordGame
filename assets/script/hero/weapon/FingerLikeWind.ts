@@ -10,8 +10,8 @@
  */
 import { _decorator, Component, Node, Animation } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('FingerLikeWind')
@@ -30,7 +30,7 @@ export class FingerLikeWind extends Weapon {
         this._attackInterval = 0.5;
         this._weaponName = data.name;
         this.node.parent = em.dispatch("getHeroControlProperty", "node").getChildByName("skillParent");
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
     }
     update(deltaTime: number) {
         this.weaponMove(deltaTime);

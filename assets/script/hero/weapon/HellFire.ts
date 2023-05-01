@@ -1,7 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('HellFire')
@@ -18,7 +18,7 @@ export class HellFire extends Weapon {
         this._attackInterval = 1;
         this._weaponName = data.name2;
         this.clearCacheData();
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
     }
 }
 

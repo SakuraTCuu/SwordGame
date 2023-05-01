@@ -20,9 +20,9 @@
  */
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd } from '../../global/globalData';
-import { glf } from '../../global/globalFun';
 import { Boss } from './Boss';
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('Boss6')
@@ -42,7 +42,9 @@ export class Boss6 extends Boss {
 
     onLoad() {
         this.initSprintData();
-        let bossData = em.dispatch("usingHeroBasePropertyFun", "getBossDataById", 6);
+        // let bossData = em.dispatch("usingHeroBasePropertyFun", "getBossDataById", 6);
+        let bossData = app.staticData.getBossDataById(6);
+
         bossData.canMove = true;
         this._skillData.normalParticle.damage = bossData.normalDamage;
         this.initBossInfo(bossData);
@@ -60,10 +62,10 @@ export class Boss6 extends Boss {
         // },2);
 
         this.schedule(() => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             let targetPos = em.dispatch("getHeroWorldPos");
             let curPos = this.node.getWorldPosition();
-            if (!glf.towPointDisGreaterThanValue(targetPos, curPos, 300)) return;//不大于200的距离不释放该技能
+            if (!Utils.towPointDisGreaterThanValue(targetPos, curPos, 300)) return;//不大于200的距离不释放该技能
             this.isToSprintHero(200, null, () => {
                 // console.log("向两边发射子弹");
                 this.usingNormalParticleWithDoubleDir(this._sprintDir);

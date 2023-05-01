@@ -1,9 +1,8 @@
 import { _decorator, Component, Node, SpriteFrame, find, Sprite, Label, Color, Layers, director, sys, JsonAsset, native } from 'cc';
 import { em } from '../global/EventManager';
-import { ggd } from '../global/globalData';
-import { glf } from '../global/globalFun';
-import { EventId } from '../global/GameEvent';
+
 import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -46,11 +45,11 @@ export class MainMenu extends Component {
     _lingshiTotalLabel: Label = null;
 
     onDestroy() {
-        em.remove(EventId.switchMainMenuLayer);
+        em.remove(Constant.EventId.switchMainMenuLayer);
     }
 
     onLoad() {
-        em.add(EventId.switchMainMenuLayer, this.onSelectBtn.bind(this));
+        em.add(Constant.EventId.switchMainMenuLayer, this.onSelectBtn.bind(this));
 
         this.initView();
 
@@ -181,8 +180,8 @@ export class MainMenu extends Component {
         });
     }
     onBtnAds(e, p) {
-        ggd.curAdRewardType = p;
-        glf.playAd();
+        Constant.GlobalGameData.curAdRewardType = p;
+        Utils.playAd();
         // native.reflection.callStaticMethod("com/cocos/game/AppActivity", "createAds", "()V");
         // em.dispatch("getItemsRewardByAds");
     }

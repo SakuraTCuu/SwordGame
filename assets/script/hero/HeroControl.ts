@@ -1,10 +1,9 @@
 // 英雄死亡
 import { _decorator, Component, Sprite, input, Input, Node, find, js, JsonAsset, Label, Animation, game, Game, Color, PhysicsSystem2D, EPhysics2DDrawFlags, BoxCollider2D, ParticleSystem, ParticleSystem2D, Rect, Collider2D, Touch, math, view, instantiate, Prefab, macro, native, JavaScript, Material } from 'cc';
 import { em } from '../global/EventManager';
-import { ggd, tagData } from '../global/globalData';
 import { LevelManager } from "../system/LevelManager";
-import { glf } from '../global/globalFun';
-import { EventId } from '../global/GameEvent';
+import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('HeroControl')
@@ -159,7 +158,7 @@ export class HeroControl extends Component {
         this.createRandomSkill();
         //游戏运行计时器开始计时
         this.schedule(() => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             this._gameRunTimer++;
             this.activeEffects();
         }, 1);
@@ -184,7 +183,7 @@ export class HeroControl extends Component {
                 prefab.parent = find("Canvas/bulletLayer");
                 prefab.setPosition(pos.x, pos.y, 0);
                 prefab.getComponent(Sprite).spriteFrame = assets;
-                prefab.getComponent("ItemInPlaying").init(tagData.randomSkillReward);
+                prefab.getComponent("ItemInPlaying").init(Constant.Tag.randomSkillReward);
             });
         }
     }
@@ -234,18 +233,27 @@ export class HeroControl extends Component {
      * @description: 属性包括基础属性和额外属性 
      */
     initHeroDataByLv() {
-        let a = em.dispatch("usingHeroBasePropertyFun", "getBasePropertyValueByEqu");
+        // let a = em.dispatch("usingHeroBasePropertyFun", "getBasePropertyValueByEqu");
+        let a = app.staticData.getBasePropertyValueByEqu();
+
         this._effectList = a.effectList;
         console.log("hero data", this._heroData);
         this._slowResistance = a.slowResistance;
         this._slowResistance > 1 ? 1 : this._slowResistance;
         this._damageReduce = a.damageReduce;
         this._continueSlowPer = a.slowPer;
-        this._baseBlood = em.dispatch("usingHeroBasePropertyFun", "getTrainingData", "blood") + a.blood;
-        this._baseMoveSpeed = em.dispatch("usingHeroBasePropertyFun", "getTrainingData", "moveSpeed") + a.moveSpeed;;
+
+ 
+        this._baseBlood = app.staticData.getTrainingData("blood") + a.blood;
+        // this._baseBlood = em.dispatch("usingHeroBasePropertyFun", "getTrainingData", "blood") + a.blood;
+
+        this._baseMoveSpeed = app.staticData.getTrainingData("moveSpeed") + a.moveSpeed;
+        // this._baseMoveSpeed = em.dispatch("usingHeroBasePropertyFun", "getTrainingData", "moveSpeed") + a.moveSpeed;;
         // this._baseMoveSpeed += 500;
 
-        this._baseMoveSpeed += em.dispatch("usingHeroBasePropertyFun", "getHeroBaseProperty", "moveSpeed");
+        this._baseMoveSpeed += app.staticData.getHeroBaseProperty("moveSpeed");
+       
+        // this._baseMoveSpeed += em.dispatch("usingHeroBasePropertyFun", "getHeroBaseProperty", "moveSpeed");
         // this._isDamageImmunity = true;
         this._baseDamage = em.dispatch("usingHeroBasePropertyFun", "getTrainingData", "damage") + a.baseDamage;
 
@@ -332,7 +340,7 @@ export class HeroControl extends Component {
     //角色移动
     heroMoveControl(t: number) {
         if (!this._canMove) return;
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let dir = this._curDirection;
         em.dispatch("usingMapLayerFun", "updateMap", dir);//刷新地图
         let speed = this.getCurMoveSpeed();
@@ -395,7 +403,7 @@ export class HeroControl extends Component {
      * @param {Touch} e
      */
     touchStart(e) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let id = e.getID();
         if (this._touchMoveId === undefined) {
             this._touchMoveId = id;
@@ -412,7 +420,7 @@ export class HeroControl extends Component {
         }
     }
     touchMove(e) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let id = e.getID();
         if (id === this._touchMoveId) this.heroMoveByTouchMove(e);
         else if (id === this._touchShotId) this.heroShotByTouchMove(e);
@@ -460,7 +468,7 @@ export class HeroControl extends Component {
     }
     //生命恢复函数
     continueRecoveryHealthy() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         // console.log("current blood",this._curBlood);
         let value = Math.ceil(this.getMaxBlood() * this._recoveryHealthy);
         this.updateBloodProgress(value);
@@ -548,7 +556,7 @@ export class HeroControl extends Component {
     // 暂停游戏
     pauseGame() {
         this._spriteAnim.pause();
-        ggd.stopAll = true;
+        Constant.GlobalGameData.stopAll = true;
         em.dispatch("usingMonsterManagerFun", "pauseAllAnim");
         em.dispatch("usingGameAnimManagerFun", "pauseAllAnim");
     }
@@ -559,7 +567,7 @@ export class HeroControl extends Component {
             return;
         }
         this._spriteAnim.resume();
-        ggd.stopAll = false;
+        Constant.GlobalGameData.stopAll = false;
         em.dispatch("usingMonsterManagerFun", "resumeAllAnim");
         em.dispatch("usingGameAnimManagerFun", "resumeAllAnim");
 
@@ -600,7 +608,7 @@ export class HeroControl extends Component {
     }
     //刷新血条
     updateBloodProgress(changeValue: number) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (changeValue < 0) {//受到伤害
             let damageReduce = em.dispatch("usingSkillManagerFun", "getPercentageReduceDamageFromSecretSkill") + this._damageReduce;
             damageReduce > 1 ? 1 : damageReduce;
@@ -617,7 +625,7 @@ export class HeroControl extends Component {
         if (this._curBlood < 0) {
             this._curBlood = 0;
             this.pauseGame();
-            if (ggd.isOpenAd && this._canRebirthByAdTimes > 0) {
+            if (Constant.GlobalGameData.isOpenAd && this._canRebirthByAdTimes > 0) {
                 this._canRebirthByAdTimes--;
                 this.showRebirthAd();
             } else this.showGameOver();
@@ -634,8 +642,8 @@ export class HeroControl extends Component {
         find("Canvas/heroLayer/GameUILayer/rebirthAd").active = true;
     }
     onBtnPlayAds() {
-        ggd.curAdRewardType = "rebirthHero";
-        glf.playAd();
+        Constant.GlobalGameData.curAdRewardType = "rebirthHero";
+        Utils.playAd();
         // native.reflection.callStaticMethod("com/cocos/game/AppActivity", "createAds", "()V");
         find("Canvas/heroLayer/GameUILayer/rebirthAd").active = false;
         // console.log("播放广告");
@@ -685,7 +693,7 @@ export class HeroControl extends Component {
 
     //展示游戏结束
     showGameOver() {
-        ggd.stopAll = true;//停止一切行为
+        Constant.GlobalGameData.stopAll = true;//停止一切行为
         this._WM.isUsingSword(false);// 停止攻击
         this._spriteAnim.stop();// 停止移动
         //所有怪物放入对象池 移除之前 先停止生成
@@ -732,7 +740,7 @@ export class HeroControl extends Component {
     }
     //重新开始
     restartGame() {
-        ggd.stopAll = false;
+        Constant.GlobalGameData.stopAll = false;
         game.restart();
     }
 
@@ -811,7 +819,7 @@ export class HeroControl extends Component {
                 y: rect.y + rect.height / 2
             };
             let wp = em.dispatch("getHeroWorldPos");
-            return glf.getTwoPointFlyDir(targetPos, wp);
+            return Utils.getTwoPointFlyDir(targetPos, wp);
         } else {
             return null;
         }
@@ -836,7 +844,7 @@ export class HeroControl extends Component {
                     y: rect.y + rect.height / 2
                 };
                 let wp = em.dispatch("getHeroWorldPos");
-                let dir = glf.getTwoPointFlyDir(targetPos, wp);
+                let dir = Utils.getTwoPointFlyDir(targetPos, wp);
                 arr.push(dir);
             }
             return arr;
@@ -858,7 +866,7 @@ export class HeroControl extends Component {
     //                 y: rect.y + rect.height / 2
     //             };
     //             let wp = em.dispatch("getHeroWorldPos");
-    //             let dir = glf.getTwoPointFlyDir(targetPos, wp);
+    //             let dir = Utils.getTwoPointFlyDir(targetPos, wp);
     //             arr.push(dir);
     //             index++;
     //         }
@@ -973,7 +981,7 @@ export class HeroControl extends Component {
         console.log("addDebuffBanMove");
         this._deBuffList.banMove = true;
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             t--;
             if (t <= 0) {
                 this.unschedule(fun);
@@ -1000,7 +1008,7 @@ export class HeroControl extends Component {
     }
     // 减速回调 新的减速会重置回调
     addDebuffSlowCallFun() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._deBuffList.slow.time--;
         if (this._deBuffList.slow.time <= 0) {
             this.unschedule(this.addDebuffSlowCallFun);
@@ -1076,7 +1084,7 @@ export class HeroControl extends Component {
         // }, t);
     }
     trackDisappearSchedule() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._trackDisappearCountdown--;
 
         if (this._trackDisappearCountdown <= 0) {
@@ -1172,7 +1180,7 @@ export class HeroControl extends Component {
         this.switchMaterial(1);
         let count = 10;
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             count--;
             if (count <= 0) {
                 this.unschedule(fun);

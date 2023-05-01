@@ -1,6 +1,5 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import { Weapon } from '../weapon/Weapon';
 const { ccclass, property } = _decorator;

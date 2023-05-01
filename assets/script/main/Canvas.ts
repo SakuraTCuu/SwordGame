@@ -1,7 +1,6 @@
 
 import { _decorator, Component, Node, Label, instantiate, tween, Vec3, Color, NodePool, Prefab, Game, game } from 'cc';
 import { em } from '../global/EventManager';
-import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 const { ccclass, property } = _decorator;
 

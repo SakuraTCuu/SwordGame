@@ -20,8 +20,8 @@
  */
 import { _decorator, Component, Node, Animation } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('SamadhiTrueFire')
@@ -43,7 +43,7 @@ export class SamadhiTrueFire extends Weapon {
         this._weaponName = data.name2;
         this.node.parent = em.dispatch("getHeroControlProperty", "node").getChildByName("sprite");
         // this.clearCacheData();
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
     }
     //自我销毁
     recoveryToPool() {

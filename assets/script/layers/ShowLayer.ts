@@ -10,8 +10,6 @@
  */
 import { _decorator, Component, Node, Label, instantiate, tween, Vec3, Color, NodePool, Prefab, color, Animation } from 'cc';
 import { em } from '../global/EventManager';
-// import { tagData2 } from '../global/globalData';
-import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 const { ccclass, property } = _decorator;
 

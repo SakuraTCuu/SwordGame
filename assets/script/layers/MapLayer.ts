@@ -10,7 +10,8 @@
  */
 import { _decorator, Component, Node, SpriteFrame, Size, find, Sprite, UITransform, Vec3, Rect, Vec2, math, CacheMode, Prefab, instantiate, BoxCollider2D, Collider2D, Material } from 'cc';
 import { em } from '../global/EventManager';
-import { ggd, groupIndex, tagData } from '../global/globalData';
+
+import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('MapLayer')
@@ -68,7 +69,7 @@ export class MapLayer extends Component {
         this.mapList[3].setWorldPosition(hwp.x + this._mapSize.x, hwp.y + this._mapSize.y, hwp.z);
     }
     switchMapBg() {
-        let index = Math.ceil(ggd.curStage / 10) - 1;
+        let index = Math.ceil(Constant.GlobalGameData.curStage / 10) - 1;
         for (let i = 0; i < this.mapList.length; i++) {
             let node = this.mapList[i];
             node.getComponent(UITransform).setContentSize(this._mapSize);
@@ -107,16 +108,16 @@ export class MapLayer extends Component {
         let offset = new Size(-this._mapSize.width / 2, -this._mapSize.height / 2);
         obs.parent = map;
         obs.setPosition(pos[0] * 200 + offset.width, pos[1] * 200 + offset.height);
-        let index = Math.ceil(ggd.curStage / 10) - 1;
+        let index = Math.ceil(Constant.GlobalGameData.curStage / 10) - 1;
         obs.getComponent(Sprite).spriteFrame = this.obsSFs[index];
         let collider = obs.addComponent(BoxCollider2D);
         let UIT = obs.getComponent(UITransform);
         // let obsSize = new Size(UIT.contentSize.x, UIT.contentSize.y);
         // let obsSize = new Size(UIT.contentSize.x*3/4, UIT.contentSize.y*3/4);
         let obsSize = new Size(UIT.contentSize.x * 1 / 2, UIT.contentSize.y * 1 / 2);
-        collider.tag = tagData.obstacle;
+        collider.tag = Constant.Tag.obstacle;
         collider.size = obsSize;
-        collider.group = groupIndex.obstacle;
+        collider.group = Constant.GroupIndex.obstacle;
         this._obsColliderArr.push(collider);
     }
 
@@ -149,7 +150,7 @@ export class MapLayer extends Component {
     }
     // 冻结倒计时运行
     frozenCountdownRun() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._frozenCountdown--;
         let progress = 1 - (this._frozenCountdown / this._frozenTotalTime);
         this.frozenMaterial.setProperty("frozenProgress", progress);

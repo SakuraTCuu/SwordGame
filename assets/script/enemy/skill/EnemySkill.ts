@@ -10,9 +10,9 @@
  */
 import { _decorator, Component, Node, BoxCollider2D, UITransform, Size, Contact2DType, Collider2D, Animation, CircleCollider2D } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, groupIndex, tagData } from '../../global/globalData';
 
 import { plm } from '../../global/PoolManager';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('EnemySkill')
@@ -43,9 +43,9 @@ export class EnemySkill extends Component {
         if (!collider) collider = this.node.addComponent(BoxCollider2D);
         let UIT = this.node.getComponent(UITransform);
         let skillSize = new Size(UIT.contentSize.x * scale, UIT.contentSize.y * scale);
-        collider.tag = tagData.enemySkill;
+        collider.tag = Constant.Tag.enemySkill;
         collider.size = skillSize;
-        collider.group = groupIndex.enemySkill;
+        collider.group = Constant.GroupIndex.enemySkill;
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         // console.log("EnemySkill collider",collider);
     }
@@ -54,18 +54,18 @@ export class EnemySkill extends Component {
         if (!collider) collider = this.node.addComponent(CircleCollider2D);
         let UIT = this.node.getComponent(UITransform);
         let skillSize = new Size(UIT.contentSize.x * scale, UIT.contentSize.y * scale);
-        collider.tag = tagData.enemySkill;
+        collider.tag = Constant.Tag.enemySkill;
         collider.radius = skillSize.x / 2;
-        collider.group = groupIndex.enemySkill;
+        collider.group = Constant.GroupIndex.enemySkill;
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
     }
     onBeginContact(self, other) {
         // 攻击玩家
-        if (other.tag == tagData.hero) {
+        if (other.tag == Constant.Tag.hero) {
             this.colliderHero();
         }
         //碰撞销毁
-        if (other.tag == tagData.destroyWeapon) {
+        if (other.tag == Constant.Tag.destroyWeapon) {
             this.recoveryPrefab();
         }
     }
@@ -91,7 +91,7 @@ export class EnemySkill extends Component {
         this.weaponDuration(deltaTime);
     }
     weaponMove(deltaTime: number) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._flyDir) return;
         if (this._moveSpeed == 0 || this._duration == Infinity) return;
 
@@ -102,7 +102,7 @@ export class EnemySkill extends Component {
         this.node.setPosition(this.node.getPosition().x + moveX, this.node.getPosition().y + moveY, 0);
     }
     weaponDuration(deltaTime: number) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._duration -= deltaTime;
         if (this._duration <= 0) this.recoveryPrefab();
     }

@@ -3,6 +3,9 @@
     "__type__": "cc.AnimationClip",
     "_name": "training",
     "_objFlags": 0,
+    "__editorExtras__": {
+      "embeddedPlayerGroups": []
+    },
     "_native": "",
     "sample": 30,
     "speed": 1,
@@ -39,16 +42,22 @@
     "_exoticAnimation": null,
     "_events": [
       {
-        "frame": 5.366666666666666,
+        "frame": 0,
         "func": "",
         "params": []
       },
       {
-        "frame": 5.366666666666666,
-        "func": "afterPlayUpgradeAnim",
+        "frame": 0,
+        "func": "",
+        "params": []
+      },
+      {
+        "frame": 0,
+        "func": "",
         "params": []
       }
-    ]
+    ],
+    "_embeddedPlayers": []
   },
   {
     "__type__": "cc.animation.VectorTrack",
@@ -56,7 +65,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 2
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {
@@ -222,7 +232,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 12
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {
@@ -440,7 +451,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 23
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {
@@ -658,7 +670,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 34
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {
@@ -876,7 +889,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 45
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {
@@ -1094,7 +1108,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 56
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {
@@ -1312,7 +1327,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 67
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {
@@ -1530,7 +1546,8 @@
       "__type__": "cc.animation.TrackBinding",
       "path": {
         "__id__": 78
-      }
+      },
+      "proxy": null
     },
     "_channels": [
       {

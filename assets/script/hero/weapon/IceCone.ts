@@ -10,7 +10,6 @@
  */
 import { _decorator, Component, Node, Vec2 } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Sword } from './Sword';
 import { Weapon } from './Weapon';
 import { Constant } from '../../Common/Constant';
@@ -34,7 +33,7 @@ export class IceCone extends Weapon {
         // this._flyDir = new Vec2(-.25, -1);
         this._flyDir = flyDir;
         this.clearCacheData();
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
         this.changeBulletRotationByFlyDir();
     }
     colliderMonster(other) {

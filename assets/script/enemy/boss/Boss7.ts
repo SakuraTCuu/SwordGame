@@ -25,7 +25,9 @@ export class Boss7 extends Boss {
         },
     };
     onLoad() {
-        let bossData = em.dispatch("usingHeroBasePropertyFun", "getBossDataById", 7);
+        // let bossData = em.dispatch("usingHeroBasePropertyFun", "getBossDataById", 7);
+        let bossData = app.staticData.getBossDataById(7);
+
         bossData.canMove = false;
         this._skillData.normalParticle.damage = bossData.normalDamage;
         this.initBossInfo(bossData);

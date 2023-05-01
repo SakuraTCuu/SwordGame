@@ -10,8 +10,8 @@
  */
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('SpiritBullet')
@@ -19,8 +19,8 @@ export class SpiritBullet extends Weapon {
     init(data, lv, flyDir: { x: number, y: number }) {
         this.initWeaponInfo(lv, data, flyDir);
         // let weaponName: string = data.name;
-        this.initCircleCollider(tagData.sword);
-        // this.initBoxCollider((tagData.sword));
+        this.initCircleCollider(Constant.Tag.sword);
+        // this.initBoxCollider((Constant.Tag.sword));
         this.changeBulletRotationByFlyDir();
     }
     colliderMonster(other) {

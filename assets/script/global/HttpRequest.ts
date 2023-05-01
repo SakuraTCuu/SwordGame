@@ -1,17 +1,6 @@
 import { sys } from "cc";
-import { ggd } from "./globalData";
+import { Constant } from "../Common/Constant";
 
-
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-10-27 15:38:10
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-10-27 17:14:25
- * @FilePath: \copy9train\assets\script\global\HttpRequest.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 export { hr }
 class HttpRequest {
     constructor() {
@@ -53,7 +42,7 @@ class HttpRequest {
         xhr.setRequestHeader("Content-Type", "application/json");
         xhr.setRequestHeader("version", 101);
         xhr.setRequestHeader("nonce", Date.now());
-        let imei = ggd.phoneInfo.imei;
+        let imei = Constant.GlobalGameData.phoneInfo.imei;
         if (imei) xhr.setRequestHeader("imei", imei);
         else {
             let imei = sys.localStorage.getItem("imei");
@@ -68,7 +57,7 @@ class HttpRequest {
         if (sys.os == "Android") xhr.setRequestHeader("os", "ANDROID");
         else if (sys.os == "iOS") xhr.setRequestHeader("os", "IOS");
         else xhr.setRequestHeader("os", "PC");
-        if (ggd.userInfo.token) xhr.setRequestHeader("Authorization", "Bearer " + ggd.userInfo.token);
+        if (Constant.GlobalGameData.userInfo.token) xhr.setRequestHeader("Authorization", "Bearer " + Constant.GlobalGameData.userInfo.token);
 
     }
     //获取随机imei

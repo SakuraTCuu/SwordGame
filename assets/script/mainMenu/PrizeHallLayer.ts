@@ -10,10 +10,9 @@
  */
 import { _decorator, Component, Node, find, instantiate, Sprite, Label, NodePool } from 'cc';
 import { em } from '../global/EventManager';
-import { gUrl } from '../global/GameUrl';
 import { hr } from '../global/HttpRequest';
 import { plm } from '../global/PoolManager';
-import { EventId } from '../global/GameEvent';
+import { Constant } from '../Common/Constant';
 ;
 const { ccclass, property } = _decorator;
 
@@ -40,7 +39,7 @@ export class PrizeHallLayer extends Component {
     }
     //发送奖励请求
     sendPrizeRequest() {
-        let url = gUrl.list.getPrize;
+        let url = Constant.URL.GetPrize;
         hr.get(url, { cdk: this._curCdkeySting }, (response) => {
             console.log("response", response);
             if (response.successful) {

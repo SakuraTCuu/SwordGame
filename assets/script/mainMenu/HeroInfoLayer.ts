@@ -10,11 +10,10 @@
  */
 import { _decorator, Component, Node, Prefab, SpriteFrame, instantiate, Sprite, Label, find, Color, tween, Vec3, NodePool, ProgressBar, Slider, Tween, Animation, RichText, color } from 'cc';
 import { em } from '../global/EventManager';
-import { ggd } from '../global/globalData';
-import { glf } from '../global/globalFun';
+
 import { plm } from '../global/PoolManager';
-import { EventId } from '../global/GameEvent';
 import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -198,10 +197,10 @@ export class HeroInfoLayer extends Component {
     }
     //是否展示广告按钮
     isShowAdBtn() {
-        if (ggd.isOpenAd) {
+        if (Constant.GlobalGameData.isOpenAd) {
             this.adGetBox.active = true;
         } else this.adGetBox.active = false;
-        if (ggd.isOpenAd && !em.dispatch("usingGameRewardFun", "todayEquVideoIsCanShow")) this.adGetEqu.active = true;
+        if (Constant.GlobalGameData.isOpenAd && !em.dispatch("usingGameRewardFun", "todayEquVideoIsCanShow")) this.adGetEqu.active = true;
         else this.adGetEqu.active = false;
     }
     // 初始化属性
@@ -221,8 +220,8 @@ export class HeroInfoLayer extends Component {
             prefab.getChildByName("description").getComponent(Label).string = "Lv:" + curLv + "\n" + this._nameConfig[str];
             prefab.getChildByName("value").getComponent(Label).string = em.dispatch("usingHeroBasePropertyFun", "getHeroBaseProperty", str);
             let upgrade = prefab.getChildByName("upgrade");
-            glf.createButton(this.node, prefab.getChildByName("icon"), "HeroInfoLayer", "onBtnBaseProperty", str);
-            glf.createButton(this.node, upgrade, "HeroInfoLayer", "onBtnUpgrade", str);
+            Utils.createButton(this.node, prefab.getChildByName("icon"), "HeroInfoLayer", "onBtnBaseProperty", str);
+            Utils.createButton(this.node, upgrade, "HeroInfoLayer", "onBtnUpgrade", str);
             this._propertyPrefabArr.push(prefab);
         }
     }
@@ -408,7 +407,7 @@ export class HeroInfoLayer extends Component {
             prefab.itemName = data.name;//用于索引
             this._itemPrefabArr.push(prefab);
             //创建按钮事件
-            glf.createButton(this.node, prefab.getChildByName("itemBg"), "HeroInfoLayer", "onBtnItem", key);
+            Utils.createButton(this.node, prefab.getChildByName("itemBg"), "HeroInfoLayer", "onBtnItem", key);
         }
     }
     // 初始化物品等级
@@ -582,11 +581,11 @@ export class HeroInfoLayer extends Component {
                 break;;
             case "丹药":
                 this.closeItemDetail();
-                em.dispatchs(EventId.switchMainMenuLayer, null, "3");
+                em.dispatchs(Constant.EventId.switchMainMenuLayer, null, "3");
                 break;;
             case "功法":
                 this.closeItemDetail();
-                em.dispatchs(EventId.switchMainMenuLayer, null, "5");
+                em.dispatchs(Constant.EventId.switchMainMenuLayer, null, "5");
                 break;
             case "宝箱":
                 this.openTreasureChest();
@@ -749,7 +748,7 @@ export class HeroInfoLayer extends Component {
         find("heroInfoBg/" + type, this.node).getComponent(Sprite).spriteFrame = this.itemQBg[data.quality - 1];
         let sprite: any = find("heroInfoBg/" + type + "/sprite", this.node).getComponent(Sprite);
         sprite.node.data = data;
-        glf.createButton(this.node, sprite.node, "HeroInfoLayer", "viewEquDetail");
+        Utils.createButton(this.node, sprite.node, "HeroInfoLayer", "viewEquDetail");
 
         this.loadRes(loadUrl, (assets) => sprite.spriteFrame = assets);
 

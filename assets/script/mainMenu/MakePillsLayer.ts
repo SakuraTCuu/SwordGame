@@ -10,10 +10,9 @@
  */
 import { _decorator, Component, Node, Prefab, find, SpriteFrame, instantiate, Sprite, Label, Color, NodePool, Material, tween, Vec3 } from 'cc';
 import { em } from '../global/EventManager';
-import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
-import { EventId } from '../global/GameEvent';
 import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -122,7 +121,7 @@ export class MakePillsLayer extends Component {
             let total = app.bag.getItemTotalByIdOrName(data.name);
             pill.getChildByName("total").getComponent(Label).string = total;
             pill.data = data;//可以直接通过节点获取
-            glf.createButton(this.node, pill, "MakePillsLayer", "onBtnPill");
+            Utils.createButton(this.node, pill, "MakePillsLayer", "onBtnPill");
             this._pillPrefabArr.push(pill);
         });
     }

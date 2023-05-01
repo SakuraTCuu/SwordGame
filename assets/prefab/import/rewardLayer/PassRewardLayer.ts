@@ -10,8 +10,6 @@
  */
 import { _decorator, Component, Node, Sprite, find, SpriteFrame, instantiate, Label, director } from 'cc';
 import { em } from '../../../script/global/EventManager';
-import { ggd } from '../../../script/global/globalData';
-import { EventId } from '../../../script/global/GameEvent';
 import { Constant } from '../../../script/Common/Constant';
 const { ccclass, property } = _decorator;
 
@@ -69,8 +67,8 @@ export class PassRewardLayer extends Component {
         }
     }
     onDisable() {
-        ggd.stopAll = find("passRewardLayer", this.node.parent).active;
-        // ggd.stopAll = false;
+        Constant.GlobalGameData.stopAll = find("passRewardLayer", this.node.parent).active;
+        // Constant.GlobalGameData.stopAll = false;
 
     }
     showKillLeaderReward(strengthType) {
@@ -105,10 +103,10 @@ export class PassRewardLayer extends Component {
         });
         this.descriptionLabel.string = string;
         this.killCountLabel.string = em.dispatch("geCurStageKillInfo");
-        this.curStageLabel.string = "第" + ggd.curStage + "关";
+        this.curStageLabel.string = "第" + Constant.GlobalGameData.curStage + "关";
         if (isDouble) this.doubleTips.active = true;
         else this.doubleTips.active = false;
-        ggd.stopAll = true;
+        Constant.GlobalGameData.stopAll = true;
         this.node.active = true;
         this._isPass = true;
     }

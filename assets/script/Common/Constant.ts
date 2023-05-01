@@ -32,6 +32,89 @@ export namespace Constant {
         loadingComplete = 'loadingComplete',
     }
 
+    //属性标记
+    export enum Tag {
+        hero = 10,
+        sword,
+        fan,
+        guard,
+        spell,
+        darts,//15
+        friend1Skill1,
+        monster,
+        wall,
+        boss,
+        fireBall,//20
+        fireBallFire,
+        trackDisappear,
+        enemySkill,//敌人技能 只单纯的计算伤害
+        obstacle,
+        puppet,
+        destroyWeapon,//无坚不摧的武器
+        randomSkillReward,//随机技能奖励
+    }
+
+    //分组
+    export const GroupIndex = {
+        DEFAULT: 2 ** 0,
+        enemy: 2 ** 1,
+        self: 2 ** 2,
+        obstacle: 2 ** 3,
+        enemySkill: 2 ** 4,
+        heroWeapon: 2 ** 5,
+        itemInPlaying: 2 ** 6,//游戏过程中的物品
+    }
+
+    //攻击间隔 
+    export const AttackInterval = {
+        monsterCollideHero: 1,
+        guard: 0.5,
+        spell: 0.1,
+        f1s1: 1 / 60,
+        boss1: 1,
+        boss2: 1,
+    }
+
+    //全局游戏配置 global game config
+    export const GlobalGameConfig = {
+        framingInitMonster: true,//分帧生成怪物
+        dynamicSupFrame: false,//动态辅助框
+        quadTreeRange: {
+            w: 700,
+            h: 1300
+        },
+        adUnitIds: [
+            "adunit-e4f9eda3feb2de98",
+            "adunit-4fd8f9b38c4adb1f",
+            "adunit-6337803394072dcc"
+        ]
+    }
+
+    //全局通用数据 global game data
+    export const GlobalGameData = {
+        stopAll: false,
+        curStage: 1,
+        totalStage: 80,
+        isOpenAd: true,
+        // platform: "GooglePlay",
+        platform: "wxGame",
+        versionCode: "wx-v-1.0.3.2",
+
+        curAdRewardType: "",//当前广告奖励类型 --->通过该字段判断发放奖励类型
+        //需要记录的
+        stageProgress: 1,
+        userInfo: {
+            isVisitor: true,
+            token: "",
+            accountMetadata: null,
+        },
+        phoneInfo: {
+            imei: "",
+        },
+        //播放广告次数
+        playAdTimes: 0,
+    }
+
     export class Res {
         static ResBundleName: "resources";
 
@@ -65,5 +148,13 @@ export namespace Constant {
         static EquArmorListJson = "data/equSystem/防具等级属性表";
         //鞋等级属性表
         static EquShoeListJson = "data/equSystem/鞋等级属性表";
+    }
+
+    export const URL = {
+        Register: "/xiuXian/player/registry",
+        Login: "/xiuXian/player/login",
+        SavingData: "/xiuXian/player/syncAccountMetadata",
+        AdClickCount: "/xiuXian/statistics/adClick",
+        GetPrize: "/game/toBeImmortal/prize", //推送记录到服务端
     }
 }

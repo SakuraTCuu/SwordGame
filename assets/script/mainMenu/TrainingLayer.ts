@@ -1,10 +1,9 @@
 import { _decorator, Component, Node, find, tween, Vec3, JsonAsset, Prefab, instantiate, Label, Sprite, NodePool, Animation, Color, Tween } from 'cc';
 import { em } from '../global/EventManager';
-import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
 import { LevelManager } from '../system/LevelManager';
-import { EventId } from '../global/GameEvent';
 import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -93,7 +92,7 @@ export class TrainingLayer extends Component {
                     sprite.spriteFrame = assets;
                 });
 
-                glf.createButton(this.node, pill, "TrainingLayer", "onBtnUsingPill", data.name);
+                Utils.createButton(this.node, pill, "TrainingLayer", "onBtnUsingPill", data.name);
                 this._itemPrefabArr.push(pill);
                 count++;
             }
@@ -142,7 +141,7 @@ export class TrainingLayer extends Component {
     //使用丹药
     onBtnUsingPill(e, p) {
         app.audio.playSFX(Constant.Audio.TAKE_PILLS);
-        
+
         app.bag.reduceItemFromBag(p, 1);//使用丹药
         this.updatePillsContent();
         let exp: number;
@@ -230,6 +229,7 @@ export class TrainingLayer extends Component {
         app.audio.playSFX(Constant.Audio.BREAKTHROUGH);
 
         let anim = find("training/animPar", this.node).getComponent(Animation);
+        anim.on(Animation.EventType.FINISHED, this.afterPlayUpgradeAnim.bind(this), this);
         anim.play();
     }
     //播放完突破动画 恢复可突破状态

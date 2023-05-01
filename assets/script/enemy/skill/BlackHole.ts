@@ -1,7 +1,7 @@
 import { _decorator, Component, Node, CircleCollider2D, Contact2DType } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { EnemySkill } from './EnemySkill';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('BlackHole')
@@ -20,7 +20,7 @@ export class BlackHole extends EnemySkill {
     onBeginContact(self, other) {
         console.log("onBeginContact black hole");
 
-        if (other.tag !== tagData.hero) return;
+        if (other.tag !== Constant.Tag.hero) return;
         this._touchHero = true;
         this.scheduleOnce(() => {
             this.heroInBlackHole(other);

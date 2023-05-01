@@ -9,9 +9,9 @@
  * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
  */
 import { _decorator, Component, Node } from 'cc';
-import { groupIndex, tagData } from '../../global/globalData';
 import { Puppet } from '../Puppet';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('MoveLikeShadow')
@@ -20,7 +20,7 @@ export class MoveLikeShadow extends Puppet {
         this._maxBlood = maxBlood;
         this._curBlood = maxBlood;
         this.initNodeCallBack();
-        this.initBoxCollider(tagData.puppet,groupIndex.self);
+        this.initBoxCollider(Constant.Tag.puppet,Constant.GroupIndex.self);
     }
     
 }

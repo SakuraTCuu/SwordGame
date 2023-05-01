@@ -1,8 +1,8 @@
 import { _decorator, Component, Node, BoxCollider2D, Contact2DType } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, groupIndex, tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import { Weapon } from '../weapon/Weapon';
+import { Constant } from '../../Common/Constant';
 
 const { ccclass, property } = _decorator;
 
@@ -28,7 +28,7 @@ export class RotationAxe extends Component {
         this.axe2.getComponent("RotationAxeChild").init();
     }
     update(dt) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let pos1 = this.axe1.getPosition();
         let pos2 = this.axe2.getPosition();
         this.axe1.setPosition(pos1.x - dt * this._moveSpeed, pos1.y, pos1.z);

@@ -1,9 +1,9 @@
-import { EventId, ViewId, MapId, EditId, NetId } from '../global/GameEvent';
+import { Constant } from "../Common/Constant";
 
 export { em }
 
 
-export type EventKey = EventId | ViewId | MapId | EditId | NetId | string;
+export type EventKey = Constant.EventId| string;
 
 interface EventObj {
     target: any
@@ -139,6 +139,6 @@ class EventManager {
 }
 
 // console.log("修了个仙 Google Play version-beta-1.0.3");
-// console.log(ggd.versionCode);
+// console.log(Constant.GlobalGameData.versionCode);
 
 const em = new EventManager();

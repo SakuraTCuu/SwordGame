@@ -1,5 +1,5 @@
 
-import { _decorator, Component, Node, JsonAsset, game, director, resources } from 'cc';
+import { _decorator, JsonAsset } from 'cc';
 import { em } from '../global/EventManager';
 import IService from '../Interfaces/IService';
 import { Constant } from '../Common/Constant';

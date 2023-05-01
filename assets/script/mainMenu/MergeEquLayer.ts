@@ -1,8 +1,7 @@
 import { _decorator, Component, Node, Label, Sprite, SpriteFrame, RichText } from 'cc';
 import { em } from '../global/EventManager';
-import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
-import { EventId } from '../global/GameEvent';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -32,8 +31,8 @@ export class MergeEquLayer extends Component {
         "5": 0
     };
     onLoad() {
-        glf.createButton(this.node, this.curSelect, "MergeEquLayer", "onBtnEqu");
-        glf.createButton(this.node, this.target, "MergeEquLayer", "onBtnEqu");
+        Utils.createButton(this.node, this.curSelect, "MergeEquLayer", "onBtnEqu");
+        Utils.createButton(this.node, this.target, "MergeEquLayer", "onBtnEqu");
     }
     onEnable() {
         this.updateEquList();
@@ -85,7 +84,7 @@ export class MergeEquLayer extends Component {
                 // prefab.getChildByName("name").getComponent(Label).string = data.name;
                 prefab.itemName = data.name;//用于索引
                 this._itemPrefabArr.push(prefab);
-                glf.createButton(this.node, prefab.getChildByName("itemBg"), "MergeEquLayer", "onBtnItemInMergeLayer", key);
+                Utils.createButton(this.node, prefab.getChildByName("itemBg"), "MergeEquLayer", "onBtnItemInMergeLayer", key);
             }
         }
     }

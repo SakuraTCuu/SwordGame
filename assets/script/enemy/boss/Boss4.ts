@@ -20,7 +20,9 @@ export class Boss4 extends Boss {
 
     onLoad() {
         this.initSprintData();
-        let bossData = em.dispatch("usingHeroBasePropertyFun","getBossDataById",4);
+        // let bossData = em.dispatch("usingHeroBasePropertyFun","getBossDataById",4);
+        let bossData = app.staticData.getBossDataById(4);
+
         bossData.canMove = true;
         this._skillData.normalParticle.damage = bossData.normalDamage;
         this.initBossInfo(bossData);

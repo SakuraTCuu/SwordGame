@@ -1,8 +1,7 @@
 import { _decorator, Component, Node, Sprite, SpriteFrame, Label, Material, RichText } from 'cc';
 import { em } from '../global/EventManager';
-import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
-import { EventId } from '../global/GameEvent';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -49,8 +48,8 @@ export class UpgradeEquLvLayer extends Component {
         }
     }
     onLoad() {
-        glf.createButton(this.node, this.curSelect, "UpgradeEquLvLayer", "onBtnEqu");
-        glf.createButton(this.node, this.target, "UpgradeEquLvLayer", "onBtnEqu");
+        Utils.createButton(this.node, this.curSelect, "UpgradeEquLvLayer", "onBtnEqu");
+        Utils.createButton(this.node, this.target, "UpgradeEquLvLayer", "onBtnEqu");
     }
     onEnable() {
         this.updateEquList();
@@ -120,7 +119,7 @@ export class UpgradeEquLvLayer extends Component {
                 // prefab.getChildByName("name").getComponent(Label).string = data.name;
                 prefab.itemName = data.name;//用于索引
                 this._itemPrefabArr.push(prefab);
-                glf.createButton(this.node, prefab.getChildByName("itemBg"), "UpgradeEquLvLayer", "onBtnItemInUpgradeEquLvLayer", key);
+                Utils.createButton(this.node, prefab.getChildByName("itemBg"), "UpgradeEquLvLayer", "onBtnItemInUpgradeEquLvLayer", key);
             }
         }
     }

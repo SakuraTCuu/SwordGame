@@ -10,7 +10,6 @@
  */
 import { _decorator, Component, Node, BoxCollider2D, Contact2DType, Sprite, find } from 'cc';
 import { em } from '../global/EventManager';
-import { groupIndex } from '../global/globalData';
 const { ccclass, property } = _decorator;
 
 @ccclass('Puppet')

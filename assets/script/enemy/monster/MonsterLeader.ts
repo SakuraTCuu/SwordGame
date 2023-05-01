@@ -1,10 +1,10 @@
 
 import { _decorator, Component, Node, Animation, Sprite, Material, instantiate, find, Vec3, tween, BoxCollider2D, Prefab, UITransform, Size, Contact2DType } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, groupIndex, tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import Simulator from '../../RVO/Simulator';
 import { Monster } from './Monster';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('MonsterLeader')
@@ -143,9 +143,9 @@ export class MonsterLeader extends Monster {
         let monsterSize = new Size(UIT.contentSize.x / 2, UIT.contentSize.y / 2);
         // let monsterSize = new Size(UIT.contentSize.x*2/3, UIT.contentSize.y*2/3);
 
-        collider.tag = tagData.monster;
+        collider.tag = Constant.Tag.monster;
         collider.size = monsterSize;
-        collider.group = groupIndex.enemy;
+        collider.group = Constant.GroupIndex.enemy;
 
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
 

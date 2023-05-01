@@ -10,8 +10,8 @@
  */
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { EnemySkill } from './EnemySkill';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('DarkMask')
@@ -20,7 +20,7 @@ export class DarkMask extends EnemySkill {
         this.initCollider();
     }
     onBeginContact(self,other){
-        if(other.tag !==tagData.hero) return;
+        if(other.tag !==Constant.Tag.hero) return;
         em.dispatch("usingHeroControlFun", "addDebuffBanMove", 2);
     }
 

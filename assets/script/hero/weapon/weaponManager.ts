@@ -1,10 +1,14 @@
 import { _decorator, Component, Node, Prefab, NodePool, find, CircleCollider2D, instantiate, tween, BoxCollider2D, SpriteFrame, Sprite, Button, Material, JsonAsset, resources, Asset, Vec2, Label, math, ColorKey, Color, Vec3, Animation } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, tagData } from '../../global/globalData';
-import { glf } from '../../global/globalFun';
+
 import { plm } from '../../global/PoolManager';
-import { Queue } from '../../global/Queue';
-import { EventId } from '../../global/GameEvent';
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
+import Queue from '../../Libs/Structs/Queue';
+import { ThunderRunning } from './ThunderRunning';
+import { DoomsdayStorm } from './DoomsdayStorm';
+import { HellFire } from './HellFire';
+import { FireBloom } from './FireBloom';
 const { ccclass, property } = _decorator;
 
 @ccclass('WeaponManager')
@@ -19,9 +23,9 @@ export class weaponManager extends Component {
     @property(Material)
     defaultMaterial: Material = null;
 
-    _thousandsSwordToTombQueue: Queue = new Queue();
-    _fireBloomQueue: Queue = new Queue();
-    _hellFireQueue: Queue = new Queue();
+    _thousandsSwordToTombQueue: Queue<Node> = new Queue();
+    _fireBloomQueue: Queue<Node> = new Queue();
+    _hellFireQueue: Queue<Node> = new Queue();
 
 
     /**
@@ -191,7 +195,7 @@ export class weaponManager extends Component {
     }
     // 初始化选择武器界面的广告
     initSelectWeaponAd() {
-        if (ggd.isOpenAd) {
+        if (Constant.GlobalGameData.isOpenAd) {
             find("Canvas/heroLayer/GameUILayer/selectWeapon/getAll").active = true;
             find("Canvas/heroLayer/GameUILayer/selectWeapon/updateAll").active = true;
         } else {
@@ -200,12 +204,12 @@ export class weaponManager extends Component {
         }
     }
     getAllUpgradeReward() {
-        ggd.curAdRewardType = "getAllUpgradeReward";
-        glf.playAd();
+        Constant.GlobalGameData.curAdRewardType = "getAllUpgradeReward";
+        Utils.playAd();
     }
     updateUpgradeReward() {
-        ggd.curAdRewardType = "updateUpgradeReward";
-        glf.playAd();
+        Constant.GlobalGameData.curAdRewardType = "updateUpgradeReward";
+        Utils.playAd();
     }
     //======================护符相关=======================
     // 是否开启护符
@@ -267,7 +271,7 @@ export class weaponManager extends Component {
     }
     // 护符旋转
     spellParRotate() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let par = find("spellPar", this.node);
         let interval = 1 / 60;
         let rotationSpeed = 180 * interval;
@@ -285,7 +289,7 @@ export class weaponManager extends Component {
     }
     //护符 大招
     usingSpellUltimateSkill() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         console.log("释放护符大招");
         let total = 12;
         let radius = 150;
@@ -313,7 +317,7 @@ export class weaponManager extends Component {
             spell.angle = angle;
             let times = 60;//旋转消失次数
             let callback = () => {
-                if (ggd.stopAll) return;
+                if (Constant.GlobalGameData.stopAll) return;
                 times--;
                 let curPos = spell.getPosition();
                 let x = pos[0] / radius * speed;
@@ -345,7 +349,7 @@ export class weaponManager extends Component {
     //是否开启波动阵大招
     isOpenGuardUltimateSkill(bool: boolean) {
         this.schedule(() => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             this.usingGuardUltimateSkill();
         }, this._rogueUltimateSkillCDList.guard);
         // this.usingGuardUltimateSkill();
@@ -360,7 +364,7 @@ export class weaponManager extends Component {
         let times = 6;
         let t = 0.1;
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             let scale = guard.getScale();
             times -= t * 2;
             if (times > 0) {
@@ -385,7 +389,7 @@ export class weaponManager extends Component {
     }
     //创建手里剑
     createSpiritBullet() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let flyDir = em.dispatch("usingHeroControlFun", "seekTreeFirstEnemyDir");
         if (!flyDir) return;
         let data = this.getWeaponDataByIdOrName("spiritBullet");
@@ -429,8 +433,8 @@ export class weaponManager extends Component {
     }
     getFlyDirByCurPos(target) {
         let wp = em.dispatch("getHeroWorldPos");
-        // return glf.getTwoPointFlyDir(wp,target);
-        return glf.getTwoPointFlyDir(target, wp);
+        // return Utils.getTwoPointFlyDir(wp,target);
+        return Utils.getTwoPointFlyDir(target, wp);
     }
     isOpenSpiritBulletUltimateSkill(bool: boolean) {
         return;
@@ -452,7 +456,7 @@ export class weaponManager extends Component {
     }
     // 创建剑
     createSword() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let data = this.getWeaponDataByIdOrName("sword");
         let total = data.total[this._swordLv - 1];
         let bonusTotal = em.dispatch("getHeroControlProperty", "_bonusBulletTotal");
@@ -507,11 +511,11 @@ export class weaponManager extends Component {
     }
     //剑 大招
     usingSwordUltimateSkill() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let total = 16;
         let r = 50;
         // let initPosArr = this.getCirclePos(r, total);
-        let initPosArr = glf.getCirclePos(r, total);
+        let initPosArr = Utils.getCirclePos(r, total);
         let data = this.getWeaponDataByIdOrName("sword");
         for (let i = 0; i < total; i++) {
             let sword = plm.getFromPool("sword");
@@ -567,7 +571,7 @@ export class weaponManager extends Component {
         }
     }
     createDarts() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let data = this.getWeaponDataByIdOrName("darts");
         let total = data.total[this._dartsLv - 1];
         let bonusTotal = em.dispatch("getHeroControlProperty", "_bonusBulletTotal");
@@ -618,7 +622,7 @@ export class weaponManager extends Component {
     }
     // 创建 冰魄神针
     createIceSpiritNeedle() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let data = this.getWeaponDataByIdOrName("iceSpiritNeedle");
         let total = data.total[this._iceSpiritNeedleLv - 1];
 
@@ -691,7 +695,7 @@ export class weaponManager extends Component {
     }
     // 创建 天雷
     createSkyThunder() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let data = this.getWeaponDataByIdOrName("skyThunder");
         let total = data.total[this._skyThunderLv - 1];
         let bonusTotal = em.dispatch("getHeroControlProperty", "_bonusBulletTotal");
@@ -700,7 +704,7 @@ export class weaponManager extends Component {
         for (let i = 0; i < total; i++) {
             let t = 0.2 * i;
             this.scheduleOnce(() => {
-                if (ggd.stopAll) return;
+                if (Constant.GlobalGameData.stopAll) return;
                 let wp = em.dispatch("usingHeroControlFun", "seekTreeRandomOneEnemyPos");
                 if (!wp) return;
                 let skyThunder = plm.getFromPool("skyThunder");
@@ -741,7 +745,7 @@ export class weaponManager extends Component {
     }
     // 创建 地火
     createLandFire() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let data = this.getWeaponDataByIdOrName("landFire");
         let total = data.total[this._landFireLv - 1];
         let bonusTotal = em.dispatch("getHeroControlProperty", "_bonusBulletTotal");
@@ -754,7 +758,7 @@ export class weaponManager extends Component {
         ];
         for (let i = 0; i < total; i++) {
             this.scheduleOnce(() => {
-                if (ggd.stopAll) return;
+                if (Constant.GlobalGameData.stopAll) return;
                 let landFire = plm.getFromPool("landFire");
                 if (landFire) this.initLandFire(landFire, dirs[i % dirs.length]);
                 else {
@@ -791,7 +795,7 @@ export class weaponManager extends Component {
     }
     // 创建 太极环
     createTaijihuan() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let data = this.getWeaponDataByIdOrName("taijihuan");
         let total = data.total[this._taijihuanLv - 1];
         let bonusTotal = em.dispatch("getHeroControlProperty", "_bonusBulletTotal");
@@ -799,7 +803,7 @@ export class weaponManager extends Component {
         if (!total) throw "total err,total is " + total;
         for (let i = 0; i < total; i++) {
             this.scheduleOnce(() => {
-                if (ggd.stopAll) return;
+                if (Constant.GlobalGameData.stopAll) return;
                 let taijihuan = plm.getFromPool("taijihuan");
                 if (taijihuan) this.initTaijihuan(taijihuan);
                 else {
@@ -867,7 +871,7 @@ export class weaponManager extends Component {
             node.getChildByName("mask").getChildByName("icon").getComponent(Sprite).spriteFrame = null;
             // node.getComponent(Sprite).spriteFrame = null;
         }
-        ggd.stopAll = find("GameUILayer/passRewardLayer", this.node.parent).active;
+        Constant.GlobalGameData.stopAll = find("GameUILayer/passRewardLayer", this.node.parent).active;
         switch (type) {
             case "restoreHP":
                 this.restoreHP();
@@ -897,7 +901,7 @@ export class weaponManager extends Component {
             node.getChildByName("mask").getChildByName("icon").getComponent(Sprite).spriteFrame = null;
             // node.getComponent(Sprite).spriteFrame = null;
         }
-        ggd.stopAll = find("GameUILayer/passRewardLayer", this.node.parent).active;
+        Constant.GlobalGameData.stopAll = find("GameUILayer/passRewardLayer", this.node.parent).active;
         for (const type of this._curAllURList) {
             switch (type) {
                 case "restoreHP":
@@ -972,7 +976,7 @@ export class weaponManager extends Component {
             });
 
             //添加回调函数寻址方式
-            glf.createButton(this.node, node, "WeaponManager", "getUpgradeReward", name);
+            Utils.createButton(this.node, node, "WeaponManager", "getUpgradeReward", name);
             // 初始化描述
             let mainNode = node;
             let label = mainNode.getChildByName("label").getComponent(Label);
@@ -1123,7 +1127,7 @@ export class weaponManager extends Component {
      * 生成一阵持续5s的剑雨，对敌人产生多段伤害，每段伤害基础伤害为22。
      */
     usingSkillSwordRain() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let total = 5;
         let spx = -160;
         let unitX = 80;
@@ -1187,7 +1191,7 @@ export class weaponManager extends Component {
         let changeAngle = 0;
         let unitChange = 20;
         let callback = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             prefab.angle += unitChange;
             changeAngle += unitChange;
             if (changeAngle >= 1080) {
@@ -1224,7 +1228,7 @@ export class weaponManager extends Component {
     }
     //创建万剑
     createThousandsSwordToTomb() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         // console.log("创建万剑");
         let prefab = this._thousandsSwordToTombQueue.dequeue();
         if (prefab) this.initThousandsSwordToTomb(prefab);
@@ -1249,7 +1253,7 @@ export class weaponManager extends Component {
     usingSkillIceCone() {
         let total = 20;
         let r = 20;
-        let initPosArr = glf.getCirclePos(r, total);
+        let initPosArr = Utils.getCirclePos(r, total);
         for (let i = 0; i < total; i++) {
             let prefab = plm.getFromPool("iceCone");
             let initPos = initPosArr[i];
@@ -1303,7 +1307,7 @@ export class weaponManager extends Component {
     }
     // 创建炎爆
     createFireBloom() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         // console.log("创建炎爆");
         let prefab = this._fireBloomQueue.dequeue();
         if (prefab) {
@@ -1311,7 +1315,7 @@ export class weaponManager extends Component {
             let layer = find("Canvas/bulletLayer");
             prefab.parent = layer;
             prefab.setWorldPosition(wp.x, wp.y, 0);
-            prefab.getComponent("FireBloom").init();
+            prefab.getComponent(FireBloom).init();
         }
         else this.unschedule(this.createFireBloom);
     }
@@ -1334,7 +1338,7 @@ export class weaponManager extends Component {
         }
     }
     createHellFire() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         // console.log("创建炎爆");
         let prefab = this._hellFireQueue.dequeue();
         if (prefab) {
@@ -1343,7 +1347,7 @@ export class weaponManager extends Component {
             let layer = find("Canvas/bulletLayer");
             prefab.parent = layer;
             prefab.setWorldPosition(wp.x, wp.y + 50, 0);
-            prefab.getComponent("HellFire").init();
+            prefab.getComponent(HellFire).init();
         }
         else this.unschedule(this.createHellFire);
     }
@@ -1353,7 +1357,7 @@ export class weaponManager extends Component {
         // this.schedule(this.createMoveLikeFire, 0.5);
     }
     createMoveLikeFire() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let prefab = plm.getFromPool("moveLikeFire");
         if (prefab) {
             let wp = em.dispatch("getHeroWorldPos");
@@ -1398,7 +1402,7 @@ export class weaponManager extends Component {
     usingSkillDoomsdayStorm() {
         let dirArr = [[-1, 1], [0, 1], [1, 1], [-1, 0], [1, 0], [-1, -1], [0, -1], [1, -1]];
         let total = 50;
-        let queue = new Queue();
+        let queue = new Queue<Node>();
         while (total) {
             let prefab = plm.getFromPool("doomsdayStorm");
             if (prefab) queue.enqueue(prefab);
@@ -1413,14 +1417,14 @@ export class weaponManager extends Component {
         }
         let count = 0;
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             let prefab = queue.dequeue();
             if (prefab) {
                 let dir = dirArr[count % dirArr.length];
                 let wp = em.dispatch("getHeroWorldPos");
                 prefab.parent = find("Canvas/bulletLayer");
                 prefab.setWorldPosition(wp.x, wp.y, 0);
-                prefab.getComponent("DoomsdayStorm").init(dir);
+                prefab.getComponent(DoomsdayStorm).init(dir);
                 count++;
             } else {
                 this.unschedule(fun);
@@ -1433,12 +1437,12 @@ export class weaponManager extends Component {
         let dirArr = [[0, 1], [0, -1], [1, 0], [-1, 0]];
         let total = 20;
         let unit = 100;
-        let queue = new Queue();
+        let queue = new Queue<Node>();
         for (let i = 0; i < total; i++) {
             // let dir = dirArr[i % dirArr.length];
             let prefab = plm.getFromPool("thunderRunning");
             if (prefab) {
-                queue.enqueue(prefab);;
+                queue.enqueue(prefab);
             } else {
                 this.loadPrefab("thunderRunning", (assets) => {
                     plm.addPoolToPools("thunderRunning", new NodePool(), assets);
@@ -1449,7 +1453,7 @@ export class weaponManager extends Component {
         }
         let count = 0;
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             let prefab = queue.dequeue();
             if (prefab) {
                 let dir = dirArr[count % dirArr.length];
@@ -1457,7 +1461,7 @@ export class weaponManager extends Component {
                 let wp = em.dispatch("getHeroWorldPos");
                 // prefab.setWorldPosition(wp.x + dir[0] * unit, wp.y + dir[1] * unit, wp.z);
                 prefab.setWorldPosition(wp);
-                prefab.getComponent("ThunderRunning").init({ x: dir[0], y: dir[1] });
+                prefab.getComponent(ThunderRunning).init({ x: dir[0], y: dir[1] });
                 count++;
             } else {
                 this.unschedule(fun);
@@ -1511,7 +1515,7 @@ export class weaponManager extends Component {
         }
         let t = 0.025;
         this.schedule(() => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             this._equWeaCurTime += t;
             this.updateEquWeaProgress();
             if (this._equWeaCurTime >= this._equWeaTotalCD) {
@@ -1563,7 +1567,7 @@ export class weaponManager extends Component {
 
     }
     createLongSword() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let total = 2;
         let data = em.dispatch("usingHeroBasePropertyFun", "getCurHeroUsingWeaponData");
         console.log("createLongSword", data);
@@ -1614,7 +1618,7 @@ export class weaponManager extends Component {
         }, interval);
     }
     createGiantSword() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let giantSword = plm.getFromPool("giantSword");
         if (giantSword) this.initGiantSword(giantSword);
         else {
@@ -1641,7 +1645,7 @@ export class weaponManager extends Component {
         }, interval);
     }
     createGiantAxe() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let giantAxe = plm.getFromPool("giantAxe");
         if (giantAxe) this.initGiantAxe(giantAxe);
         else {
@@ -1671,7 +1675,7 @@ export class weaponManager extends Component {
     }
     // 创建旋转斧
     createRotationAxe() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let rotationAxe = plm.getFromPool("rotationAxe");
         if (rotationAxe) this.initRotationAxe(rotationAxe);
         else {
@@ -1699,7 +1703,7 @@ export class weaponManager extends Component {
         }, interval);
     }
     createGiantArrow() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let giantArrow = plm.getFromPool("giantArrow");
         if (giantArrow) this.initGiantArrow(giantArrow);
         else {
@@ -1726,7 +1730,7 @@ export class weaponManager extends Component {
         }, interval);
     }
     createContinueArrow() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let continueArrow = plm.getFromPool("continueArrow");
         if (continueArrow) this.initContinueArrow(continueArrow);
         else {

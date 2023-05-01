@@ -1,12 +1,11 @@
 
 import { _decorator, Component, Node, Collider2D, BoxCollider2D, Button, Size, Contact2DType, Color, Sprite, Animation, UITransform, Vec2, find, NodePool, instantiate } from 'cc';
 import { em } from '../../global/EventManager';
-import { attackInterval, ggd, groupIndex, tagData } from '../../global/globalData';
-import { glf } from '../../global/globalFun';
 import { plm } from '../../global/PoolManager';
-import { Queue } from '../../global/Queue';
 import { monsterData } from '../monster/MonsterData';
-import { EventId } from '../../global/GameEvent';
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
+import Queue from '../../Libs/Structs/Queue';
 const { ccclass, property } = _decorator;
 
 @ccclass('Boss')
@@ -83,9 +82,9 @@ export class Boss extends Component {
         let collider = this._sprite.addComponent(BoxCollider2D);
         let UIT = this._sprite.getComponent(UITransform);
         let bossSize = new Size(UIT.contentSize.x, UIT.contentSize.y);
-        collider.tag = tagData.boss;
+        collider.tag = Constant.Tag.boss;
         collider.size = bossSize;
-        collider.group = groupIndex.enemy;
+        collider.group = Constant.GroupIndex.enemy;
 
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
@@ -105,7 +104,7 @@ export class Boss extends Component {
     }
 
     update(deltaTime: number) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this.updateSpriteDirection();
         this.moveToHero(deltaTime);
     }
@@ -200,7 +199,7 @@ export class Boss extends Component {
         let y = targetPos.y - curPos.y;
         let dis = Math.sqrt(x * x + y * y) + offsetDis;
         this._canMove = false;
-        this._sprintDir = glf.getTwoPointFlyDir(targetPos, curPos);
+        this._sprintDir = Utils.getTwoPointFlyDir(targetPos, curPos);
         this._sprintDis = dis;
         //创建提示预制件
         let prefab = instantiate(this._sprintTipsPrefab);
@@ -246,19 +245,19 @@ export class Boss extends Component {
 
     //====================boss碰撞逻辑==========================
     onBeginContact(selfCollider: Collider2D, otherCollider: Collider2D) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         // console.log(otherCollider);
 
         switch (otherCollider.tag) {
-            case tagData.hero:
+            case Constant.Tag.hero:
                 this._isTouchHero = true;
                 this.bossAttackHeroByCollider(selfCollider, otherCollider);
                 break;
-            case tagData.friend1Skill1:
+            case Constant.Tag.friend1Skill1:
                 this._isTouchFriend1Skill1 = true;
                 this.friendAttackBossByFriend1Skill1(selfCollider, otherCollider);
                 break;
-            case tagData.darts:
+            case Constant.Tag.darts:
                 this.heroAttackBossByDarts();
                 break;
             default:
@@ -268,13 +267,13 @@ export class Boss extends Component {
     onEndContact(selfCollider: Collider2D, otherCollider: Collider2D) {
 
         switch (otherCollider.tag) {
-            case tagData.hero:
+            case Constant.Tag.hero:
                 this._isTouchHero = false;
                 break;
-            case tagData.spell:
+            case Constant.Tag.spell:
                 this._isTouchSpell = false;
                 break;
-            case tagData.friend1Skill1:
+            case Constant.Tag.friend1Skill1:
                 this._isTouchFriend1Skill1 = false;
                 break;
             default:
@@ -283,7 +282,7 @@ export class Boss extends Component {
     }
     // boss攻击玩家
     bossAttackHeroByCollider(self, other) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._isTouchHero) return;
         let damage = this._normalDamage;
         em.dispatch("usingHeroControlFun", "createBossDamageTex", -damage);
@@ -294,7 +293,7 @@ export class Boss extends Component {
     }
     //被宝宝技能击中
     friendAttackBossByFriend1Skill1(self, other) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._isTouchFriend1Skill1) return;
         let damage = 5;
         em.dispatch("createDamageTex", self.node, damage, { x: 0, y: 20 });
@@ -302,7 +301,7 @@ export class Boss extends Component {
         this.collectToTarget(self, other);
         this.scheduleOnce(() => {
             this.friendAttackBossByFriend1Skill1(self, other);
-        }, attackInterval.f1s1);
+        }, Constant.AttackInterval.f1s1);
     }
     /**
      * @description: boss被飞镖攻击
@@ -317,7 +316,7 @@ export class Boss extends Component {
         if (this._curBlood <= 0) {
             this.unscheduleAllCallbacks();
             this.node.destroy();
-            ggd.stopAll = true;
+            Constant.GlobalGameData.stopAll = true;
             em.dispatch("passStage");
 
         } else {
@@ -404,7 +403,7 @@ export class Boss extends Component {
     //父类提供的子弹 --->atom 
     //发射1发子弹 scale 为子弹碰撞体缩放
     usingNormalParticleOneShot(scale = 1) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let np = plm.getFromPool("normalParticle");
         let flyDir = this.getDirToHero();
         np.parent = find("Canvas/bulletLayer");
@@ -415,7 +414,7 @@ export class Boss extends Component {
     }
     // 发射三发子弹
     usingNormalParticleTriShot(posArr, scale = 1) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         for (const pos of posArr) {
             let np = plm.getFromPool("normalParticle");
             let flyDir = this.getDirToHero();
@@ -430,8 +429,8 @@ export class Boss extends Component {
     //粒子三角 向hero方向释放三角形粒子集
     usingNormalParticleTriangle(scale = 1) {
         let row = 5;
-        let triPosArr = glf.getTriangleRow(row);
-        let queue = new Queue();
+        let triPosArr = Utils.getTriangleRow(row);
+        let queue = new Queue<Array<any>>();
         for (let i = triPosArr.length - 1; i >= 0; i--) {
             let initPosArr = triPosArr[i];
             let arr = [];
@@ -446,7 +445,7 @@ export class Boss extends Component {
             queue.enqueue(arr);
         }
         let fun = () => {
-            if (ggd.stopAll) return;
+            if (Constant.GlobalGameData.stopAll) return;
             let arr = queue.dequeue();
             if (arr) {
                 let layer = find("Canvas/bulletLayer");
@@ -466,7 +465,7 @@ export class Boss extends Component {
     }
     //粒子圈 向周边发射一圈粒子 向周边飞行
     usingNormalParticleCircle(total: number, r: number, scale = 1) {
-        let initPosArr = glf.getCirclePos(r, total);
+        let initPosArr = Utils.getCirclePos(r, total);
         for (let i = 0; i < total; i++) {
             let dp: any = plm.getFromPool("normalParticle");
             dp.active = true;
@@ -487,7 +486,7 @@ export class Boss extends Component {
     //向指定方向两端发射子弹 
     usingNormalParticleWithDoubleDir(curDir) {
         console.log("向指定方向两端发射子弹");
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         let dirs = this.getVerticalDirToCurDir(curDir);
         for (const dir of dirs) {
             let np = plm.getFromPool("normalParticle");

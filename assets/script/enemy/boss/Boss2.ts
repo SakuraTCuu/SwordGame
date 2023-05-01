@@ -10,7 +10,6 @@
  */
 import { _decorator, Component, Node, find, NodePool } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import { Boss } from './Boss';
 const { ccclass, property } = _decorator;
@@ -28,7 +27,9 @@ export class Boss2 extends Boss {
     };
 
     onLoad() {
-        let bossData = em.dispatch("usingHeroBasePropertyFun","getBossDataById",2);
+        // let bossData = em.dispatch("usingHeroBasePropertyFun","getBossDataById",2);
+        let bossData = app.staticData.getBossDataById(2);
+
         bossData.canMove = true;
         this._skillData.normalParticle.damage = bossData.normalDamage;
         this.initBossInfo(bossData);

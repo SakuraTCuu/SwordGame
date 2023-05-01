@@ -10,8 +10,8 @@
  */
 import { _decorator, Component, Node, find } from 'cc';
 import { em } from '../../global/EventManager';
-import { attackInterval, ggd, tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('ThunderRunning')
@@ -43,10 +43,10 @@ export class ThunderRunning extends Weapon {
         this._canAttackTimes = Infinity;
         this._attackInterval = 0.5;
         this._weaponName = data.name2;
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
     }
     weaponMove(deltaTime) {
-        if (ggd.stopAll || !this._startP) return;
+        if (Constant.GlobalGameData.stopAll || !this._startP) return;
         let wp = this.node.getWorldPosition();
         if (this._flyDir.y == 0) {
             let x = deltaTime * this._moveSpeed;

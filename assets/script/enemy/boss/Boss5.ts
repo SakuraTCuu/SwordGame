@@ -11,9 +11,9 @@
 //需要添加两个最终技能 1 藤蔓（控制） 2 高伤害技能
 import { _decorator, Component, Node, Size, UITransform, Prefab, instantiate, Vec2, tween, Vec3, Material, Animation, Sprite, find, BoxCollider2D, math, NodePool } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, groupIndex, tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import { Boss } from './Boss';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('Boss5')
@@ -37,7 +37,9 @@ export class Boss5 extends Boss {
 
     _photosynthesisTimes = 2;//光合作用可使用次数
     onLoad() {
-        let bossData = em.dispatch("usingHeroBasePropertyFun", "getBossDataById", 5);
+        // let bossData = em.dispatch("usingHeroBasePropertyFun", "getBossDataById", 5);
+        let bossData = app.staticData.getBossDataById(5);
+
         bossData.canMove = true;
         this._skillData[4] = bossData.normalDamage;
         this._skillData.normalParticle.damage = bossData.normalDamage;
@@ -78,7 +80,7 @@ export class Boss5 extends Boss {
 
     //重写
     bossAttackHeroByCollider(self, other) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._isTouchHero) return;
         em.dispatch("usingHeroControlFun", "createBossDamageTex", -this._skillData[4]);
         this.usingNormalAttack();

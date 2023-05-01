@@ -1,9 +1,9 @@
 import { _decorator, Component, Node, BoxCollider2D, Animation, UITransform, Size, Contact2DType, NodePool } from 'cc';
 import { em } from '../../global/EventManager';
-import { groupIndex, tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
 import { Sword } from './Sword';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('SkyThunder')
@@ -12,7 +12,7 @@ export class SkyThunder extends Weapon {
     // _recoveryCount: number = 0;
     init(data, lv) {
         this.initWeaponInfo(lv, data);
-        this.initBoxCollider(tagData.sword, { x: -50, y: -30 });
+        this.initBoxCollider(Constant.Tag.sword, { x: -50, y: -30 });
         this.node.getComponent(Animation).play();
     }
     update(dt){

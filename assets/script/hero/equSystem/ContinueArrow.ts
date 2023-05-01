@@ -1,7 +1,7 @@
 import { _decorator, Component, Node } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from '../weapon/Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('ContinueArrow')
@@ -9,7 +9,7 @@ export class ContinueArrow extends Weapon {
     init() {
         this.initEquData();
         this.clearCacheData();
-        this.initEquBoxCollider(tagData.sword);
+        this.initEquBoxCollider(Constant.Tag.sword);
         this.changeBulletRotationByFlyDir();
     }
     initEquData() {

@@ -1,13 +1,3 @@
-/*
- * @Author: li_jiang_wei 739671694@qq.com
- * @Date: 2022-07-05 23:35:56
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-12-14 10:41:52
- * @FilePath: \to-be-immortal\assets\script\global\PoolManager.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei 739671694@qq.com, All Rights Reserved. 
- */
 import { instantiate, NodePool } from "cc";
 
 export { plm }

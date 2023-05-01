@@ -1,9 +1,9 @@
 import { _decorator, Component, Node, JsonAsset, random, Label, find, director, Prefab, instantiate, native } from 'cc';
 import { monsterData } from '../enemy/monster/MonsterData';
 import { em } from '../global/EventManager';
-import { ggd } from '../global/globalData';
-import { glf } from '../global/globalFun';
-import { Queue } from '../global/Queue';
+import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
+import Queue from '../Libs/Structs/Queue';
 const { ccclass, property } = _decorator;
 
 @ccclass('StageManager')
@@ -65,9 +65,9 @@ export class StageManager extends Component {
         em.add("closeGetDoubleRewardAd", this.closeGetDoubleRewardAd.bind(this));
         em.add("geCurStageKillInfo", this.geCurStageKillInfo.bind(this));
         // this._curStageName = "stage" + 1;
-        this._curStageName = "stage" + ggd.curStage;
+        this._curStageName = "stage" + Constant.GlobalGameData.curStage;
         this._stageConfig = this.stageConfigJson.json;
-        this._bossConfig = this.leaderAndBossConfigJson.json[ggd.curStage - 1];
+        this._bossConfig = this.leaderAndBossConfigJson.json[Constant.GlobalGameData.curStage - 1];
         this._monsterArmyConfig = this.monsterArmyConfigJson.json[this._curStageName];
         console.log("this._monsterArmyConfig", this._monsterArmyConfig);
         console.log("_bossConfig", this._bossConfig);
@@ -136,7 +136,7 @@ export class StageManager extends Component {
     }
     //关卡计时器回调
     stageTimerCallback() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._curStageTime++;
         this.updateTimeLabel();
     }
@@ -144,7 +144,7 @@ export class StageManager extends Component {
 
     // 关卡队列任务回调
     stageQueueTaskCallBack() {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (this._curStageTime > this._curData.time) {
             console.log("进入下一个阶段");
             this._curData = this._stageQueue.dequeue();
@@ -222,7 +222,7 @@ export class StageManager extends Component {
     //         isPass: isPass,
     //         isDouble: false,
     //     };
-    //     if (ggd.isOpenAd && !this._hasShowAds) {
+    //     if (Constant.GlobalGameData.isOpenAd && !this._hasShowAds) {
     //         this.showDoubleRewardAd();
     //         this._hasShowAds = true;
     //     } else this.startDistributeReward();
@@ -232,8 +232,8 @@ export class StageManager extends Component {
         find("Canvas/heroLayer/GameUILayer/doubleRewardAd").active = true;
     }
     onBtnPlayAds() {
-        ggd.curAdRewardType = "getDoubleReward";
-        glf.playAd();
+        Constant.GlobalGameData.curAdRewardType = "getDoubleReward";
+        Utils.playAd();
         find("Canvas/heroLayer/GameUILayer/doubleRewardAd").active = false;
         // console.log("播放广告");
         // this.scheduleOnce(()=>{
@@ -270,8 +270,8 @@ export class StageManager extends Component {
             }
         });
         //更新关卡进度
-        if (isPass && ggd.curStage + 1 > ggd.stageProgress) {
-            ggd.stageProgress = ggd.curStage + 1;
+        if (isPass && Constant.GlobalGameData.curStage + 1 > Constant.GlobalGameData.stageProgress) {
+            Constant.GlobalGameData.stageProgress = Constant.GlobalGameData.curStage + 1;
             app.storage.savingGlobalDataToTempData();
         }
     }

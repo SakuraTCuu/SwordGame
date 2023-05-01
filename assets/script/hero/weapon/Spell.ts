@@ -10,7 +10,6 @@
  */
 import { _decorator } from 'cc';
 import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
 import { Constant } from '../../Common/Constant';
 const { ccclass } = _decorator;
@@ -20,7 +19,7 @@ export class Spell extends Weapon {
     init(data,lv) {
         this.initWeaponInfo(lv,data);
         let weaponName:string = data.name;
-        this.initBoxCollider(tagData[weaponName]);
+        this.initBoxCollider(Constant.Tag[weaponName]);
         // this.schedule(this.playSpellAudio,1);
     }
     playSpellAudio(){

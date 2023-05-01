@@ -1,6 +1,6 @@
 import { _decorator, Component, Node, tween, Vec3, Sprite, Color } from 'cc';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('LandFire')
@@ -8,7 +8,7 @@ export class LandFire extends Weapon {
     _canMove = false;
     init(data, lv, flyDir: { x: number, y: number }) {
         this.initWeaponInfo(lv, data, flyDir);
-        this.initBoxCollider(tagData.sword, { x: -20, y: -20 });
+        this.initBoxCollider(Constant.Tag.sword, { x: -20, y: -20 });
         this.playShotAnim();
     }
     onDisable(){

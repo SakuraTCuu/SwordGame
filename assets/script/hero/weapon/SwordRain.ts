@@ -10,8 +10,8 @@
  */
 import { _decorator, Component, Node, Vec2 } from 'cc';
 import { em } from '../../global/EventManager';
-import { attackInterval, tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('SwordRain')
@@ -30,7 +30,7 @@ export class SwordRain extends Weapon {
         this._weaponName = data.name;
         this._flyDir = new Vec2(-.25, -1);
         this.clearCacheData();
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
         this.changeBulletRotationByFlyDir();
     }
     colliderMonster(other) {

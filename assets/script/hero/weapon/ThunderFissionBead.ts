@@ -1,8 +1,9 @@
 import { _decorator, Component, Node, find, Animation } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd, tagData } from '../../global/globalData';
+
 import { plm } from '../../global/PoolManager';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('ThunderFissionBead')
@@ -34,7 +35,7 @@ export class ThunderFissionBead extends Weapon {
         // this._moveSpeed = 600;
         this._moveSpeed = 60;
         this._attackInterval = 0.5;
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
         this.clearCacheData();
     }
     update(deltaTime: number) {

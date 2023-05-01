@@ -10,9 +10,8 @@
  */
 import { _decorator, Component, Node, Prefab, find, instantiate, Label, Sprite, Color, NodePool, UITransform, ColorKey, SpriteFrame, Animation, Tween, tween, Vec3 } from 'cc';
 import { em } from '../global/EventManager';
-import { glf } from '../global/globalFun';
 import { plm } from '../global/PoolManager';
-import { EventId } from '../global/GameEvent';
+import Utils from '../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 
@@ -157,7 +156,7 @@ export class SkillBookLayer extends Component {
                     }
                     book.getChildByName("Label").getComponent(Label).string = data.name;
                     book.parent = find("/type/content", bookClass);
-                    glf.createButton(this.node, book, "SkillBookLayer", "onBtnShowBookDetail", data.name);
+                    Utils.createButton(this.node, book, "SkillBookLayer", "onBtnShowBookDetail", data.name);
                     this._bookPrefabList[data.name] = book;
                 });
                 // let total = Math.ceil(arr.length / 4);//4为适配结果，具体根据效果展示
@@ -322,7 +321,7 @@ export class SkillBookLayer extends Component {
                     sprite.spriteFrame = assets;
                 });
 
-                glf.createButton(this.node, prefab, "SkillBookLayer", "switchBook", type + "@" + data.name2);
+                Utils.createButton(this.node, prefab, "SkillBookLayer", "switchBook", type + "@" + data.name2);
             };
         });
     }

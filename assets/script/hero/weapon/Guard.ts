@@ -10,8 +10,9 @@
  */
 import { _decorator , Color } from 'cc';
 import { em } from '../../global/EventManager';
-import { ggd , tagData } from '../../global/globalData';
+
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass } = _decorator;
 
 @ccclass('Guard')
@@ -20,11 +21,11 @@ export class Guard extends Weapon {
     init(data,lv) { 
         this.initWeaponInfo(lv,data);
         let weaponName:string = data.name;
-        this.initCircleCollider(tagData[weaponName],-10);
+        this.initCircleCollider(Constant.Tag[weaponName],-10);
     }
     //guard 存在多段伤害 需要攻击间隔加入判定
     colliderMonster(other) {
-        if (ggd.stopAll) {
+        if (Constant.GlobalGameData.stopAll) {
             this.scheduleOnce(() => {
                 this.colliderMonster(other);
             }, this._attackInterval);
@@ -41,7 +42,7 @@ export class Guard extends Weapon {
     }
     //攻击怪物和boss的区别 在于击退 穿透等属性 和一些other的内部回调 暂时没写
     colliderBoss(other) {
-        if (ggd.stopAll) {
+        if (Constant.GlobalGameData.stopAll) {
             this.scheduleOnce(() => {
                 this.colliderBoss(other);
             }, this._attackInterval);

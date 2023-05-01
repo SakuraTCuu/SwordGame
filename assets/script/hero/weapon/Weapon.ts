@@ -10,8 +10,8 @@
  */
 import { _decorator, Component, Node, BoxCollider2D, Size, Contact2DType, Collider2D, Color, UITransform, physics, CircleCollider2D, PolygonCollider2D, game, Animation, Intersection2D, find } from 'cc';
 import { em } from '../../global/EventManager';
-import { attackInterval, ggd, groupIndex, tagData } from '../../global/globalData';
 import { plm } from '../../global/PoolManager';
+import { Constant } from '../../Common/Constant';
 const { ccclass } = _decorator;
 
 @ccclass('Weapon')
@@ -94,7 +94,7 @@ export class Weapon extends Component {
         let weaponSize = new Size(UIT.contentSize.x + changeSize.x, UIT.contentSize.y + changeSize.y);
         collider.tag = tag;
         collider.size = weaponSize;
-        collider.group = groupIndex.heroWeapon;
+        collider.group = Constant.GroupIndex.heroWeapon;
         // console.log("collider", collider);
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
@@ -108,7 +108,7 @@ export class Weapon extends Component {
         let UIT = this.node.getComponent(UITransform);
         collider.tag = tag;
         collider.radius = UIT.contentSize.x / 2 + changeR;
-        collider.group = groupIndex.heroWeapon;
+        collider.group = Constant.GroupIndex.heroWeapon;
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
     }
@@ -117,7 +117,7 @@ export class Weapon extends Component {
         this.weaponDuration(dt);
     }
     weaponMove(deltaTime: number) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._flyDir) return;
         if (this._moveSpeed == 0 || this._duration == Infinity) return;
 
@@ -128,7 +128,7 @@ export class Weapon extends Component {
         this.node.setPosition(this.node.getPosition().x + moveX, this.node.getPosition().y + moveY, 0);
     }
     weaponDuration(deltaTime: number) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         this._duration -= deltaTime;
         if (this._duration <= 0) this.recoveryToPool("weaponDuration");
     }
@@ -216,10 +216,10 @@ export class Weapon extends Component {
     onBeginContact(self: Collider2D, other: Collider2D) {
 
         switch (other.tag) {
-            case tagData.wall:
+            case Constant.Tag.wall:
                 this.colliderWall(other);
                 break;
-            case tagData.monster:
+            case Constant.Tag.monster:
                 this._touchingArr.push(other);
                 this.colliderMonster(other);
                 this.scheduleOnce(() => {
@@ -227,7 +227,7 @@ export class Weapon extends Component {
                 }, this._attackInterval);
 
                 break;
-            case tagData.boss:
+            case Constant.Tag.boss:
                 this._touchingArr.push(other);
                 // console.log(this.node.uuid+"添加node uuid is " + other.node.uuid);
                 this.colliderBoss(other);
@@ -241,10 +241,10 @@ export class Weapon extends Component {
     }
     onEndContact(self: Collider2D, other: Collider2D) {
         switch (other.tag) {
-            case tagData.monster:
+            case Constant.Tag.monster:
                 this.colliderEnemyEnd(other);
                 break;
-            case tagData.boss:
+            case Constant.Tag.boss:
                 this.colliderEnemyEnd(other);
                 break;
             default:
@@ -333,8 +333,8 @@ export class Weapon extends Component {
         }
     }
     isStopRun(other) {
-        // return ggd.stopAll && !this.isTouching(other);
-        return ggd.stopAll || !this.isTouching(other);
+        // return Constant.GlobalGameData.stopAll && !this.isTouching(other);
+        return Constant.GlobalGameData.stopAll || !this.isTouching(other);
     }
     // 回收进对象池
     recoveryToPool(type = "unknown") {
@@ -371,7 +371,7 @@ export class Weapon extends Component {
         this.schedule(fun, interval);
     }
     recoveryToPoolWhenWeaponIsDistant(dis: number) {
-        if (ggd.stopAll) return false;
+        if (Constant.GlobalGameData.stopAll) return false;
         if (this.getDistanceToHero() > dis) return true;
     }
     getDistanceToHero() {
@@ -392,7 +392,7 @@ export class Weapon extends Component {
         let collider = this.node.getComponent(BoxCollider2D);
         if (!collider) throw "未初始化法器碰撞器";
         collider.tag = tag;
-        collider.group = groupIndex.heroWeapon;
+        collider.group = Constant.GroupIndex.heroWeapon;
         // console.log("collider", collider);
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
@@ -410,8 +410,8 @@ export class Weapon extends Component {
         if (data.qData.effect.indexOf(1008) > -1) this.node.setScale(1.5, 1.5, 2);
         if (data.qData.effect.indexOf(1009) > -1) this.node.setScale(2, 2, 2);
         if (data.qData.effect.indexOf(1010) > -1) this._canAttackTimes++;
-        if (data.qData.effect.indexOf(1005) > -1) this.initEquBoxCollider(tagData.destroyWeapon);
-        else this.initEquBoxCollider(tagData.sword);
+        if (data.qData.effect.indexOf(1005) > -1) this.initEquBoxCollider(Constant.Tag.destroyWeapon);
+        else this.initEquBoxCollider(Constant.Tag.sword);
         if (data.qData.effect.indexOf(5001) > -1) this._duration *= 2;
         if (data.qData.effect.indexOf(5002) > -1) this._duration = Infinity;
     }

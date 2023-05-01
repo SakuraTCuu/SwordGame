@@ -1,14 +1,13 @@
 import { _decorator, Component, Node } from 'cc';
-import { em } from '../../global/EventManager';
-import { tagData } from '../../global/globalData';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('IceSpiritNeedle')
 export class IceSpiritNeedle extends Weapon {
     init(data, lv, flyDir: { x: number, y: number }) {
         this.initWeaponInfo(lv, data, flyDir);
-        this.initBoxCollider(tagData.sword);
+        this.initBoxCollider(Constant.Tag.sword);
         this.changeBulletRotationByFlyDir();
     }
     colliderMonster(other) {

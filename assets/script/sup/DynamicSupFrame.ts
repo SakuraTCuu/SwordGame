@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, find, UITransform } from 'cc';
-import { ggConfig } from '../global/globalData';
+import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('DynamicSupFrame')
@@ -15,7 +15,7 @@ export class DynamicSupFrame extends Component {
         this._R = find("R", this.node);
         this._U = find("U", this.node);
         this._D = find("D", this.node);
-        if (!ggConfig.dynamicSupFrame) {
+        if (!Constant.GlobalGameConfig.dynamicSupFrame) {
             this._L.active = false;
             this._R.active = false;
             this._U.active = false;
@@ -23,14 +23,14 @@ export class DynamicSupFrame extends Component {
             return;
         }
         console.log("动态初始化 四叉树范围框");
-        this._L.getComponent(UITransform).setContentSize(2, ggConfig.quadTreeRange.h);
-        this._R.getComponent(UITransform).setContentSize(2, ggConfig.quadTreeRange.h);
-        this._U.getComponent(UITransform).setContentSize(ggConfig.quadTreeRange.w, 2);
-        this._D.getComponent(UITransform).setContentSize(ggConfig.quadTreeRange.w, 2);
-        this._L.setPosition(-ggConfig.quadTreeRange.w/2, 0);
-        this._R.setPosition(ggConfig.quadTreeRange.w/2, 0);
-        this._U.setPosition(0, ggConfig.quadTreeRange.h/2);
-        this._D.setPosition(0, -ggConfig.quadTreeRange.h/2);
+        this._L.getComponent(UITransform).setContentSize(2, Constant.GlobalGameConfig.quadTreeRange.h);
+        this._R.getComponent(UITransform).setContentSize(2, Constant.GlobalGameConfig.quadTreeRange.h);
+        this._U.getComponent(UITransform).setContentSize(Constant.GlobalGameConfig.quadTreeRange.w, 2);
+        this._D.getComponent(UITransform).setContentSize(Constant.GlobalGameConfig.quadTreeRange.w, 2);
+        this._L.setPosition(-Constant.GlobalGameConfig.quadTreeRange.w/2, 0);
+        this._R.setPosition(Constant.GlobalGameConfig.quadTreeRange.w/2, 0);
+        this._U.setPosition(0, Constant.GlobalGameConfig.quadTreeRange.h/2);
+        this._D.setPosition(0, -Constant.GlobalGameConfig.quadTreeRange.h/2);
         this._L.active = true;
         this._R.active = true;
         this._U.active = true;

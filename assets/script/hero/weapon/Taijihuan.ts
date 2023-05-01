@@ -1,7 +1,8 @@
 import { _decorator, Component, Node, random } from 'cc';
-import { ggd, tagData } from '../../global/globalData';
+
 import { plm } from '../../global/PoolManager';
 import { Weapon } from './Weapon';
+import { Constant } from '../../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('Taijihuan')
@@ -15,11 +16,11 @@ export class Taijihuan extends Weapon {
         if (lv >= 5) {
             this.node.setScale(2, 2, 1);
         }
-        this.initBoxCollider(tagData.sword, { x: -40, y: -40 });
+        this.initBoxCollider(Constant.Tag.sword, { x: -40, y: -40 });
         // if(lv>=5){
         //     this.node.setScale(2,2,1);
-        //     this.initBoxCollider(tagData.sword, { x: -80, y: -80 });
-        // }else this.initBoxCollider(tagData.sword, { x: -40, y: -40 });
+        //     this.initBoxCollider(Constant.Tag.sword, { x: -80, y: -80 });
+        // }else this.initBoxCollider(Constant.Tag.sword, { x: -40, y: -40 });
 
         this._fallDuration = this._duration * 3 / 4;
         this._rawDuration = this._duration;
@@ -35,7 +36,7 @@ export class Taijihuan extends Weapon {
         if (this._canAttackTimes <= 0) this.recoveryToPool();
     }
     weaponMove(deltaTime) {
-        if (ggd.stopAll) return;
+        if (Constant.GlobalGameData.stopAll) return;
         if (!this._flyDir) return;
         let y = deltaTime * this._moveSpeed;
         let b = 1.2;

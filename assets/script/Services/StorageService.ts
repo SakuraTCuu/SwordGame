@@ -1,11 +1,11 @@
 import { _decorator, Component, sys } from 'cc';
 import { em } from '../global/EventManager';
-import { gUrl } from '../global/GameUrl';
-import { ggd } from '../global/globalData';
-import { glf } from '../global/globalFun';
+
 import { hr } from '../global/HttpRequest';
 import IService from '../Interfaces/IService';
 import Singleton from '../Decorators/Singleton';
+import { Constant } from '../Common/Constant';
+import Utils from '../Common/Utils';
 
 /**
  * 存储服务
@@ -41,14 +41,14 @@ export class StorageService implements IService {
         }
         console.log("temp data，saving key is " + key, this._tempData);
         this.savingTime();
-        if (!ggd.userInfo.isVisitor) {
+        if (!Constant.GlobalGameData.userInfo.isVisitor) {
             this.savingToServer();
         }
         else sys.localStorage.setItem("saving", JSON.stringify(this._tempData));
     }
 
     savingToServer() {
-        let url = gUrl.list.savingData;
+        let url = Constant.URL.SavingData;
         let data = {
             "configValue": JSON.stringify(this._tempData),
         }
@@ -64,7 +64,7 @@ export class StorageService implements IService {
 
     //记录时间
     savingTime() {
-        let string = glf.getTimeDetail();
+        let string = Utils.getTimeDetail();
         this._tempData.savingInfo.curTime = string;
         this._tempData.savingInfo.curTimeStamp = new Date().getTime();
     }
@@ -75,14 +75,14 @@ export class StorageService implements IService {
     }
     initTempData() {
         let data = sys.localStorage.getItem("saving");
-        if (!ggd.userInfo.isVisitor) data = ggd.userInfo.accountMetadata;
+        if (!Constant.GlobalGameData.userInfo.isVisitor) data = Constant.GlobalGameData.userInfo.accountMetadata;
         if (data) this._tempData = JSON.parse(data);
         else this._tempData = {};
         if (!this._tempData.hasOwnProperty("savingInfo")) {
             this._tempData.savingInfo = {//可能需要修改，时间戳可能存在细微误差
-                "startTime": glf.getTimeDetail(),
+                "startTime": Utils.getTimeDetail(),
                 "timeStamp": new Date().getTime(),
-                "curTime": glf.getTimeDetail(),
+                "curTime": Utils.getTimeDetail(),
                 "curTimeStamp": new Date().getTime()
             };
         };
@@ -91,8 +91,8 @@ export class StorageService implements IService {
     initGlobalData() {
         if (this._tempData.hasOwnProperty("global")) {
             let gData = this._tempData["global"];
-            ggd.stageProgress = gData.stageProgress;
-            if (ggd.versionCode !== gData.versionCode) {
+            Constant.GlobalGameData.stageProgress = gData.stageProgress;
+            if (Constant.GlobalGameData.versionCode !== gData.versionCode) {
                 console.log("版本更新");
                 this.savingGlobalDataToTempData();//记录版本号
                 // this.scheduleOnce(() => {
@@ -108,8 +108,8 @@ export class StorageService implements IService {
     savingGlobalDataToTempData() {
         let key = "global";
         let data = {
-            "stageProgress": ggd.stageProgress,
-            "versionCode": ggd.versionCode,
+            "stageProgress": Constant.GlobalGameData.stageProgress,
+            "versionCode": Constant.GlobalGameData.versionCode,
         };
         this.savingToTempData(key, data);
     }
