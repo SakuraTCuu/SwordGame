@@ -1,8 +1,7 @@
 import { _decorator, Component, Node, Sprite, SpriteFrame, Label, Material, RichText } from 'cc';
-import { em } from '../global/EventManager';
-import { plm } from '../global/PoolManager';
-import Utils from '../Common/Utils';
-;
+import { em } from '../../global/EventManager';
+import { plm } from '../../global/PoolManager';
+import Utils from '../../Common/Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('UpgradeEquLvLayer')

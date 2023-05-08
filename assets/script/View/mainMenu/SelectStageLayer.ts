@@ -1,20 +1,8 @@
-
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-05 11:37:53
- * @LastEditors: li_jiang_wei 739671694@qq.com
- * @LastEditTime: 2022-12-11 21:09:53
- * @FilePath: \to-be-immortal\assets\script\mainMenu\SelectStageLayer.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, Prefab, instantiate, Label, find, director, input, Input, JsonAsset, UITransform, utils, UI, Sprite, Material, ScrollView } from 'cc';
-import { em } from '../global/EventManager';
 
-import { Constant } from '../Common/Constant';
-import Utils from '../Common/Utils';
-;
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('SelectStageLayer')

@@ -1,8 +1,8 @@
 import { _decorator, Component, director, EditBox, Label, Node, sys } from 'cc';
-import IView from '../Interfaces/IView';
-import { hr } from '../global/HttpRequest';
+import { Api } from '../../Api';
+import { Constant } from '../../Common/Constant';
+import IView from '../../Interfaces/IView';
 
-import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 
 
@@ -96,18 +96,25 @@ export class Login extends IView {
         director.loadScene("mainMenu");
     }
 
-    onBtnLogin() {
-        let url = Constant.URL.Login;
-        let data = {
-            "loginIdentity": this._curAccountString,
-            "credential": this._curPasswordString,
-        }
-        let cb = this.loginComplete.bind(this);
-        let eb = this.loginError.bind(this);
-        let tb = this.loginTimeout.bind(this);
-        hr.post(url, data, cb, eb, tb);
+    async onBtnLogin() {
+        // let url = Constant.URL.Login;
+        // let data = {
+        //     "loginIdentity": this._curAccountString,
+        //     "credential": this._curPasswordString,
+        // }
+        // let cb = this.loginComplete.bind(this);
+        // let eb = this.loginError.bind(this);
+        // let tb = this.loginTimeout.bind(this);
+        // hr.post(url, data, cb, eb, tb);
         this.loadingLabel.string = "登录中...";
         this.loading.active = true;
+
+        let result = await Api.loginByUsername(this._curAccountString, this._curPasswordString);
+
+        console.log("onBtnLogin: ", result);
+        // if(status){
+
+        // }
     }
 
     loginComplete(res) {
@@ -143,19 +150,24 @@ export class Login extends IView {
         this.dispatch(Constant.EventId.tipsViewShow, "网络延迟，请重试或通过游客登录。");
     }
 
-    onBtnRegister() {
-        let url = Constant.URL.Register;
-        let data = {
-            "nickname": this._curAccountString,
-            "password": this._curPasswordString,
-        }
-        let cb = this.registerComplete.bind(this);
-        let eb = this.registerComplete.bind(this);
-        let tb = this.registerTimeout.bind(this);
-        hr.post(url, data, cb, eb, tb);
+    async onBtnRegister() {
+        // let url = Constant.URL.Register;
+        // let data = {
+        //     "nickname": this._curAccountString,
+        //     "password": this._curPasswordString,
+        // }
+        // let cb = this.registerComplete.bind(this);
+        // let eb = this.registerComplete.bind(this);
+        // let tb = this.registerTimeout.bind(this);
+        // hr.post(url, data, cb, eb, tb);
 
         this.loadingLabel.string = "注册中...";
         this.loading.active = true;
+
+        let result = await Api.registerByUserName(this._curAccountString, this._curPasswordString);
+
+        console.log("onBtnRegister: ", result);
+    
     }
 
     registerComplete(res) {

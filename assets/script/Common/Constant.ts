@@ -78,7 +78,7 @@ export namespace Constant {
     //全局游戏配置 global game config
     export const GlobalGameConfig = {
         framingInitMonster: true,//分帧生成怪物
-        dynamicSupFrame: false,//动态辅助框
+        dynamicSupFrame: true,//动态辅助框
         quadTreeRange: {
             w: 700,
             h: 1300
@@ -136,6 +136,8 @@ export namespace Constant {
         static TrainingLvListJson = "data/others/修仙境界表";
         //功法秘籍表
         static SkillBookListJson = "data/others/功法秘籍表";
+        //boss技能属性表
+        static BossSkillDataListJson = "data/others/Boss技能属性表";
         //boss属性配置
         static BossDataListJson = "data/stageConfig/boss属性配置";
         //装备品级属性表
@@ -148,6 +150,7 @@ export namespace Constant {
         static EquArmorListJson = "data/equSystem/防具等级属性表";
         //鞋等级属性表
         static EquShoeListJson = "data/equSystem/鞋等级属性表";
+        
     }
 
     export const URL = {

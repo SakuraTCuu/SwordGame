@@ -1,15 +1,43 @@
 
-import { _decorator, Component, Node, Collider2D, BoxCollider2D, Button, Size, Contact2DType, Color, Sprite, Animation, UITransform, Vec2, find, NodePool, instantiate } from 'cc';
+import { _decorator, Component, Node, Collider2D, BoxCollider2D, Button, Size, Contact2DType, Color, Sprite, Animation, UITransform, Vec2, find, NodePool, instantiate, Prefab } from 'cc';
 import { em } from '../../global/EventManager';
 import { plm } from '../../global/PoolManager';
-import { monsterData } from '../monster/MonsterData';
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';
 import Queue from '../../Libs/Structs/Queue';
+import IView from '../../Interfaces/IView';
+import BossLogic from './BossLogic';
+import { monsterData } from '../../enemy/monster/MonsterData';
 const { ccclass, property } = _decorator;
 
-@ccclass('Boss')
-export class Boss extends Component {
+@ccclass('BossView')
+export class BossView extends IView {
+
+    @property({
+        type: Prefab,
+        displayName: "boss冲刺预警预制件"
+    })
+    SprintTipsPrefab: Prefab = null;
+
+    @property({
+        type: Node,
+        displayName: "普通粒子节点"
+    })
+    NormalParticleNode: Node = null;
+
+    @property({
+        type: Node,
+        displayName: "boss皮肤"
+    })
+    SkinNode: Node = null;
+
+    @property({
+        type: Sprite,
+        displayName: "boss血条"
+    })
+    BloodSprite: Sprite = null;
+
+    bossLogic: BossLogic = null;
 
     // 默认属性
     _isTouchHero = false;
@@ -18,67 +46,76 @@ export class Boss extends Component {
 
     _normalDamage = 99;
 
-    //待初始化属性
-    _sprite: Node;
-    _bloodSprite: Sprite;
-    _bossId;
-    _rawSpeed;
-    _curSpeed;
-    _canMove = true;
-    _isInitData = false;
-    _maxBlood = 0;
-    _curBlood = 0;
-
-    //技能相关
-    _skillData;
-    _normalParticlePrefab: Node;
-
     //冲刺碰撞技能
-    _sprintTipsPrefab = null;//boss 冲刺预警预制件
     _sprintDir = null; //boss 冲刺方向
     _sprintDis: number; //boss 冲刺距离
-    _sprintSpeed: number;//boss 冲刺速度
 
+    private _bossId: number = 0;
+
+    public initBoss(bossId: number) {
+        this._bossId = bossId;
+    }
+
+    protected onRegister?(...r: any[]): void {
+        this.bossLogic = new BossLogic(this._bossId);
+        this.setBossStrategy();
+        this.initView();
+    }
+    protected onUnRegister?(...r: any[]): void {
+        console.log("关闭所有回调");
+        this.unscheduleAllCallbacks();
+    }
+    onTick(delta: number): void {
+        if (Constant.GlobalGameData.stopAll) return;
+        this.updateSpriteDirection();
+        this.moveToHero(delta);
+    }
+
+    setBossStrategy() {
+        this.schedule(() => {
+            this.isToSprintHero(200);
+        }, 3);
+    }
 
     // =====================初始化阶段=====================
-    initBossInfo(bd: { moveSpeed: number, canMove: boolean, id: number, maxBlood: number, normalDamage: number, animKey: string }) {
-        this._normalParticlePrefab = find("/atom", this.node);
-        plm.addPoolToPools("normalParticle", new NodePool(), this._normalParticlePrefab);
+    initView() {
+        plm.addPoolToPools("normalParticle", new NodePool(), this.NormalParticleNode);
 
-        this._sprite = this.node.getChildByName("sprite");
-        this._bloodSprite = this.node.getChildByName("bloodProgressBg").getChildByName("bloodProgress").getComponent(Sprite);
-        this._bossId = bd.id;
-        this._rawSpeed = bd.moveSpeed;
-        this._curSpeed = bd.moveSpeed;
-        this._canMove = bd.canMove;
-        this._maxBlood = bd.maxBlood;
-        this._curBlood = bd.maxBlood;
-        this._normalDamage = bd.normalDamage;
-        this.initBossMoveAnim(bd.animKey);
-        this.updateBlood(0);
+        let animKey = this.bossLogic.getAnimKey();
+        this.initBossMoveAnim(animKey);
+        this.updateBloodSprite();
         this.initCollider();
-
-        this._isInitData = true;
     }
+
+    updateBloodSprite() {
+        this.BloodSprite.fillRange = this.bossLogic.getBloodPercentage();
+        if (this.bossLogic.getIsDead()) {
+            console.log("Dead");
+            this.unscheduleAllCallbacks();
+            this.node.destroy();
+            Constant.GlobalGameData.stopAll = true;
+            em.dispatch("passStage");
+        }
+    }
+
     // 初始化boss移动动画
     initBossMoveAnim(animKey) {
         let path = "/anim/enemy/monster/" + animKey;
-
         app.loader.load("resources", path, (err, assets) => {
             if (err) {
                 console.log(err);
                 return;
             }
-            this._sprite.getComponent(Animation).defaultClip = assets;
-            this._sprite.getComponent(Animation).play();
+            this.SkinNode.getComponent(Animation).defaultClip = assets;
+            this.SkinNode.getComponent(Animation).play();
         });
     }
 
     // 初始化碰撞器
     // initCollider(data: { size: Size, tag: number }) {
     initCollider() {
-        let collider = this._sprite.addComponent(BoxCollider2D);
-        let UIT = this._sprite.getComponent(UITransform);
+        let collider = this.SkinNode.addComponent(BoxCollider2D);
+        let UIT = this.SkinNode.getComponent(UITransform);
         let bossSize = new Size(UIT.contentSize.x, UIT.contentSize.y);
         collider.tag = Constant.Tag.boss;
         collider.size = bossSize;
@@ -87,28 +124,10 @@ export class Boss extends Component {
         collider.on(Contact2DType.BEGIN_CONTACT, this.onBeginContact, this);
         collider.on(Contact2DType.END_CONTACT, this.onEndContact, this);
     }
-    onDestroy() {
-        console.log("关闭所有回调");
-        this.unscheduleAllCallbacks();
-    }
-    start() {
-        this.checkupIsInitData();
-    }
-    //检查是否初始化成功
-    checkupIsInitData() {
-        if (this._isInitData) {
-            console.log("初始化boss信息");
-        } else throw "未初始化boss信息";
-    }
 
-    update(deltaTime: number) {
-        if (Constant.GlobalGameData.stopAll) return;
-        this.updateSpriteDirection();
-        this.moveToHero(deltaTime);
-    }
     //向玩家移动
     moveToHero(dt) {
-        if (!this._canMove) return;
+        if (!this.bossLogic.canMove) return;
         let targetPos = em.dispatch("getHeroWorldPos");
         let curPos = this.node.getWorldPosition();
 
@@ -116,12 +135,13 @@ export class Boss extends Component {
         let y = targetPos.y - curPos.y;
         let dis = Math.sqrt(x * x + y * y);
         if (dis >= monsterData.minGapWithHero2) {//离得较近时 无需移动
-            let time = dis / this._curSpeed;
+            let time = dis / this.bossLogic.curSpeed;
             let moveDisX = dt / time * x;
             let moveDisY = dt / time * y;
             this.node.setWorldPosition(curPos.x + moveDisX, curPos.y + moveDisY, 0);
         }
     }
+
     // // 刷新面朝方向
     updateSpriteDirection() {
         let x = em.dispatch("getHeroWorldPos").x - this.node.getChildByName("sprite").getWorldPosition().x;
@@ -130,12 +150,14 @@ export class Boss extends Component {
         if (x > 0) this.node.getChildByName("sprite").setScale(-Math.abs(scale.x), scale.y, scale.z);
         else if (x < 0) this.node.getChildByName("sprite").setScale(Math.abs(scale.x), scale.y, scale.z);
     }
+
     // 加速冲刺
     accelerateToHero(t) {
         this.scheduleOnce(() => {
-            this._curSpeed = this._rawSpeed;
+            this.bossLogic.curSpeed = this.bossLogic.rawSpeed;
         }, t);
     }
+
     //根据方向改变矩形的旋转
     changeRotationByDir(node, dir) {
         if (dir.x == 0 && dir.y == 0) return;//无方向 暂不处理
@@ -161,27 +183,7 @@ export class Boss extends Component {
             else node.angle = angle;
         }
     }
-    // 动态加载预制件
-    loadPrefab(fileName, callback = null) {
-        let path = "/prefabs/enemy/" + fileName;
-        app.loader.load("resources", path, (err, assets) => {
-            if (err) {
-                console.log(err);
-                return;
-            }
-            if (callback) {
-                callback(assets);
-            }
-        });
-    }
-    // ==========================boss冲刺攻击==========================
-    //初始化冲刺数据
-    initSprintData() {
-        this.loadPrefab("sprintTips", (assets) => {
-            this._sprintTipsPrefab = assets;
-        });
-        this._sprintSpeed = this._skillData.sprint.speed;
-    }
+
     /**
      * @description 是否冲向玩家
      * @param {number} offsetDis 冲刺后距离目标的距离 修正距离
@@ -190,19 +192,20 @@ export class Boss extends Component {
      * @param {number} ingGap ingCb的释放间隔
     */
     isToSprintHero(offsetDis: number = 0, endCb: Function = null, ingCb: Function = null, ingGap: number = 1) {
-        if (!this._canMove) return;
+        if (!this.bossLogic.canMove) return;
         let targetPos = em.dispatch("getHeroWorldPos");
         let curPos = this.node.getWorldPosition();
         let x = targetPos.x - curPos.x;
         let y = targetPos.y - curPos.y;
         let dis = Math.sqrt(x * x + y * y) + offsetDis;
-        this._canMove = false;
+        this.bossLogic.canMove = false;
+
         this._sprintDir = Utils.getTwoPointFlyDir(targetPos, curPos);
         this._sprintDis = dis;
         //创建提示预制件
-        let prefab = instantiate(this._sprintTipsPrefab);
+        let prefab = instantiate(this.SprintTipsPrefab);
         let anim = prefab.getComponent(Animation);
-        anim.on("finished", () => {
+        anim.on(Animation.EventType.FINISHED, () => {
             if (this.node) this.startSprint(prefab, endCb, ingCb, ingGap);
         });
         prefab.getComponent(UITransform).setContentSize(dis, this.node.getChildByName("sprite").getComponent(UITransform).width - 20);
@@ -220,7 +223,7 @@ export class Boss extends Component {
     */
     startSprint(prefab, endCb: Function = null, ingCb: Function = null, ingGap: number) {
         let interval = 1 / 60;
-        let speed = this._sprintSpeed * interval;
+        let speed = this.bossLogic.sprintSpeed * interval;
         let callback = () => {
             let curPos = this.node.getWorldPosition();
             this.node.setWorldPosition(curPos.x + speed * this._sprintDir.x, curPos.y + speed * this._sprintDir.y, 0);
@@ -229,7 +232,7 @@ export class Boss extends Component {
                 this._sprintDis = 0;
                 this.unschedule(callback);
                 if (ingCb) this.unschedule(ingCb);
-                this._canMove = true;
+                this.bossLogic.canMove = true;
                 prefab.destroy();
                 if (endCb) endCb();
             }
@@ -295,7 +298,12 @@ export class Boss extends Component {
         if (!this._isTouchFriend1Skill1) return;
         let damage = 5;
         em.dispatch("createDamageTex", self.node, damage, { x: 0, y: 20 });
-        this.updateBlood(-damage, false);
+
+        this.bossLogic.attackedByHero({
+            damage: -damage,
+        });
+        this.updateBloodSprite();
+
         this.collectToTarget(self, other);
         this.scheduleOnce(() => {
             this.friendAttackBossByFriend1Skill1(self, other);
@@ -308,26 +316,6 @@ export class Boss extends Component {
         console.log("boss被飞镖攻击 还没写");//
     }
 
-    //更新血量
-    updateBlood(changeValue: number, isRepelled = false) {
-        this._curBlood += changeValue;
-        if (this._curBlood <= 0) {
-            this.unscheduleAllCallbacks();
-            this.node.destroy();
-            Constant.GlobalGameData.stopAll = true;
-            em.dispatch("passStage");
-
-        } else {
-            if (isRepelled) this.bossIsRepelled();
-            // this.bossIsRepelled();
-        }
-        if (this._curBlood > this._maxBlood) this._curBlood = this._maxBlood;
-        this._bloodSprite.fillRange = this._curBlood / this._maxBlood;
-    }
-    // 获取当前血量百分比
-    getBloodPercentage() {
-        return this._curBlood / this._maxBlood;
-    }
     //boss被击退
     bossIsRepelled() {
         // this.flashWhite();//闪白  被击退的特效
@@ -358,11 +346,11 @@ export class Boss extends Component {
     }
     pauseAnim() {
         // this.node.getChildByName("sprite").getComponent(Animation).pause();
-        this._sprite.getComponent(Animation).pause();
+        this.SkinNode.getComponent(Animation).pause();
     }
     resumeAnim() {
         // this.node.getChildByName("sprite").getComponent(Animation).resume();
-        this._sprite.getComponent(Animation).resume();
+        this.SkinNode.getComponent(Animation).resume();
     }
 
     // 获取朝向hero的方向
@@ -408,8 +396,9 @@ export class Boss extends Component {
         let wp = this.node.getWorldPosition();
         np.active = true;
         np.setWorldPosition(wp);
-        np.getComponent("EnemySkill").init(this._skillData.normalParticle, flyDir, scale);
+        np.getComponent("EnemySkill").init(this.bossLogic.skillData.normalParticle, flyDir, scale);
     }
+
     // 发射三发子弹
     usingNormalParticleTriShot(posArr, scale = 1) {
         if (Constant.GlobalGameData.stopAll) return;
@@ -420,7 +409,7 @@ export class Boss extends Component {
             let wp = this.node.getWorldPosition();
             np.active = true;
             np.setWorldPosition(wp.x + pos[0], wp.y + pos[1], wp.z);
-            np.getComponent("EnemySkill").init(this._skillData.normalParticle, flyDir, scale);
+            np.getComponent("EnemySkill").init(this.bossLogic.skillData.normalParticle, flyDir, scale);
         }
     }
 
@@ -455,12 +444,13 @@ export class Boss extends Component {
                     wp.x += dp.initPos[0];
                     wp.y += dp.initPos[1];
                     dp.setWorldPosition(wp);
-                    dp.getComponent("EnemySkill").init(this._skillData.normalParticle, flyDir, scale);
+                    dp.getComponent("EnemySkill").init(this.bossLogic.skillData.normalParticle, flyDir, scale);
                 }
             } else this.unschedule(fun);
         }
         this.schedule(fun, 0.2);
     }
+
     //粒子圈 向周边发射一圈粒子 向周边飞行
     usingNormalParticleCircle(total: number, r: number, scale = 1) {
         let initPosArr = Utils.getCirclePos(r, total);
@@ -478,9 +468,10 @@ export class Boss extends Component {
             wp.x += initPos[0];
             wp.y += initPos[1];
             dp.setWorldPosition(wp);
-            dp.getComponent("EnemySkill").init(this._skillData.normalParticle, flyDir, scale);
+            dp.getComponent("EnemySkill").init(this.bossLogic.skillData.normalParticle, flyDir, scale);
         }
     }
+
     //向指定方向两端发射子弹 
     usingNormalParticleWithDoubleDir(curDir) {
         console.log("向指定方向两端发射子弹");
@@ -492,9 +483,10 @@ export class Boss extends Component {
             let wp = this.node.getWorldPosition();
             np.active = true;
             np.setWorldPosition(wp);
-            np.getComponent("EnemySkill").init(this._skillData.normalParticle, dir, 0.2);
+            np.getComponent("EnemySkill").init(this.bossLogic.skillData.normalParticle, dir, 0.2);
         }
     }
+
     // 获取当前方向上的垂直方向
     getVerticalDirToCurDir(curDir) {
         let a = Math.abs(curDir.x / curDir.y);

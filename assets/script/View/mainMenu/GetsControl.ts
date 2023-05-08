@@ -1,6 +1,6 @@
 import { _decorator, Component, Node, find, NodePool, Label, Sprite, Color } from 'cc';
-import { em } from '../global/EventManager';
-import { plm } from '../global/PoolManager';
+import { em } from '../../global/EventManager';
+import { plm } from '../../global/PoolManager';
 ;
 const { ccclass, property } = _decorator;
 

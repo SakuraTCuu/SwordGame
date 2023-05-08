@@ -1,7 +1,7 @@
 import { _decorator, Component, director, Sprite, Label, Game, game, find, sys, Settings, profiler, EditBox, Node, Asset, AnimationClip, AssetManager, JsonAsset, Prefab, SpriteFrame } from 'cc';
+import { Constant } from '../../Common/Constant';
+import IView from '../../Interfaces/IView';
 
-import IView from '../Interfaces/IView';
-import { Constant } from '../Common/Constant';
 
 const { ccclass, property } = _decorator;
 

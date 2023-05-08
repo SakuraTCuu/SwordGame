@@ -1,11 +1,11 @@
 import { _decorator, Component, sys } from 'cc';
 import { em } from '../global/EventManager';
 
-import { hr } from '../global/HttpRequest';
 import IService from '../Interfaces/IService';
 import Singleton from '../Decorators/Singleton';
 import { Constant } from '../Common/Constant';
 import Utils from '../Common/Utils';
+import { Api } from '../Api';
 
 /**
  * 存储服务
@@ -47,14 +47,15 @@ export class StorageService implements IService {
         else sys.localStorage.setItem("saving", JSON.stringify(this._tempData));
     }
 
-    savingToServer() {
-        let url = Constant.URL.SavingData;
-        let data = {
-            "configValue": JSON.stringify(this._tempData),
-        }
-        let cb = this.savingToServerComplete.bind(this);
-        let eb = this.savingToServerError.bind(this);
-        hr.post(url, data, cb, eb);
+    async savingToServer() {
+        // let url = Constant.URL.SavingData;
+        // let data = {
+        //     "configValue": JSON.stringify(this._tempData),
+        // }
+        // let cb = this.savingToServerComplete.bind(this);
+        // let eb = this.savingToServerError.bind(this);
+        // hr.post(url, data, cb, eb);
+        let result = await Api.SavingData(JSON.stringify(this._tempData));
     }
 
     savingToServerComplete(res) {

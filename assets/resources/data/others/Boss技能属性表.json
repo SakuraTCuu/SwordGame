@@ -1,0 +1,751 @@
+[
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 200,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        },
+        "sprint": {
+            "speed": 600
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 200,
+            "duration": 3,
+            "moveSpeed": 300,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 300,
+            "duration": 3,
+            "moveSpeed": 250,
+            "canAttackTimes": 1
+        },
+        "sprint": {
+            "speed": 500
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 600,
+            "duration": 3,
+            "moveSpeed": 400,
+            "canAttackTimes": 1
+        },
+        "sprint": {
+            "speed": 500
+        }
+    },
+    {
+        "1": 15,
+        "2": 300,
+        "3": 500,
+        "4": 50,
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 200,
+            "duration": 3,
+            "moveSpeed": 300,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 1000,
+            "duration": 3,
+            "moveSpeed": 800,
+            "canAttackTimes": 1
+        },
+        "sprint": {
+            "speed": 500
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 1500,
+            "duration": 3,
+            "moveSpeed": 400,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 2500,
+            "duration": 3,
+            "moveSpeed": 400,
+            "canAttackTimes": 1,
+            "effects": [
+                "slow"
+            ]
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 2500,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        },
+        "ice": {
+            "name": "ice",
+            "damage": 10,
+            "duration": 5,
+            "moveSpeed": 0,
+            "canAttackTimes": null,
+            "attackInterval": 1,
+            "effects": [
+                "slow"
+            ]
+        }
+    },
+    {
+        "1": 299,
+        "2": 600,
+        "3": 1500,
+        "4": 5000
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 15000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 20000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 25000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 50000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 9999,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        },
+        "maxMS": 800
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 100000,
+            "duration": 3,
+            "moveSpeed": 590,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 150000,
+            "duration": 3,
+            "moveSpeed": 550,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 200000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 300000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 9999,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        },
+        "maxMS": 800
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 500000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 1121250,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 1552500,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 1983750,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 2415000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 2846250,
+            "duration": 3,
+            "moveSpeed": 590,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 3277500,
+            "duration": 3,
+            "moveSpeed": 550,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 3708750,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 4140000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 4571250,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 5002500,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 5433750,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 5865000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 6296250,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 6727500,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 7158750,
+            "duration": 3,
+            "moveSpeed": 590,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 8158750,
+            "duration": 3,
+            "moveSpeed": 550,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 9158750,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 10158750,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 12158750,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 14000000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 21200000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 284000000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 35600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 42800000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 50000000,
+            "duration": 3,
+            "moveSpeed": 590,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 572000000,
+            "duration": 3,
+            "moveSpeed": 550,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 64400000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 71600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 78800000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 86000000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 93200000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 107600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 107600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 114800000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 122000000,
+            "duration": 3,
+            "moveSpeed": 590,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 129200000,
+            "duration": 3,
+            "moveSpeed": 550,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 136400000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 143600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 150800000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 158000000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 165200000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 172400000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 179600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 186800000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 194000000,
+            "duration": 3,
+            "moveSpeed": 590,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 201200000,
+            "duration": 3,
+            "moveSpeed": 550,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 208400000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 215600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 222800000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 230000000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 237200000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 244400000,
+            "duration": 3,
+            "moveSpeed": 500,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 179600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 251600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 258800000,
+            "duration": 3,
+            "moveSpeed": 590,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 266000000,
+            "duration": 3,
+            "moveSpeed": 550,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 273200000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 280400000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    },
+    {
+        "normalParticle": {
+            "name": "normalParticle",
+            "damage": 287600000,
+            "duration": 3,
+            "moveSpeed": 600,
+            "canAttackTimes": 1
+        }
+    }
+]

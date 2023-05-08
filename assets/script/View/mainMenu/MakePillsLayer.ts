@@ -1,18 +1,9 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-08 17:30:34
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-12-12 21:27:02
- * @FilePath: \to-be-immortal\assets\script\mainMenu\MakePillsLayer.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
+
 import { _decorator, Component, Node, Prefab, find, SpriteFrame, instantiate, Sprite, Label, Color, NodePool, Material, tween, Vec3 } from 'cc';
-import { em } from '../global/EventManager';
-import { plm } from '../global/PoolManager';
-import { Constant } from '../Common/Constant';
-import Utils from '../Common/Utils';
+import { em } from '../../global/EventManager';
+import { plm } from '../../global/PoolManager';
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
 

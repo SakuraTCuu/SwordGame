@@ -1,18 +1,6 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-10-27 14:48:15
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-11-23 16:37:04
- * @FilePath: \to-be-immortal\assets\script\mainMenu\PrizeHallLayer.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, find, instantiate, Sprite, Label, NodePool } from 'cc';
-import { em } from '../global/EventManager';
-import { hr } from '../global/HttpRequest';
-import { plm } from '../global/PoolManager';
-import { Constant } from '../Common/Constant';
+import { plm } from '../../global/PoolManager';
+import { Api } from '../../Api';
 ;
 const { ccclass, property } = _decorator;
 
@@ -38,18 +26,24 @@ export class PrizeHallLayer extends Component {
         // console.log("this._curCdkeySting", this._curCdkeySting);
     }
     //发送奖励请求
-    sendPrizeRequest() {
-        let url = Constant.URL.GetPrize;
-        hr.get(url, { cdk: this._curCdkeySting }, (response) => {
-            console.log("response", response);
-            if (response.successful) {
-                console.log("添加领取奖励效果 还没写");
-                em.dispatch("tipsViewShow", "领取奖励成功");
-                this.distributePrizes(response.data);
-            } else {
-                em.dispatch("tipsViewShow", "cdk错误或已失效，领取失败。");
-            }
-        });
+    async sendPrizeRequest() {
+        // let url = Constant.URL.GetPrize;
+
+        // hr.get(url, { cdk: this._curCdkeySting }, (response) => {
+        //     console.log("response", response);
+        //     if (response.successful) {
+        //         console.log("添加领取奖励效果 还没写");
+        //         em.dispatch("tipsViewShow", "领取奖励成功");
+        //         this.distributePrizes(response.data);
+        //     } else {
+        //         em.dispatch("tipsViewShow", "cdk错误或已失效，领取失败。");
+        //     }
+        // });
+
+        let result = await Api.cdkExchange(this._curCdkeySting);
+        console.log("sendPrizeRequest: ", result);
+
+        //TODO: 后续逻辑处理
     }
 
     //分发奖励

@@ -1,20 +1,11 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-05 15:09:09
- * @LastEditors: li_jiang_wei 739671694@qq.com
- * @LastEditTime: 2022-12-10 21:10:26
- * @FilePath: \to-be-immortal\assets\script\mainMenu\HeroInfoLayer.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
-import { _decorator, Component, Node, Prefab, SpriteFrame, instantiate, Sprite, Label, find, Color, tween, Vec3, NodePool, ProgressBar, Slider, Tween, Animation, RichText, color } from 'cc';
-import { em } from '../global/EventManager';
 
-import { plm } from '../global/PoolManager';
-import { Constant } from '../Common/Constant';
-import Utils from '../Common/Utils';
-;
+import { _decorator, Component, Node, Prefab, SpriteFrame, instantiate, Sprite, Label, find, Color, tween, Vec3, NodePool, ProgressBar, Slider, Tween, Animation, RichText, color } from 'cc';
+import { em } from '../../global/EventManager';
+
+import { plm } from '../../global/PoolManager';
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
+
 const { ccclass, property } = _decorator;
 
 @ccclass('HeroInfoLayer')

@@ -1,18 +1,7 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-19 14:16:09
- * @LastEditors: li_jiang_wei 739671694@qq.com
- * @LastEditTime: 2022-12-12 00:19:12
- * @FilePath: \to-be-immortal\assets\script\mainMenu\SkillBookLayer.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, Prefab, find, instantiate, Label, Sprite, Color, NodePool, UITransform, ColorKey, SpriteFrame, Animation, Tween, tween, Vec3 } from 'cc';
-import { em } from '../global/EventManager';
-import { plm } from '../global/PoolManager';
-import Utils from '../Common/Utils';
-;
+import { em } from '../../global/EventManager';
+import { plm } from '../../global/PoolManager';
+import Utils from '../../Common/Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('SkillBookLayer')

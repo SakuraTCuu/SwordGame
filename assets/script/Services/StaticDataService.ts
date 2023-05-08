@@ -18,6 +18,7 @@ export class StaticDataService implements IService {
     equQualityData = {};
     equLevelData = {};
     equEffectData = {};
+    bossSkillListData = [];
 
     heroPropertyRuntimeData: HeroPropertyRuntimeData = null;
 
@@ -35,6 +36,13 @@ export class StaticDataService implements IService {
         let equEffectLevelListJson = await app.loader.loadAsync(Constant.Path.EquEffectLevelListJson, JsonAsset) as JsonAsset;
         let equArmorListJson = await app.loader.loadAsync(Constant.Path.EquArmorListJson, JsonAsset) as JsonAsset;
         let equShoeListJson = await app.loader.loadAsync(Constant.Path.EquShoeListJson, JsonAsset) as JsonAsset;
+
+        let bossSkillListDataJson = await app.loader.loadAsync(Constant.Path.BossSkillDataListJson, JsonAsset) as JsonAsset;
+
+        //boss技能属性表
+        if (bossSkillListDataJson) {
+            this.bossSkillListData = bossSkillListDataJson.json as Array<any>;
+        }
 
         //英雄属性表
         if (heroPropertyDataJson) {
@@ -141,6 +149,18 @@ export class StaticDataService implements IService {
     }
 
     // ==============外部调用==============
+
+    /**
+     * 获取boss技能属性
+     * @returns 
+     */
+    getBossSkillDataById(bossId: number) {
+        if (!this.bossSkillListData[bossId]) {
+            console.error("表中无bossId 所配置的属性");
+            return
+        }
+        return this.bossSkillListData[bossId];
+    }
     usingHeroBasePropertyFun(string, ...param) {
         if (this[string] && typeof this[string] == "function") return this[string](...param);
         else throw string + " is not fun or undefined";

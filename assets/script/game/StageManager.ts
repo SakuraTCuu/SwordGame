@@ -4,6 +4,8 @@ import { em } from '../global/EventManager';
 import { Constant } from '../Common/Constant';
 import Utils from '../Common/Utils';
 import Queue from '../Libs/Structs/Queue';
+import { Boss } from '../enemy/boss/Boss';
+import { BossView } from '../Role/Enemy/BossView';
 const { ccclass, property } = _decorator;
 
 @ccclass('StageManager')
@@ -16,6 +18,10 @@ export class StageManager extends Component {
     rewardConfigJson;
     @property(JsonAsset)
     monsterArmyConfigJson;
+
+    @property(Prefab)
+    bossPrefab: Prefab = null;
+
     @property([Prefab])
     bossPrefabs;
 
@@ -318,14 +324,23 @@ export class StageManager extends Component {
     }
     // 创建boss
     createBoss() {
-        let prefab = this.bossPrefabs[this._bossConfig.bossId - 1];
-        if (prefab) {
-            let boss = instantiate(prefab);
-            // boss.parent = find("Canvas/enemyLayer");
-            boss.parent = find("Canvas/bossLayer");
-            let wp = em.dispatch("getHeroWorldPos");
-            boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
-        } else throw "prefab is undefined";
+        // this._bossConfig.bossId - 1
+        let boss = instantiate(this.bossPrefab);
+        let bossController = boss.getComponent(BossView);
+        bossController.initBoss(this._bossConfig.bossId - 1);
+        
+        boss.parent = find("Canvas/bossLayer");
+        let wp = em.dispatch("getHeroWorldPos");
+        boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
+
+        // let prefab = this.bossPrefabs[this._bossConfig.bossId - 1];
+        // if (prefab) {
+        //     let boss = instantiate(prefab);
+        //     // boss.parent = find("Canvas/enemyLayer");
+        //     boss.parent = find("Canvas/bossLayer");
+        //     let wp = em.dispatch("getHeroWorldPos");
+        //     boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
+        // } else throw "prefab is undefined";
     }
     removeBoss() {
         let boss = find("Canvas/bossLayer").children[0];

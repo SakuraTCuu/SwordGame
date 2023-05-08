@@ -7,6 +7,7 @@ import WebPlatform from "../Platforms/WebPlatform";
 import TimerService from "./TimerService";
 
 import { log, sys, warn } from "cc";
+import AndroidPlatform from "../Platforms/AndroidPlatform";
 
 @Singleton
 class PlatformService implements IService {
@@ -30,6 +31,9 @@ class PlatformService implements IService {
             default:
                 this.platform = new WebPlatform();
                 break;
+            case PlatformService.PlatformType.ANDROID: 
+               this.platform = new AndroidPlatform();
+               break;
         }
 
         await this.platform.initialize();
