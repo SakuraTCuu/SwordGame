@@ -4,7 +4,6 @@ import { em } from '../global/EventManager';
 import { Constant } from '../Common/Constant';
 import Utils from '../Common/Utils';
 import Queue from '../Libs/Structs/Queue';
-import { Boss } from '../enemy/boss/Boss';
 import { BossView } from '../Role/Enemy/BossView';
 const { ccclass, property } = _decorator;
 
@@ -51,25 +50,29 @@ export class StageManager extends Component {
 
     _hasShowAds: boolean = false;
     onDestroy() {
-        em.remove("endStage");
-        em.remove("passStage");
-        em.remove("updateKillCountLabel");
-        em.remove("updateLeaderCurTotal");
-        em.remove("getCurStageTime");
-        em.remove("getDoubleReward");
-        em.remove("closeGetDoubleRewardAd");
+        em.remove(Constant.EventId.quitHalfway, this.quitHalfway.bind(this), this);
+        em.remove(Constant.EventId.passStage, this.passStage.bind(this), this);
+        em.remove(Constant.EventId.updateKillCountLabel);
+        em.remove(Constant.EventId.updateLeaderCurTotal);
+        em.remove(Constant.EventId.getCurStageTime);
+        em.remove(Constant.EventId.getDoubleReward);
+        em.remove(Constant.EventId.closeGetDoubleRewardAd);
         em.remove("geCurStageKillInfo");
         this.unscheduleAllCallbacks();
     }
+
     onLoad() {
-        em.add("endStage", this.endStage.bind(this));
-        em.add("passStage", this.passStage.bind(this));
-        em.add("updateKillCountLabel", this.updateKillCountLabel.bind(this));
-        em.add("updateLeaderCurTotal", this.updateLeaderCurTotal.bind(this));
-        em.add("getCurStageTime", this.getCurStageTime.bind(this));
-        em.add("getDoubleReward", this.getDoubleReward.bind(this));
-        em.add("closeGetDoubleRewardAd", this.closeGetDoubleRewardAd.bind(this));
+        em.add(Constant.EventId.quitHalfway, this.quitHalfway.bind(this));
+        em.add(Constant.EventId.passStage, this.passStage.bind(this));
+        em.add(Constant.EventId.updateKillCountLabel, this.updateKillCountLabel.bind(this));
+        em.add(Constant.EventId.updateLeaderCurTotal, this.updateLeaderCurTotal.bind(this));
+
+        em.add(Constant.EventId.getCurStageTime, this.getCurStageTime.bind(this));
+        em.add(Constant.EventId.getDoubleReward, this.getDoubleReward.bind(this));
+        em.add(Constant.EventId.closeGetDoubleRewardAd, this.closeGetDoubleRewardAd.bind(this));
+        
         em.add("geCurStageKillInfo", this.geCurStageKillInfo.bind(this));
+
         // this._curStageName = "stage" + 1;
         this._curStageName = "stage" + Constant.GlobalGameData.curStage;
         this._stageConfig = this.stageConfigJson.json;
@@ -123,6 +126,10 @@ export class StageManager extends Component {
     }
     // 开启敌群计时器
     startManyMonsterTimer() {
+        if (!this._curData) {
+            console.log("暂停开启敌群");
+            return;
+        }
         let max = this._curData.max > monsterData.monsterMaxTotal ? monsterData.monsterMaxTotal : this._curData.max;
         let curTotal = em.dispatch("getMonsterTotal");
         if (curTotal >= max) return;
@@ -238,7 +245,7 @@ export class StageManager extends Component {
         find("Canvas/heroLayer/GameUILayer/doubleRewardAd").active = true;
     }
     onBtnPlayAds() {
-        Constant.GlobalGameData.curAdRewardType = "getDoubleReward";
+        Constant.GlobalGameData.curAdRewardType = Constant.EventId.getDoubleReward;
         Utils.playAd();
         find("Canvas/heroLayer/GameUILayer/doubleRewardAd").active = false;
         // console.log("播放广告");
@@ -310,7 +317,7 @@ export class StageManager extends Component {
         this.distributeReward("通 关 奖 励", true);
     }
     //关闭关卡 游戏中途失败
-    endStage() {
+    quitHalfway() {
         console.log("关闭关卡");
         this.stopCreateMonster();
         this.removeBoss();
@@ -320,15 +327,18 @@ export class StageManager extends Component {
     stopCreateMonster() {
         this.unschedule(this.stageQueueTaskCallBack);
         this.unschedule(this.stageTimerCallback);
+        this.unschedule(this.startManyMonsterTimer);
         em.dispatch("removeAllMonsters");
     }
     // 创建boss
     createBoss() {
         // this._bossConfig.bossId - 1
+
+        console.log("createBoss: bossId: ", this._bossConfig.bossId);
         let boss = instantiate(this.bossPrefab);
         let bossController = boss.getComponent(BossView);
-        bossController.initBoss(this._bossConfig.bossId - 1);
-        
+        bossController.initBoss(this._bossConfig.bossId);
+
         boss.parent = find("Canvas/bossLayer");
         let wp = em.dispatch("getHeroWorldPos");
         boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
@@ -424,10 +434,12 @@ export class StageManager extends Component {
         console.log("rewardArr", rewardArr);
         return rewardArr;
     }
+
     //过去当前关卡时间 
     getCurStageTime() {
         return this._curStageTime;
     }
+
     //获取当前游戏进度
     getCurStageProgress() {
         let progress = this._curStageTime / this._curStageMaxTime;

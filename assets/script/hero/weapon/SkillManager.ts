@@ -425,7 +425,7 @@ export class SkillManager extends Component {
     godWindCloudBody() {
         this._openSecretList.push("godWindCloudBody");
         this.schedule(() => {
-            let times = Math.ceil(em.dispatch("getCurStageTime") / 60);
+            let times = Math.ceil(em.dispatch(Constant.EventId.getCurStageTime) / 60);
             this._godWindCloudBodyTimes = times;
         }, 1);
     }

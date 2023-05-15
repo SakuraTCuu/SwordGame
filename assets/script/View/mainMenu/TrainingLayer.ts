@@ -125,7 +125,6 @@ export class TrainingLayer extends Component {
         };
         this._TIM = new LevelManager(obj);
         this._TIM.addExp(this._curTrainingExp);
-        // console.log("_TIM",this._TIM);
         this.updateProgressView();
         this.savingTrainingData();
     }

@@ -190,9 +190,15 @@ export class HeroInfoLayer extends Component {
     isShowAdBtn() {
         if (Constant.GlobalGameData.isOpenAd) {
             this.adGetBox.active = true;
-        } else this.adGetBox.active = false;
-        if (Constant.GlobalGameData.isOpenAd && !em.dispatch("usingGameRewardFun", "todayEquVideoIsCanShow")) this.adGetEqu.active = true;
-        else this.adGetEqu.active = false;
+        } else {
+            this.adGetBox.active = false;
+        }
+
+        if (Constant.GlobalGameData.isOpenAd && !app.reward.todayEquVideoIsCanShow()) {
+            this.adGetEqu.active = true;
+        } else {
+            this.adGetEqu.active = false;
+        }
     }
     // 初始化属性
     initHeroProperty() {

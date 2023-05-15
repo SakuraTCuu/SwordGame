@@ -697,7 +697,7 @@ export class HeroControl extends Component {
         this._WM.isUsingSword(false);// 停止攻击
         this._spriteAnim.stop();// 停止移动
         //所有怪物放入对象池 移除之前 先停止生成
-        em.dispatch("endStage");
+        em.dispatch(Constant.EventId.quitHalfway);
     }
     //刷新经验/100条
     updateExpProgress(exp: number) {

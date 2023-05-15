@@ -327,7 +327,7 @@ export class Weapon extends Component {
         em.dispatch("createDamageTex", other.node, damage, { x: 0, y: 20 });
         let script = other.node.parent.components[0];
         if (script) {
-            script.updateBlood(-damage);
+            script.bossLogic.updateBlood(-damage);
         } else {
             throw "script is not init";
         }

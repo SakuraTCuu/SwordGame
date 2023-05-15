@@ -20,6 +20,7 @@ import { ItemDataService } from './Services/ItemDataService';
 import { StorageService } from './Services/StorageService';
 import LoaderService from './Services/LoaderService';
 import { StaticDataService } from './Services/StaticDataService';
+import RewardService from './Services/RewardService';
 
 class App extends IFrameWork {
 
@@ -49,6 +50,11 @@ class App extends IFrameWork {
    * @memberof App
    */
    public readonly loader = LoaderService.instance
+
+  /**
+   * 奖励服务, 广告奖励/补偿奖励/日常奖励/邮箱...
+   */
+  public readonly reward = RewardService.instance
 
   /**
    * 模型

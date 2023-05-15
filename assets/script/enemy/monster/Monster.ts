@@ -262,7 +262,7 @@ export class Monster extends Component {
         // 加经验
         em.dispatch("usingHeroControlFun", "updateExpProgress", 100);
         // em.dispatch("usingHeroControlFun", "updateExpProgress", 200);
-        em.dispatch("updateKillCountLabel", 1);
+        em.dispatch(Constant.EventId.updateKillCountLabel, 1);
         this.afterMonsterDied();
     }
 

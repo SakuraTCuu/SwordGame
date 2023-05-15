@@ -20,6 +20,11 @@ export class StaticDataService implements IService {
     equEffectData = {};
     bossSkillListData = [];
 
+    stageConfigData = [];
+    stageLeaderAndBossConfigData = [];
+    stageRewardConfigData = [];
+    stageArmyConfigData = [];
+
     heroPropertyRuntimeData: HeroPropertyRuntimeData = null;
 
     public async initialize(): Promise<void> {
@@ -36,8 +41,28 @@ export class StaticDataService implements IService {
         let equEffectLevelListJson = await app.loader.loadAsync(Constant.Path.EquEffectLevelListJson, JsonAsset) as JsonAsset;
         let equArmorListJson = await app.loader.loadAsync(Constant.Path.EquArmorListJson, JsonAsset) as JsonAsset;
         let equShoeListJson = await app.loader.loadAsync(Constant.Path.EquShoeListJson, JsonAsset) as JsonAsset;
-
         let bossSkillListDataJson = await app.loader.loadAsync(Constant.Path.BossSkillDataListJson, JsonAsset) as JsonAsset;
+        let stageConfigJson = await app.loader.loadAsync(Constant.Path.StageConfig, JsonAsset) as JsonAsset;
+        let stageLeaderAndBossConfigJson = await app.loader.loadAsync(Constant.Path.StageLeaderAndBossConfig, JsonAsset) as JsonAsset;
+        let stageRewardConfigJson = await app.loader.loadAsync(Constant.Path.StageRewardConfig, JsonAsset) as JsonAsset;
+        let stageArmyConfigJson = await app.loader.loadAsync(Constant.Path.StageArmyConfig, JsonAsset) as JsonAsset;
+
+        //关卡配置
+        if (stageConfigJson) {
+            this.stageConfigData = stageConfigJson.json as Array<any>;
+        }
+        //关卡boss配置
+        if (stageLeaderAndBossConfigJson) {
+            this.stageLeaderAndBossConfigData = stageLeaderAndBossConfigJson.json as Array<any>;
+        }
+        //关卡奖励配置
+        if (stageRewardConfigJson) {
+            this.stageRewardConfigData = stageConfigJson.json as Array<any>;
+        }
+        //关卡敌群
+        if (stageArmyConfigJson) {
+            this.stageArmyConfigData = stageArmyConfigJson.json as Array<any>;
+        }
 
         //boss技能属性表
         if (bossSkillListDataJson) {
@@ -123,7 +148,6 @@ export class StaticDataService implements IService {
 
         //初始化英雄属性
         this.initHeroData();
-
         em.add("usingHeroBasePropertyFun", this.usingHeroBasePropertyFun.bind(this));
     }
 
@@ -449,5 +473,25 @@ export class StaticDataService implements IService {
         if (this.bossData.hasOwnProperty(id)) return this.bossData[id];
         else throw id + " of bossData is null";
     }
+
+    getStageDataById(name: string){
+        if (this.stageConfigData.hasOwnProperty(name)) return this.stageConfigData[name];
+        else throw name + " of stageConfigData is null";
+    }
+
+    getLeaderAndBossDataById(name: string){
+        if (this.stageLeaderAndBossConfigData.hasOwnProperty(name)) return this.stageLeaderAndBossConfigData[name];
+        else throw name + " of stageLeaderAndBossConfigData is null";
+    }
+
+    getArmyDataById(name: string){
+        if (this.stageArmyConfigData.hasOwnProperty(name)) return this.stageArmyConfigData[name];
+        else throw name + " of stageArmyConfigData is null";
+    }
+
+    getRewardDataById(){
+        return this.stageRewardConfigData;
+    }
+    
 }
 

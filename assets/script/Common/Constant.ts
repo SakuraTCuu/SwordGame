@@ -30,6 +30,13 @@ export namespace Constant {
         switchMainMenuLayer = "switchMainMenuLayer",
         updateLoadingProgress = 'updateLoadingProgress',
         loadingComplete = 'loadingComplete',
+        passStage = 'passStage', //通关
+        quitHalfway = 'quitHalfway', //中途失败或退出
+        updateKillCountLabel = 'updateKillCountLabel',
+        updateLeaderCurTotal = 'updateLeaderCurTotal',
+        getDoubleReward = 'getDoubleReward',
+        getCurStageTime = 'getCurStageTime',
+        closeGetDoubleRewardAd = 'closeGetDoubleRewardAd',
     }
 
     //属性标记
@@ -113,6 +120,9 @@ export namespace Constant {
         },
         //播放广告次数
         playAdTimes: 0,
+
+        //每日最大播放次数
+        MaxTodayEquVideoShowTimes: 2,
     }
 
     export class Res {
@@ -150,7 +160,16 @@ export namespace Constant {
         static EquArmorListJson = "data/equSystem/防具等级属性表";
         //鞋等级属性表
         static EquShoeListJson = "data/equSystem/鞋等级属性表";
+
         
+        //关卡配置
+        static StageConfig = "data/stageConfig/stageConfig";
+        //关卡精英怪和boss配置leaderAndBossConfigJson
+        static StageLeaderAndBossConfig = "data/stageConfig/关卡精英怪和boss配置";
+        //关卡奖励配置
+        static StageRewardConfig = "data/stageConfig/关卡奖励配置";
+        //关卡怪物群配置
+        static StageArmyConfig = "data/stageConfig/stageArmyConfig";
     }
 
     export const URL = {

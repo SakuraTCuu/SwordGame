@@ -31,8 +31,8 @@ export default class AndroidPlatform extends IPlatform {
                 //     case "rebirthHero":
                 //         em.dispatch("rebirthHero");
                 //         break;
-                //     case "getDoubleReward":
-                //         em.dispatch("getDoubleReward");
+                //     case Constant.EventId.getDoubleReward:
+                //         em.dispatch(Constant.EventId.getDoubleReward);
                 //         break;
                 //     default:
                 //         em.dispatch("tipsViewShow", "参数类型错误："+Constant.GlobalGameData.curAdRewardType);

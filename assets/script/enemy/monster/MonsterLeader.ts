@@ -164,12 +164,12 @@ export class MonsterLeader extends Monster {
         //节点已经被清除 无法找到父节点 血条更新处理
         if (this.node.parent) {
             plm.putToPool("monsterLeader", this.node);
-            em.dispatch("updateLeaderCurTotal", -1);
+            em.dispatch(Constant.EventId.updateLeaderCurTotal, -1);
             em.dispatch("showKillLeaderReward", this._strengthType);
             // 加经验
             em.dispatch("usingHeroControlFun", "updateExpProgress", 100);
             // em.dispatch("usingHeroControlFun", "updateExpProgress", 200);
-            em.dispatch("updateKillCountLabel", 1);
+            em.dispatch(Constant.EventId.updateKillCountLabel, 1);
         };
         this.afterMonsterDied();
     }

@@ -99,8 +99,8 @@ export default class Utils {
             case "rebirthHero":
                 em.dispatch("rebirthHero");
                 break;
-            case "getDoubleReward":
-                em.dispatch("getDoubleReward");
+            case Constant.EventId.getDoubleReward:
+                em.dispatch(Constant.EventId.getDoubleReward);
                 break;
             case "getAllUpgradeReward":
                 em.dispatch("usingWeaponManagerFun", "getAllUpgradeRewardComplete");
@@ -125,7 +125,7 @@ export default class Utils {
                     app.bag.addItemToBag("实用装备箱", 1);
                     em.dispatch("showGets", { "实用装备箱": 1 });
                 }
-                em.dispatch("usingGameRewardFun", "afterPlayEquVideo");
+                app.reward.afterPlayEquVideo();
                 em.dispatch("usingHeroInfoLayerFun", "isShowAdBtn");
                 break;
             default:
@@ -146,8 +146,8 @@ export default class Utils {
             case "rebirthHero":
                 em.dispatch("closeRebirthAd");
                 break;
-            case "getDoubleReward":
-                em.dispatch("closeGetDoubleRewardAd");
+            case Constant.EventId.getDoubleReward:
+                em.dispatch(Constant.EventId.closeGetDoubleRewardAd);
                 break;
             case "getEquBox":
                 em.dispatch("tipsViewShow", "获取奖励失败");
