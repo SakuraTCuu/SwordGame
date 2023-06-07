@@ -7,7 +7,7 @@ import Utils from '../../Common/Utils';
 import Queue from '../../Libs/Structs/Queue';
 import IView from '../../Interfaces/IView';
 import BossLogic from './BossLogic';
-import { monsterData } from '../../enemy/monster/MonsterData';
+import MonsterUtil from './Monster/MonsterUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('BossView')
@@ -134,7 +134,7 @@ export class BossView extends IView {
         let x = targetPos.x - curPos.x;
         let y = targetPos.y - curPos.y;
         let dis = Math.sqrt(x * x + y * y);
-        if (dis >= monsterData.minGapWithHero2) {//离得较近时 无需移动
+        if (dis >= MonsterUtil.minGapWithHero2) {//离得较近时 无需移动
             let time = dis / this.bossLogic.curSpeed;
             let moveDisX = dt / time * x;
             let moveDisY = dt / time * y;

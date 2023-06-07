@@ -349,11 +349,11 @@ export class Weapon extends Component {
     }
     addToAnimManger() {
         let anim = this.node.getComponent(Animation);
-        em.dispatch("usingGameAnimManagerFun", "addAnimToList", anim);
+        app.anim.addAnimToList(anim);
     }
     removeAnimFromList() {
         let anim = this.node.getComponent(Animation);
-        em.dispatch("usingGameAnimManagerFun", "removeAnimFromList", anim);
+        app.anim.removeAnimFromList(anim);
     }
     //判断矩形是否相交
     rectIsIntersectsRect(rect1, rect2) {

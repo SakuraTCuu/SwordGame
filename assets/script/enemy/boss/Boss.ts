@@ -2,10 +2,10 @@
 import { _decorator, Component, Node, Collider2D, BoxCollider2D, Button, Size, Contact2DType, Color, Sprite, Animation, UITransform, Vec2, find, NodePool, instantiate } from 'cc';
 import { em } from '../../global/EventManager';
 import { plm } from '../../global/PoolManager';
-import { monsterData } from '../monster/MonsterData';
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';
 import Queue from '../../Libs/Structs/Queue';
+import MonsterUtil from '../../Role/Enemy/Monster/MonsterUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('Boss')
@@ -115,7 +115,7 @@ export class Boss extends Component {
         let x = targetPos.x - curPos.x;
         let y = targetPos.y - curPos.y;
         let dis = Math.sqrt(x * x + y * y);
-        if (dis >= monsterData.minGapWithHero2) {//离得较近时 无需移动
+        if (dis >= MonsterUtil.minGapWithHero2) {//离得较近时 无需移动
             let time = dis / this._curSpeed;
             let moveDisX = dt / time * x;
             let moveDisY = dt / time * y;

@@ -1,22 +1,24 @@
 import { Asset } from "cc";
+import { AssetType } from "./ResLoader";
 
 export default class ResCacheAssets {
     // 是否被释放
     private released: boolean = false
 
-    private resCache = new Set<Asset>();
+    // private resCache = new Set<Asset>();
+    private resCache = new Map<string, Asset>();
 
 
     /**
      * 缓存资源
      * @param asset 
      */
-    public cacheAsset(asset: Asset) {
+    public cacheAsset(path: string, asset: Asset) {
         if (this.released) return;
 
-        if (!this.resCache.has(asset)) {
+        if (!this.resCache.has(path)) {
             asset.addRef();
-            this.resCache.add(asset);
+            this.resCache.set(path, asset);
         }
     }
 
@@ -29,5 +31,13 @@ export default class ResCacheAssets {
             element.decRef();
         });
         this.resCache.clear();
+    }
+
+    public getAsset(path: string, type?: Asset) {
+        if (this.resCache.has(path)) {
+            return this.resCache.get(path);
+        }
+        console.log(`not find res, path = ${path} `);
+        return null;
     }
 }

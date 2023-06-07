@@ -115,5 +115,12 @@ export default class LoaderService implements IService {
     public async resLoadAsync<T extends Asset>(path: string, type: AssetType<T>, onProgress?: ProgressCallback | null) {
         return this.loader.loadAsync(path, type, onProgress);
     }
- 
+
+    /**
+     * TODO:  实现get
+     */
+    public get<T extends Asset>(path: string, type?: AssetType<T>) {
+        return this.loader.get(path, type);
+    }
+
 }

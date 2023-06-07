@@ -1,13 +1,3 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-11-23 22:06:51
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-11-24 11:08:25
- * @FilePath: \to-be-immortal\assets\script\hero\weapon\FingerLikeWind.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, Animation } from 'cc';
 import { em } from '../../global/EventManager';
 import { Weapon } from './Weapon';
@@ -45,11 +35,11 @@ export class FingerLikeWind extends Weapon {
     }
     addToAnimManger() {
         let anim = this.node.getComponent(Animation);
-        em.dispatch("usingGameAnimManagerFun", "addAnimToList", anim);
+        app.anim.addAnimToList(anim);
     }
     removeAnimFromList() {
         let anim = this.node.getComponent(Animation);
-        em.dispatch("usingGameAnimManagerFun", "removeAnimFromList", anim);
+        app.anim.removeAnimFromList(anim);
     }
 }
 

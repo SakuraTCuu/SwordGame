@@ -1,10 +1,10 @@
 import { _decorator, Component, Node, JsonAsset, random, Label, find, director, Prefab, instantiate, native } from 'cc';
-import { monsterData } from '../enemy/monster/MonsterData';
 import { em } from '../global/EventManager';
 import { Constant } from '../Common/Constant';
 import Utils from '../Common/Utils';
 import Queue from '../Libs/Structs/Queue';
 import { BossView } from '../Role/Enemy/BossView';
+import MonsterUtil from '../Role/Enemy/Monster/MonsterUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('StageManager')
@@ -21,8 +21,8 @@ export class StageManager extends Component {
     @property(Prefab)
     bossPrefab: Prefab = null;
 
-    @property([Prefab])
-    bossPrefabs;
+    // @property([Prefab])
+    // bossPrefabs;
 
     _curStageName: string;
     _curStageTime: number = 0;//用于记录stage时长
@@ -91,7 +91,7 @@ export class StageManager extends Component {
     }
     start() {
         this.startStage();//开始关卡
-        // this.justCreateBoss();//boss模式 用于
+        // this.justCreateBoss();
     }
     justCreateBoss() {
         this.createBoss();
@@ -130,15 +130,15 @@ export class StageManager extends Component {
             console.log("暂停开启敌群");
             return;
         }
-        let max = this._curData.max > monsterData.monsterMaxTotal ? monsterData.monsterMaxTotal : this._curData.max;
+        let max = this._curData.max > MonsterUtil.monsterMaxTotal ? MonsterUtil.monsterMaxTotal : this._curData.max;
         let curTotal = em.dispatch("getMonsterTotal");
         if (curTotal >= max) return;
         if (this._monsterArmyConfig) {
             let index = this._monsterArmyConfig.time.indexOf(this._curStageTime);
             if (index > -1) {
                 // if (config.queue[index] >= 11001) em.dispatch("playAnimMassMonsterComing");
-                let key = monsterData.queueMappingList[this._monsterArmyConfig.queue[index]];
-                let queue = monsterData.queue[key];
+                let key = MonsterUtil.queueMappingList[this._monsterArmyConfig.queue[index]];
+                let queue = MonsterUtil.queue[key];
                 // console.log("key",key);
                 // console.log("queue",queue);
                 if (!queue) throw "queue is error";
@@ -173,7 +173,7 @@ export class StageManager extends Component {
             }
         } else {
             // console.log("运行当前环境");
-            let max = this._curData.max > monsterData.monsterMaxTotal ? monsterData.monsterMaxTotal : this._curData.max;
+            let max = this._curData.max > MonsterUtil.monsterMaxTotal ? MonsterUtil.monsterMaxTotal : this._curData.max;
             // let max = this._curData.max > 300 ? 300 : this._curData.max;
             let curTotal = em.dispatch("getMonsterTotal");
             // let max = this._curData.max;
@@ -291,11 +291,11 @@ export class StageManager extends Component {
     //通过当前数据创建怪物
     createMonsterByCurData() {
         let index = this.getIndexByRatio(this._curData.ratio);
-        let key = monsterData.queueMappingList[this._curData.queue[index]];
+        let key = MonsterUtil.queueMappingList[this._curData.queue[index]];
         if (key == "circleR1000T20") return;
         if (key == "heartR500T40") return;
-        let queue = monsterData.queue[key];
-        let dir = monsterData.queueDir[key];
+        let queue = MonsterUtil.queue[key];
+        let dir = MonsterUtil.queueDir[key];
         if (!queue) throw new Error("找不到映射队列:" + key);
         if (!dir && dir !== null) throw new Error("找不到映射方向:" + key);//可以改成 指定方向 后期调整
         let monsterID = this._curData.id[Math.random() * this._curData.id.length | 0];

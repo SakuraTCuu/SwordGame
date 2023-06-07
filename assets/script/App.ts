@@ -21,8 +21,14 @@ import { StorageService } from './Services/StorageService';
 import LoaderService from './Services/LoaderService';
 import { StaticDataService } from './Services/StaticDataService';
 import RewardService from './Services/RewardService';
+import { GameAnimService } from './Services/GameAnimService';
 
 class App extends IFrameWork {
+
+  /**
+  * 背包数据
+  */
+  public readonly anim = GameAnimService.instance
 
   /**
    * 背包数据
@@ -44,12 +50,12 @@ class App extends IFrameWork {
    */
   public readonly item = ItemDataService.instance
 
-   /**
-   * 加载
-   *
-   * @memberof App
-   */
-   public readonly loader = LoaderService.instance
+  /**
+  * 加载
+  *
+  * @memberof App
+  */
+  public readonly loader = LoaderService.instance
 
   /**
    * 奖励服务, 广告奖励/补偿奖励/日常奖励/邮箱...

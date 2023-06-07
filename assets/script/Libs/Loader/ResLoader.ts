@@ -65,10 +65,10 @@ export default class ResLoader {
             if (this.resCacheAssets) {
                 if (resource instanceof Array) {
                     resource.forEach(element => {
-                        this.resCacheAssets.cacheAsset(element);
+                        this.resCacheAssets.cacheAsset(element.nativeUrl || paths, element);
                     });
                 } else {
-                    this.resCacheAssets.cacheAsset(resource);
+                    this.resCacheAssets.cacheAsset(resource.path, resource);
                 }
             }
             if (onCompleteOut) {
@@ -163,5 +163,9 @@ export default class ResLoader {
     public loadRemote<T extends Asset>(url: string, onComplete?: CompleteCallback<T> | null): void;
     public loadRemote<T extends Asset>(url: string, options: IRemoteOptions | CompleteCallback<T> | null, onComplete?: CompleteCallback<T> | null): void {
         assetManager.loadRemote(url, options, onComplete);
+    }
+
+    public getRes(path: string, type?) {
+        this.resCacheAssets.getAsset(path, type);
     }
 }

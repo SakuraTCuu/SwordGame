@@ -558,7 +558,8 @@ export class HeroControl extends Component {
         this._spriteAnim.pause();
         Constant.GlobalGameData.stopAll = true;
         em.dispatch("usingMonsterManagerFun", "pauseAllAnim");
-        em.dispatch("usingGameAnimManagerFun", "pauseAllAnim");
+
+        app.anim.pauseAllAnim();
     }
     //恢复游戏
     resumeGame() {
@@ -569,7 +570,7 @@ export class HeroControl extends Component {
         this._spriteAnim.resume();
         Constant.GlobalGameData.stopAll = false;
         em.dispatch("usingMonsterManagerFun", "resumeAllAnim");
-        em.dispatch("usingGameAnimManagerFun", "resumeAllAnim");
+        app.anim.resumeAllAnim();
 
     }
     //获取hero的世界坐标  

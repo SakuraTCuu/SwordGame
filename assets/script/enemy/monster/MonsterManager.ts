@@ -1,6 +1,5 @@
 import { _decorator, Component, Prefab, NodePool, Vec3, JsonAsset, SpriteAtlas, resources, find, AnimationClip, BoxCollider2D, Rect, Label, input, Input, Node } from 'cc';
 import { plm } from '../../global/PoolManager';
-import { monsterData } from './MonsterData';
 import { em } from '../../global/EventManager';
 import QuadtreeRect from '../../plugin/Quadtree';
 import Simulator from '../../RVO/Simulator';
@@ -128,9 +127,7 @@ export class MonsterManager extends Component {
     }
     // 初始化动画剪辑
     initAnimClips() {
-
-        let path = "/anim/enemy/monster";
-        app.loader.loadDir("resources", path, (err, arr: any) => {
+        app.loader.loadDir(Constant.Res.ResBundleName, Constant.Res.AnimEnemyMonster, (err, arr: any) => {
             arr.forEach(clip => {
                 this._monsterAnimClips[clip.name] = clip;
             });

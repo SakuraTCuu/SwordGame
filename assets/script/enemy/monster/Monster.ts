@@ -4,8 +4,8 @@ import { plm } from '../../global/PoolManager';
 import RVOMath from '../../RVO/RVOMath';
 import Simulator from '../../RVO/Simulator';
 import Vector2 from '../../RVO/Vector2';
-import { monsterData } from './MonsterData';
 import { Constant } from '../../Common/Constant';
+import MonsterUtil from '../../Role/Enemy/Monster/MonsterUtil';
 const { ccclass, property } = _decorator;
 //
 @ccclass('Monster')
@@ -527,7 +527,7 @@ export class Monster extends Component {
     getMonsterCurMoveSpeed() {
         // if (this._debuffList.frozen.state) return this._debuffList.frozen.moveSpeed;//冻结
         if (this.isStrongControlled()) return 0;
-        let moveSpeed = this._curMonsterData.moveSpeed * monsterData.MSCoefficient * this._curMoveSpeedTimes * this._speedMonsterSpeedTimes;
+        let moveSpeed = this._curMonsterData.moveSpeed * MonsterUtil.MSCoefficient * this._curMoveSpeedTimes * this._speedMonsterSpeedTimes;
         if (this._debuffList.timid.state) moveSpeed *= this._debuffList.timid.moveSpeed;//胆怯
         if (em.dispatch("getMapLayerProperty", "_frozenCountdown") > 0) {//地形减速
             let slowTimes = em.dispatch("getMapLayerProperty", "_frozenSlowTimes");

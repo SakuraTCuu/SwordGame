@@ -24,6 +24,8 @@ export class StaticDataService implements IService {
     stageLeaderAndBossConfigData = [];
     stageRewardConfigData = [];
     stageArmyConfigData = [];
+    monsterListData = {};
+    monsterStrongData = {};
 
     heroPropertyRuntimeData: HeroPropertyRuntimeData = null;
 
@@ -46,6 +48,23 @@ export class StaticDataService implements IService {
         let stageLeaderAndBossConfigJson = await app.loader.loadAsync(Constant.Path.StageLeaderAndBossConfig, JsonAsset) as JsonAsset;
         let stageRewardConfigJson = await app.loader.loadAsync(Constant.Path.StageRewardConfig, JsonAsset) as JsonAsset;
         let stageArmyConfigJson = await app.loader.loadAsync(Constant.Path.StageArmyConfig, JsonAsset) as JsonAsset;
+
+        let monsterConfigListJson = await app.loader.loadAsync(Constant.Path.MonsterConfigListJson, JsonAsset) as JsonAsset;
+        let monsterStrongJson = await app.loader.loadAsync(Constant.Path.MonsterStrongJson, JsonAsset) as JsonAsset;
+
+        //怪物属性表
+        if (monsterConfigListJson) {
+            let all = monsterConfigListJson.json as Array<any>;
+            all.forEach(element => {
+                let id = element.id;
+                this.monsterListData[id] = element;
+            });
+        }
+
+        //精英怪怪物增强表
+        if (monsterStrongJson) {
+            this.monsterStrongData = monsterStrongJson.json;
+        }
 
         //关卡配置
         if (stageConfigJson) {
@@ -474,24 +493,50 @@ export class StaticDataService implements IService {
         else throw id + " of bossData is null";
     }
 
-    getStageDataById(name: string){
+    getStageDataById(name: string) {
         if (this.stageConfigData.hasOwnProperty(name)) return this.stageConfigData[name];
         else throw name + " of stageConfigData is null";
     }
 
-    getLeaderAndBossDataById(name: string){
+    getLeaderAndBossDataById(name: string) {
         if (this.stageLeaderAndBossConfigData.hasOwnProperty(name)) return this.stageLeaderAndBossConfigData[name];
         else throw name + " of stageLeaderAndBossConfigData is null";
     }
 
-    getArmyDataById(name: string){
+    getArmyDataById(name: string) {
         if (this.stageArmyConfigData.hasOwnProperty(name)) return this.stageArmyConfigData[name];
         else throw name + " of stageArmyConfigData is null";
     }
 
-    getRewardDataById(){
+    getRewardDataById() {
         return this.stageRewardConfigData;
     }
-    
+
+    /**
+     * 通过id  获取怪物属性
+     * @param id 
+     * @returns 
+     */
+    getMonsterDataById(id) {
+        let flag = this.monsterListData.hasOwnProperty(id);
+        if (flag) {
+            return this.monsterListData[id];
+        }
+
+        console.log("property " + id + " of monsterListData is null");
+        return null;
+    }
+
+    getMonsterStrongDataByStage(stage: string) {
+        let has = this.monsterStrongData.hasOwnProperty(stage);
+        if (has) {
+            return this.monsterStrongData["stage" + Constant.GlobalGameData.curStage]
+        }
+        console.log("property " + stage + " of monsterStrongData is null");
+        return null;
+    }
+
+
+
 }
 

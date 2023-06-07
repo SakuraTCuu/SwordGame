@@ -52,11 +52,11 @@ export class SamadhiTrueFire extends Weapon {
     }
     addToAnimManger() {
         let anim = this.node.getComponent(Animation);
-        em.dispatch("usingGameAnimManagerFun", "addAnimToList", anim);
+        app.anim.addAnimToList(anim);
     }
     removeAnimFromList() {
         let anim = this.node.getComponent(Animation);
-        em.dispatch("usingGameAnimManagerFun", "removeAnimFromList", anim);
+        app.anim.removeAnimFromList(anim);
     }
 }
 

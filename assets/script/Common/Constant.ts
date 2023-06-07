@@ -37,6 +37,7 @@ export namespace Constant {
         getDoubleReward = 'getDoubleReward',
         getCurStageTime = 'getCurStageTime',
         closeGetDoubleRewardAd = 'closeGetDoubleRewardAd',
+        distributeReward = 'distributeReward', //分配奖励
     }
 
     //属性标记
@@ -135,6 +136,9 @@ export namespace Constant {
             { id: 3, path: "images", desc: "图片资源", type: SpriteFrame },
             { id: 4, path: "prefabs", desc: "预制资源", type: Prefab },
         ];
+
+        //小怪动画
+        static AnimEnemyMonster = "/anim/enemy/monster";
     }
 
     export class Path {
@@ -161,7 +165,10 @@ export namespace Constant {
         //鞋等级属性表
         static EquShoeListJson = "data/equSystem/鞋等级属性表";
 
-        
+        //怪物属性表
+        static MonsterConfigListJson = "data/others/怪物属性表";
+        //精英怪怪物增强表
+        static MonsterStrongJson = "data/stageConfig/stageMonsterStrong";
         //关卡配置
         static StageConfig = "data/stageConfig/stageConfig";
         //关卡精英怪和boss配置leaderAndBossConfigJson

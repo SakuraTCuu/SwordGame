@@ -172,4 +172,8 @@ export default class Loader {
             });
         });
     }
+
+    public get<T extends Asset>(path: string, type?: AssetType<T>) {
+        this.resLoader.getRes(path, type);
+    }
 }
