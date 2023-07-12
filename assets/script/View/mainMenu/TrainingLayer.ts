@@ -1,7 +1,7 @@
 import { _decorator, Component, Node, find, tween, Vec3, JsonAsset, Prefab, instantiate, Label, Sprite, NodePool, Animation, Color, Tween } from 'cc';
 import { em } from '../../global/EventManager';
 import { plm } from '../../global/PoolManager';
-import { LevelManager } from '../../system/LevelManager';
+import { LevelManager } from '../../Common/LevelManager';
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';
 const { ccclass, property } = _decorator;

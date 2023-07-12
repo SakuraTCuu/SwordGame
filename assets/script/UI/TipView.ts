@@ -16,7 +16,7 @@ export class TipView extends IView {
     }
 
     onTick(delta: number): void {
-        throw new Error('Method not implemented.');
+        // throw new Error('Method not implemented.');
     }
 
     //显示信息

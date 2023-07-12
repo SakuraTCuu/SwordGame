@@ -1,24 +1,25 @@
-import { _decorator, Component, Node, director, sys } from 'cc';
-import { em } from '../global/EventManager';
-import { Constant } from '../Common/Constant';
-import Utils from '../Common/Utils';
-const { ccclass, property } = _decorator;
+import { em } from '../../global/EventManager';
+import { Constant } from '../../Common/Constant';
+import Utils from '../../Common/Utils';
+import { sys } from 'cc';
 
-@ccclass('WX_GAME')
-export class WX_GAME extends Component {
+export class Ad_WX_GAME  {
 
     _videoAd = null;
     _bannerAd = null;
     _curAdIndex = 0;
-    onLoad() {
+
+
+
+    initialize() {
         if (!Constant.GlobalGameData.isOpenAd) return;//没开启 直接停止初始化
-        em.add(Constant.EventId.showWxVideoAd, this.showWxVideoAd.bind(this));
-        em.add(Constant.EventId.showBanner, this.showBanner.bind(this));
-        em.add(Constant.EventId.hideBanner, this.hideBanner.bind(this));
+        // em.add(Constant.EventId.showWxVideoAd, this.showWxVideoAd.bind(this));
+        // em.add(Constant.EventId.showBanner, this.showBanner.bind(this));
+        // em.add(Constant.EventId.hideBanner, this.hideBanner.bind(this));
         // em.add("initRewardAdByPlayTimes", this.initRewardAdByPlayTimes.bind(this));
         //如果是微信小游戏
         if (sys.platform == sys.Platform.WECHAT_GAME) {
-            director.addPersistRootNode(this.node);
+            // director.addPersistRootNode(this.node);
             this.init();
         }
     }

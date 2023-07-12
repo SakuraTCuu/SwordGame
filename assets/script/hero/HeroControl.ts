@@ -1,7 +1,7 @@
 // 英雄死亡
 import { _decorator, Component, Sprite, input, Input, Node, find, js, JsonAsset, Label, Animation, game, Game, Color, PhysicsSystem2D, EPhysics2DDrawFlags, BoxCollider2D, ParticleSystem, ParticleSystem2D, Rect, Collider2D, Touch, math, view, instantiate, Prefab, macro, native, JavaScript, Material } from 'cc';
 import { em } from '../global/EventManager';
-import { LevelManager } from "../system/LevelManager";
+import { LevelManager } from "../Common/LevelManager";
 import { Constant } from '../Common/Constant';
 import Utils from '../Common/Utils';
 const { ccclass, property } = _decorator;
