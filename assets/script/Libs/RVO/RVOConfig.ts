@@ -1,4 +1,4 @@
-import Vector2 from "../RVO/Vector2";
+import Vector2 from "./Vector2";
 
 export default class RVOConfig
 {
