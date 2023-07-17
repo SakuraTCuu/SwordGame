@@ -1,4 +1,4 @@
-import { _decorator, Component, Game, Label, Node } from 'cc';
+import { _decorator, Component, Game, Label, Node, Prefab } from 'cc';
 import IView from '../../Interfaces/IView';
 import GameLogic from './GameLogic';
 import { Constant } from '../../Common/Constant';
@@ -11,6 +11,12 @@ export class GameView extends IView {
     @property(Label)
     timeLabel: Label = null;
 
+    @property(Label)
+    killCountLabel: Label = null;
+
+    @property(Prefab)
+    bossPrefab: Prefab = null;
+
     @property(Node)
     bossLayer: Node = null;
 
@@ -18,12 +24,14 @@ export class GameView extends IView {
     private _rewardConfig: any = {};
     private _curLevelId: number = 0;
 
-
     protected async onRegister?(...r: any[]) {
-        this.gameLogic = new GameLogic();
+
+        //TODO: 修改
+        this.gameLogic = new GameLogic(this.bossPrefab);
 
         this.initData();
         this.initEvent();
+        this.gameLogic.onGameEnter(Constant.GlobalGameData.curStage);
     }
 
     protected async onUnRegister?(...r: any[]) {
@@ -31,16 +39,33 @@ export class GameView extends IView {
     }
 
     start() {
-
+        this.gameLogic.onGameStart();
     }
 
     onTick(delta: number): void {
-
+        this.gameLogic.onTick(delta);
     }
 
     initEvent() {
         this.subscribe(Constant.EventId.distributeReward, this.distributeReward);
         this.subscribe(Constant.EventId.passStage, this.passStage);
+        this.subscribe(Constant.EventId.quitHalfway, this.quitHalfway);
+
+        this.subscribe(Constant.EventId.updateKillCountLabel, this.updateKillCountLabel.bind(this));
+        this.subscribe(Constant.EventId.updateLeaderCurTotal, this.updateLeaderCurTotal.bind(this));
+        this.subscribe(Constant.EventId.closeGetDoubleRewardAd, this.startDistributeReward);
+
+
+        em.add(Constant.EventId.quitHalfway, this.quitHalfway.bind(this));
+        em.add(Constant.EventId.passStage, this.passStage.bind(this));
+        em.add(Constant.EventId.updateKillCountLabel, this.updateKillCountLabel.bind(this));
+        em.add(Constant.EventId.updateLeaderCurTotal, this.updateLeaderCurTotal.bind(this));
+
+        // em.add(Constant.EventId.getCurStageTime, this.getCurStageTime.bind(this));
+        // em.add(Constant.EventId.getDoubleReward, this.getDoubleReward.bind(this));
+        // em.add(Constant.EventId.closeGetDoubleRewardAd, this.closeGetDoubleRewardAd.bind(this));
+
+        // this.subscribe("geCurStageKillInfo", this.geCurStageKillInfo.bind(this));
     }
 
     initData() {
@@ -50,6 +75,14 @@ export class GameView extends IView {
     //通关
     passStage(title: string, isPass: boolean) {
         this.distributeReward(title, isPass);
+    }
+
+    //关闭关卡 游戏中途失败
+    quitHalfway() {
+        console.log("关闭关卡");
+        // this.stopCreateMonster();
+        this.gameLogic.stopCreateMonster();
+        this.distributeReward("击 杀 奖 励");
     }
 
     distributeReward(rewardName: string, isPass: boolean = false) {
@@ -150,8 +183,20 @@ export class GameView extends IView {
         // console.log("this._curStageTime", this._curStageTime);
         let time = " 时 间 ： " + this.gameLogic.getCurStageTime + " ";
         let progress = "（进度" + Math.floor(this.gameLogic.getCurStageProgress() * 100) + "%）";
-        this.timeLabel.string = time + progress;
+        // this.timeLabel.string = time + progress;
     }
 
+    //刷新击杀信息
+    updateKillCountLabel() {
+        // this.killCountLabel.string = " 击 杀 ： " + this.gameLogic.getKillCount() + " ";
+    }
+
+    //刷新精英怪当前总数 如果 num为负数 说明精英怪被击杀 根据精英怪被击杀数量 刷新精英怪出现的最大数量
+    updateLeaderCurTotal(num: number) {
+        // this._curLeaderTotal += num;
+        // if (num < 0) {
+        //     this._killLeaderTotal += Math.abs(num);
+        // }
+    }
 }
 

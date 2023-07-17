@@ -45,6 +45,15 @@ export default abstract class IBaseComponent extends Component implements ITicke
         // 注销计时器
         app.ticker.unregister(this);
     }
+
+    update(dt: number): void {
+        this.onTick(dt);
+    }
+
+    lateUpdate(dt: number): void {
+        this.onLateTick && this.onLateTick();
+    }
+
     /**
      * 初始化 注册
      */

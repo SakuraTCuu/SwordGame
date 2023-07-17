@@ -62,6 +62,7 @@ export class StageManager extends Component {
     }
 
     onLoad() {
+        return;
         em.add(Constant.EventId.quitHalfway, this.quitHalfway.bind(this));
         em.add(Constant.EventId.passStage, this.passStage.bind(this));
         em.add(Constant.EventId.updateKillCountLabel, this.updateKillCountLabel.bind(this));
@@ -90,6 +91,7 @@ export class StageManager extends Component {
         this._killCountLabel = find("Canvas/heroLayer/GameUILayer/expPar/curKillCount").getComponent(Label);
     }
     start() {
+        return;
         this.startStage();//开始关卡
         // this.justCreateBoss();
     }

@@ -44,7 +44,7 @@ export default class BossLogic {
     //冲刺碰撞技能
     _sprintDir = null; //boss 冲刺方向
     _sprintDis: number; //boss 冲刺距离
-    private _sprintSpeed: number;//boss 冲刺速度
+    private _sprintSpeed: number = 300;//boss 冲刺速度
     public get sprintSpeed(): number {
         return this._sprintSpeed;
     }
@@ -67,7 +67,8 @@ export default class BossLogic {
         this.skillData = app.staticData.getBossSkillDataById(bossId);
 
         this.skillData.normalParticle.damage = bossData.normalDamage;
-        this.sprintSpeed = this.skillData?.sprint?.speed;
+        this.sprintSpeed = this.skillData?.sprint?.speed || 300;
+        console.log(this.skillData)
         this.initBossInfo(bossData);
     }
 

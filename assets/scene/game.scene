@@ -21,7 +21,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 607
+      "__id__": 608
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 608
+      "__id__": 609
     },
     "_id": "ecf9f657-a586-4565-aae7-21fdd9a378a0"
   },
@@ -102,6 +102,9 @@
       },
       {
         "__id__": 606
+      },
+      {
+        "__id__": 607
       }
     ],
     "_prefab": null,
@@ -988,6 +991,10 @@
     },
     "bullet": {
       "__uuid__": "08b18131-2dc0-4058-bb77-a49e8c01598a",
+      "__expectedType__": "cc.Prefab"
+    },
+    "bossPrefab": {
+      "__uuid__": "ac275b9c-83d5-4bf0-ac42-3bb439479738",
       "__expectedType__": "cc.Prefab"
     },
     "_id": "9fAGJEoZBN2bSePUVPbe9Z"
@@ -20436,7 +20443,7 @@
     "node": {
       "__id__": 2
     },
-    "_enabled": true,
+    "_enabled": false,
     "__prefab": null,
     "stageConfigJson": {
       "__uuid__": "0976774f-fcf0-4ed8-8186-d68a197aaa68",
@@ -20459,6 +20466,24 @@
       "__expectedType__": "cc.Prefab"
     },
     "_id": "e2kOjJhOZIu5HQR7lhPbOp"
+  },
+  {
+    "__type__": "64480m/artD17W4H5xA7zEM",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 2
+    },
+    "_enabled": true,
+    "__prefab": null,
+    "timeLabel": null,
+    "killCountLabel": null,
+    "bossPrefab": {
+      "__uuid__": "ac275b9c-83d5-4bf0-ac42-3bb439479738",
+      "__expectedType__": "cc.Prefab"
+    },
+    "bossLayer": null,
+    "_id": "8ccyqj19tJKJxBjYd+B82M"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -20485,22 +20510,22 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 609
-    },
-    "shadows": {
       "__id__": 610
     },
-    "_skybox": {
+    "shadows": {
       "__id__": 611
     },
-    "fog": {
+    "_skybox": {
       "__id__": 612
     },
-    "octree": {
+    "fog": {
       "__id__": 613
     },
-    "lightProbeInfo": {
+    "octree": {
       "__id__": 614
+    },
+    "lightProbeInfo": {
+      "__id__": 615
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false
