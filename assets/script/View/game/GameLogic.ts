@@ -1,17 +1,13 @@
 import { Prefab, instantiate } from "cc";
 import { Constant } from "../../Common/Constant";
-import Singleton from "../../Decorators/Singleton";
 import IBaseGame from "../../Interfaces/IBaseGame";
 import Queue from "../../Libs/Structs/Queue";
-import MonsterUtil from "../../Role/Enemy/Monster/MonsterUtil";
+import MonsterUtil from "../../Common/MonsterUtil";
 import { MonsterManager } from "../../enemy/monster/MonsterManager";
 import { em } from "../../global/EventManager";
 import { BossView } from "../../Role/Enemy/BossView";
 
-@Singleton
 export default class GameLogic extends IBaseGame {
-
-    public static readonly instance: GameLogic;
 
     private _bossPrefab: Prefab = null; //boss预制体
     private _isKillBoss: boolean = false;
@@ -53,6 +49,13 @@ export default class GameLogic extends IBaseGame {
     private _stageQueue: Queue<any> = null;
 
     private _isRunning: boolean = false;
+    private _isQueenTask: boolean = false;
+    private _isJustBoss: boolean = true;
+
+    constructor(bossPrefab: Prefab) {
+        super();
+        this._bossPrefab = bossPrefab;
+    }
 
     /**
      *  游戏进入
@@ -67,7 +70,12 @@ export default class GameLogic extends IBaseGame {
     */
     onGameStart() {
         this._isRunning = true;
+        this._isQueenTask = true;
         this.startStage(true);
+
+        if (this._isJustBoss) {
+            this.justCreateBoss();
+        }
     }
 
     onGamePause() {
@@ -91,19 +99,28 @@ export default class GameLogic extends IBaseGame {
             return;
         }
 
-        this._totalRunTime += dt;
+        if (this._isJustBoss) {
+            return;
+        }
 
+        this._totalRunTime += dt;
         this._curStageTime += dt;
         this._curScheduleTime += dt;
 
-        //阶段调度
-        if (this._curStageTime >= this._curStageData.timeGap) {
-            //进入下一阶段
-            this.startStage();
-            this._curStageTime = 0;
-        } else {
-            //生成小怪
-            this.createMonster();
+        if (this._isQueenTask) {
+            if (!this._curStageData) {
+                return
+            }
+
+            //阶段调度
+            if (this._curStageTime >= this._curStageData.time) {
+                //进入下一阶段
+                this.startStage();
+                this._curStageTime = 0;
+            } else {
+                //生成小怪
+                this.createMonster();
+            }
         }
 
         //计时器调度
@@ -124,12 +141,10 @@ export default class GameLogic extends IBaseGame {
         //准备数据
         let stageId = "stage" + this._curLevelId;
 
-        this._stageConfig = app.staticData.getStageDataById(stageId);
+        let stageData = app.staticData.getStageDataById(stageId);
         this._bossConfig = app.staticData.getLeaderAndBossDataById(String(this._curLevelId - 1));
         this._armyConfig = app.staticData.getArmyDataById(stageId);
         this._rewardConfig = app.staticData.getRewardDataById();
-
-        let stageData = this._stageConfig[stageId];
 
         this._stageQueue = new Queue();
         this._curStageMaxTime = stageData[stageData.length - 1].time;
@@ -164,6 +179,7 @@ export default class GameLogic extends IBaseGame {
             if (isFirst) {
                 return console.log("_curStageData is null");
             }
+            this._isQueenTask = false;
             return this.showBossOrPass();
         }
 
@@ -287,17 +303,22 @@ export default class GameLogic extends IBaseGame {
 
     // 创建boss
     createBoss() {
-        // this._bossConfig.bossId - 1
+        em.dispatch("createMonsterBoss", this._bossConfig.bossId);
 
-        console.log("createBoss: bossId: ", this._bossConfig.bossId);
-        let boss = instantiate(this._bossPrefab);
-        let bossController = boss.getComponent(BossView);
-        bossController.initBoss(this._bossConfig.bossId);
+        // console.log("createBoss: bossId: ", this._bossConfig.bossId);
+        // let boss = instantiate(this._bossPrefab);
+        // let bossController = boss.getComponent(BossView);
+        // bossController.initBoss(this._bossConfig.bossId);
 
-        // boss.parent = find("Canvas/bossLayer");
+        // // boss.parent = find("Canvas/bossLayer");
 
-        let wp = em.dispatch("getHeroWorldPos");
-        boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
+        // let wp = em.dispatch("getHeroWorldPos");
+        // boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
+    }
+
+    //停止创建
+    stopCreateMonster() {
+
     }
 
     removeBoss() {

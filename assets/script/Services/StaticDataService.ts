@@ -76,7 +76,7 @@ export class StaticDataService implements IService {
         }
         //关卡奖励配置
         if (stageRewardConfigJson) {
-            this.stageRewardConfigData = stageConfigJson.json as Array<any>;
+            this.stageRewardConfigData = stageRewardConfigJson.json as Array<any>;
         }
         //关卡敌群
         if (stageArmyConfigJson) {

@@ -7,7 +7,7 @@ import Utils from '../../Common/Utils';
 import Queue from '../../Libs/Structs/Queue';
 import IView from '../../Interfaces/IView';
 import BossLogic from './BossLogic';
-import MonsterUtil from './Monster/MonsterUtil';
+import MonsterUtil from '../../Common/MonsterUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('BossView')
@@ -85,6 +85,10 @@ export class BossView extends IView {
         this.initBossMoveAnim(animKey);
         this.updateBloodSprite();
         this.initCollider();
+    }
+
+    updateBlood(damage: number) {
+        this.bossLogic.updateBlood(damage);
     }
 
     updateBloodSprite() {
@@ -261,6 +265,9 @@ export class BossView extends IView {
             case Constant.Tag.darts:
                 this.heroAttackBossByDarts();
                 break;
+            case Constant.Tag.sword:
+                this.heroAttackBossByDarts();
+                break;
             default:
                 break;
         }
@@ -313,7 +320,12 @@ export class BossView extends IView {
      * @description: boss被飞镖攻击
      */
     heroAttackBossByDarts() {
-        console.log("boss被飞镖攻击 还没写");//
+        console.log("boss被飞镖攻击 还没写");
+        //TODO:  武器的基本攻击力 + 英雄的基本攻击力
+        let damage = em.dispatch("usingHeroControlFun", "getCurDamage");
+        this.updateBlood(-damage);
+        this.updateBloodSprite();
+
     }
 
     //boss被击退

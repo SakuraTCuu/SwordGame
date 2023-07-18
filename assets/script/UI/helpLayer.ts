@@ -22,7 +22,7 @@ export class helpLayer extends Component {
     onBtnCloseHelpLayer(){
         this.node.active = false;
     }
-    onBtnOpenDamageImmunity(){  
+    onBtnOpenDamageImmunity(){
         em.dispatch("usingHeroControlFun","openDamageImmunity");
     }
 }
