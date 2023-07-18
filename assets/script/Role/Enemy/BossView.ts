@@ -7,7 +7,7 @@ import Utils from '../../Common/Utils';
 import Queue from '../../Libs/Structs/Queue';
 import IView from '../../Interfaces/IView';
 import BossLogic from './BossLogic';
-import MonsterUtil from './Monster/MonsterUtil';
+import MonsterUtil from '../../Common/MonsterUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('BossView')

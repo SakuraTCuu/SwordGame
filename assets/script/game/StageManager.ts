@@ -4,7 +4,7 @@ import { Constant } from '../Common/Constant';
 import Utils from '../Common/Utils';
 import Queue from '../Libs/Structs/Queue';
 import { BossView } from '../Role/Enemy/BossView';
-import MonsterUtil from '../Role/Enemy/Monster/MonsterUtil';
+import MonsterUtil from '../Common/MonsterUtil';
 const { ccclass, property } = _decorator;
 
 @ccclass('StageManager')

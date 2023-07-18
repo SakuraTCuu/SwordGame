@@ -2,7 +2,7 @@ import { Prefab, instantiate } from "cc";
 import { Constant } from "../../Common/Constant";
 import IBaseGame from "../../Interfaces/IBaseGame";
 import Queue from "../../Libs/Structs/Queue";
-import MonsterUtil from "../../Role/Enemy/Monster/MonsterUtil";
+import MonsterUtil from "../../Common/MonsterUtil";
 import { MonsterManager } from "../../enemy/monster/MonsterManager";
 import { em } from "../../global/EventManager";
 import { BossView } from "../../Role/Enemy/BossView";
