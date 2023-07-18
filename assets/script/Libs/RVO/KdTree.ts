@@ -1,4 +1,3 @@
-import GameConfig from "../example/gameConfig";
 import Agent from "./Agent";
 import { ObserverObj } from "./commonDefine";
 import Obstacle from "./Obstacle";
