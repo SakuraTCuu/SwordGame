@@ -962,7 +962,7 @@
     "_id": "3baGBR+S1Cm7MX225CzvYd"
   },
   {
-    "__type__": "64b4feS1jZCmaEd2+7cjaAo",
+    "__type__": "193c6h2NQNEvIFEGLNUveSK",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -993,11 +993,7 @@
       "__uuid__": "08b18131-2dc0-4058-bb77-a49e8c01598a",
       "__expectedType__": "cc.Prefab"
     },
-    "bossPrefab": {
-      "__uuid__": "ac275b9c-83d5-4bf0-ac42-3bb439479738",
-      "__expectedType__": "cc.Prefab"
-    },
-    "_id": "9fAGJEoZBN2bSePUVPbe9Z"
+    "_id": "b6q9Tj2/5PR4gidATybgU1"
   },
   {
     "__type__": "cc.Label",
