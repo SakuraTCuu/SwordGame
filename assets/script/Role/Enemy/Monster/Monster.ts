@@ -1,8 +1,8 @@
 import { _decorator, Component, Node, Material, Sprite, BoxCollider2D, UITransform, Size, Contact2DType, Collider2D, Rect, Animation, warn, AnimationClip, find, Vec2, Color } from 'cc';
 import { em } from '../../../Common/EventManager';
-import RVOMath from '../../../Libs/Rvo/RVOMath';
-import Simulator from '../../../Libs/Rvo/Simulator';
-import Vector2 from '../../../Libs/Rvo/Vector2';
+import RVOMath from '../../../Libs/RVO/RVOMath';
+import Simulator from '../../../Libs/RVO/Simulator';
+import Vector2 from '../../../Libs/RVO/Vector2';
 import { Constant } from '../../../Common/Constant';
 import MonsterUtil from '../../../Common/MonsterUtil';
 const { ccclass, property } = _decorator;

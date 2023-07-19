@@ -1,8 +1,8 @@
 import { _decorator, Component, Prefab, NodePool, Vec3, JsonAsset, SpriteAtlas, resources, find, AnimationClip, BoxCollider2D, Rect, Label, input, Input, Node } from 'cc';
 import { Constant } from '../../../Common/Constant';
 import QuadtreeRect from '../../../Libs/QuadTree/Quadtree';
-import RVOConfig from '../../../Libs/Rvo/RVOConfig';
-import Simulator from '../../../Libs/Rvo/Simulator';
+import RVOConfig from '../../../Libs/RVO/RVOConfig';
+import Simulator from '../../../Libs/RVO/Simulator';
 import { em } from '../../../Common/EventManager';
 const { ccclass, property } = _decorator;
 

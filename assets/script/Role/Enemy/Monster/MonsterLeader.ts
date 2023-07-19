@@ -2,7 +2,7 @@
 import { _decorator, Component, Node, Animation, Sprite, Material, instantiate, find, Vec3, tween, BoxCollider2D, Prefab, UITransform, Size, Contact2DType } from 'cc';
 import { Monster } from './Monster';
 import { Constant } from '../../../Common/Constant';
-import Simulator from '../../../Libs/Rvo/Simulator';
+import Simulator from '../../../Libs/RVO/Simulator';
 import { em } from '../../../Common/EventManager';
 const { ccclass, property } = _decorator;
 
