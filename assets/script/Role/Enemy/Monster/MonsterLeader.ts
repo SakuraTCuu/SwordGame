@@ -2,9 +2,8 @@
 import { _decorator, Component, Node, Animation, Sprite, Material, instantiate, find, Vec3, tween, BoxCollider2D, Prefab, UITransform, Size, Contact2DType } from 'cc';
 import { Monster } from './Monster';
 import { Constant } from '../../../Common/Constant';
-import Simulator from '../../../Libs/RVO/Simulator';
-import { em } from '../../../global/EventManager';
-import { plm } from '../../../global/PoolManager';
+import Simulator from '../../../Libs/Rvo/Simulator';
+import { em } from '../../../Common/EventManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('MonsterLeader')
@@ -163,7 +162,7 @@ export class MonsterLeader extends Monster {
     monsterDied() {
         //节点已经被清除 无法找到父节点 血条更新处理
         if (this.node.parent) {
-            plm.putToPool("monsterLeader", this.node);
+            app.pool.plm.putToPool("monsterLeader", this.node);
             em.dispatch(Constant.EventId.updateLeaderCurTotal, -1);
             em.dispatch("showKillLeaderReward", this._strengthType);
             // 加经验

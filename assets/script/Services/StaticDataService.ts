@@ -1,10 +1,10 @@
 
 import { _decorator, JsonAsset } from 'cc';
-import { em } from '../global/EventManager';
 import IService from '../Interfaces/IService';
 import { Constant } from '../Common/Constant';
-import HeroPropertyRuntimeData from '../Role/Hero/HeroPropertyRuntimeData';
 import Singleton from '../Decorators/Singleton';
+import { em } from '../Common/EventManager';
+import HeroPropertyRuntimeData from '../Role/hero/HeroPropertyRuntimeData';
 
 @Singleton
 export class StaticDataService implements IService {

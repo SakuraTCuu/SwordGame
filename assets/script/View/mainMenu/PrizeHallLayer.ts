@@ -1,5 +1,4 @@
 import { _decorator, Component, Node, find, instantiate, Sprite, Label, NodePool } from 'cc';
-import { plm } from '../../global/PoolManager';
 import { Api } from '../../Api';
 ;
 const { ccclass, property } = _decorator;
@@ -15,7 +14,7 @@ export class PrizeHallLayer extends Component {
         this._itemPrefab = find("item", this.node);
         this._itemContent = find("ScrollView/view/content", this.node);
         let pool = new NodePool();
-        plm.addPoolToPools("PrizeHallItem", pool, this._itemPrefab);
+        app.pool.plm.addPoolToPools("PrizeHallItem", pool, this._itemPrefab);
     }
     onDisable() {
         this.clearContent();
@@ -57,7 +56,7 @@ export class PrizeHallLayer extends Component {
 
             app.bag.addItemToBag(prize, total);
 
-            let item = plm.getFromPool("PrizeHallItem");
+            let item = app.pool.plm.getFromPool("PrizeHallItem");
             item.parent = this._itemContent;
             let sprite = item.getChildByName("Sprite").getComponent(Sprite);
 
@@ -83,7 +82,7 @@ export class PrizeHallLayer extends Component {
         while (content.children.length) {
             let child = this._itemContent.children[0];
             child.removeFromParent();
-            plm.putToPool("PrizeHallItem", child);
+            app.pool.plm.putToPool("PrizeHallItem", child);
         };
     }
 

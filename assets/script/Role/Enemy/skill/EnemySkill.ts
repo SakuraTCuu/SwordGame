@@ -1,17 +1,6 @@
-/*
- * @Author: li_jiang_wei_12345 739671694@qq.com
- * @Date: 2022-09-26 16:21:41
- * @LastEditors: li_jiang_wei_12345 739671694@qq.com
- * @LastEditTime: 2022-12-14 14:32:01
- * @FilePath: \to-be-immortal\assets\script\enemy\skill\EnemySkill.ts
- * @Description: 
- * 
- * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
- */
 import { _decorator, Component, Node, BoxCollider2D, UITransform, Size, Contact2DType, Collider2D, Animation, CircleCollider2D } from 'cc';
-import { em } from '../../../global/EventManager';
+import { em } from '../../../Common/EventManager';
 
-import { plm } from '../../../global/PoolManager';
 import { Constant } from '../../../Common/Constant';
 const { ccclass, property } = _decorator;
 
@@ -80,8 +69,8 @@ export class EnemySkill extends Component {
         if (this._canAttackTimes <= 0) this.recoveryPrefab();
     }
     recoveryPrefab() {
-        plm.putToPool(this._skillName, this.node);
-        // plm.putToPool(this._skillName,this.node,true);
+        app.pool.plm.putToPool(this._skillName, this.node);
+        // app.pool.plm.putToPool(this._skillName,this.node,true);
     }
     destroyPrefab() {
         this.node.destroy();

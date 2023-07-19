@@ -1,6 +1,6 @@
 import { Button, Component, Contact2DType, EventHandler, native, Node, PhysicsSystem2D } from "cc";
 import { Constant } from "./Constant";
-import { em } from "../global/EventManager";
+import { em } from "./EventManager";
 
 export default class Utils {
     //创建组件提供的按钮 或 修改内部调用 

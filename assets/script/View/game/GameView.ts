@@ -2,7 +2,7 @@ import { _decorator, Component, Game, Label, Node, Prefab } from 'cc';
 import IView from '../../Interfaces/IView';
 import GameLogic from './GameLogic';
 import { Constant } from '../../Common/Constant';
-import { em } from '../../global/EventManager';
+import { em } from '../../Common/EventManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameView')

@@ -1,9 +1,8 @@
 import { _decorator, Component, Node, Material, Sprite, BoxCollider2D, UITransform, Size, Contact2DType, Collider2D, Rect, Animation, warn, AnimationClip, find, Vec2, Color } from 'cc';
-import { em } from '../../../global/EventManager';
-import { plm } from '../../../global/PoolManager';
-import RVOMath from '../../../Libs/RVO/RVOMath';
-import Simulator from '../../../Libs/RVO/Simulator';
-import Vector2 from '../../../Libs/RVO/Vector2';
+import { em } from '../../../Common/EventManager';
+import RVOMath from '../../../Libs/Rvo/RVOMath';
+import Simulator from '../../../Libs/Rvo/Simulator';
+import Vector2 from '../../../Libs/Rvo/Vector2';
 import { Constant } from '../../../Common/Constant';
 import MonsterUtil from '../../../Common/MonsterUtil';
 const { ccclass, property } = _decorator;
@@ -147,8 +146,8 @@ export class Monster extends Component {
         this._remainingDuration -= 10;
         this.runOthers();
         if (this._remainingDuration <= 0) {
-            // plm.putToPool("monster", this.node);
-            plm.putToPool("monsterChild", this.node);
+            // app.pool.plm.putToPool("monster", this.node);
+            app.pool.plm.putToPool("monsterChild", this.node);
             this.removeAgent();
             this.unschedule(this.durationCountdown);
         }
@@ -257,7 +256,7 @@ export class Monster extends Component {
     // }
     //怪物死亡
     monsterDied() {
-        plm.putToPool("monsterChild", this.node);
+        app.pool.plm.putToPool("monsterChild", this.node);
         this.removeAgent();
         // 加经验
         em.dispatch("usingHeroControlFun", "updateExpProgress", 100);
@@ -669,7 +668,7 @@ export class Monster extends Component {
     }
     // 攻击 仅攻击一次
     shotOnce(color) {
-        let bullet = plm.getFromPool("monsterBullet");
+        let bullet = app.pool.plm.getFromPool("monsterBullet");
         bullet.getComponent(Sprite).color = color;
         let flyDir = this.getDirToHero();
         bullet.parent = find("Canvas/bulletLayer");

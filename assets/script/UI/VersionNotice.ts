@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, Label } from 'cc';
-import { em } from '../global/EventManager';
+import { em } from '../Common/EventManager';
 import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 

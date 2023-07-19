@@ -1,11 +1,11 @@
 import { _decorator, Component, sys } from 'cc';
-import { em } from '../global/EventManager';
 
 import IService from '../Interfaces/IService';
 import Singleton from '../Decorators/Singleton';
 import { Constant } from '../Common/Constant';
 import Utils from '../Common/Utils';
 import { Api } from '../Api';
+import { em } from '../Common/EventManager';
 
 /**
  * 存储服务

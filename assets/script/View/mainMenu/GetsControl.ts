@@ -1,6 +1,5 @@
 import { _decorator, Component, Node, find, NodePool, Label, Sprite, Color } from 'cc';
-import { em } from '../../global/EventManager';
-import { plm } from '../../global/PoolManager';
+import { em } from '../../Common/EventManager';
 ;
 const { ccclass, property } = _decorator;
 
@@ -26,7 +25,7 @@ export class GetsControl extends Component {
         em.add("showGets", this.showGets.bind(this));
         em.add("closeGets", this.closeGets.bind(this));
         let getsItemPrefab = find("/itemPrefab", this.node);
-        plm.addPoolToPools("SSLGetsItemPrefab", new NodePool(), getsItemPrefab);
+        app.pool.plm.addPoolToPools("SSLGetsItemPrefab", new NodePool(), getsItemPrefab);
     }
     // 展示获得物品
     showGets(items) {
@@ -47,7 +46,7 @@ export class GetsControl extends Component {
                 let data = app.bag.getItemDataByIdOrName(key);
 
                 // let prefab = instantiate(itemPrefab);
-                let prefab = plm.getFromPool("SSLGetsItemPrefab");
+                let prefab = app.pool.plm.getFromPool("SSLGetsItemPrefab");
                 prefab.active = true;
                 prefab.parent = content;
                 let sprite = prefab.getComponent(Sprite);
@@ -79,7 +78,7 @@ export class GetsControl extends Component {
             let child = content.children[0];
             child.getComponent(Sprite).spriteFrame = null;
             child.removeFromParent();
-            plm.putToPool("SSLGetsItemPrefab", child);
+            app.pool.plm.putToPool("SSLGetsItemPrefab", child);
         };
     }
     getColorStrByQuality(quality) {

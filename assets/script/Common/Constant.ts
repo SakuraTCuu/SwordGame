@@ -38,6 +38,9 @@ export namespace Constant {
         getCurStageTime = 'getCurStageTime',
         closeGetDoubleRewardAd = 'closeGetDoubleRewardAd',
         distributeReward = 'distributeReward', //分配奖励
+        createDamageTex = 'createDamageTex', //创建伤害文本
+        createTipsTex = 'createTipsTex',
+        showMassMonsterComing = 'showMassMonsterComing',
     }
 
     //属性标记

@@ -9,7 +9,7 @@
  * Copyright (c) 2022 by li_jiang_wei_12345 739671694@qq.com, All Rights Reserved. 
  */
 import { _decorator, Component, Node } from 'cc';
-import { em } from '../../../global/EventManager';
+import { em } from '../../../Common/EventManager';
 import { EnemySkill } from './EnemySkill';
 import { Constant } from '../../../Common/Constant';
 const { ccclass, property } = _decorator;

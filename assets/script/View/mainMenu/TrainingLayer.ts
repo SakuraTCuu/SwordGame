@@ -1,6 +1,5 @@
 import { _decorator, Component, Node, find, tween, Vec3, JsonAsset, Prefab, instantiate, Label, Sprite, NodePool, Animation, Color, Tween } from 'cc';
-import { em } from '../../global/EventManager';
-import { plm } from '../../global/PoolManager';
+import { em } from '../../Common/EventManager';
 import { LevelManager } from '../../Common/LevelManager';
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';
@@ -44,9 +43,9 @@ export class TrainingLayer extends Component {
         this._pillList = find("pillList", this.node);
         this._trainingLvList = this.trainingLvListJson.json;
         // console.log("list", this._trainingLvList);
-        plm.addPoolToPools("TLPillPrefab", new NodePool(), this.pillPrefab);
+        app.pool.plm.addPoolToPools("TLPillPrefab", new NodePool(), this.pillPrefab);
         let tipsTexPool = new NodePool();
-        plm.addPoolToPools("tipsTex", tipsTexPool, this.tipsPrefab);
+        app.pool.plm.addPoolToPools("tipsTex", tipsTexPool, this.tipsPrefab);
     }
     onEnable() {
         let guideData = em.dispatch("getGuideData");
@@ -71,7 +70,7 @@ export class TrainingLayer extends Component {
         console.log("updatePillsContent");
         while (this._itemPrefabArr.length > 0) {
             let prefab = this._itemPrefabArr.shift();
-            plm.putToPool("TLPillPrefab", prefab);
+            app.pool.plm.putToPool("TLPillPrefab", prefab);
         }
         let pillList = app.bag.getAllPills();
         let count = 0;
@@ -79,7 +78,7 @@ export class TrainingLayer extends Component {
             if (Object.prototype.hasOwnProperty.call(pillList, id)) {
                 const total = pillList[id];
                 // let pill = instantiate(this.pillPrefab);
-                let pill = plm.getFromPool("TLPillPrefab");
+                let pill = app.pool.plm.getFromPool("TLPillPrefab");
                 pill.parent = this.pillPar;
                 let data = app.bag.getItemDataByIdOrName(id);
                 pill.getChildByName("name").getComponent(Label).string = data.name;
@@ -245,7 +244,7 @@ export class TrainingLayer extends Component {
 
     //=================创建提示信息===============
     createTipsTex(content: string, initPos = { x: 0, y: 100 }) {
-        let tex = plm.getFromPool("tipsTex");
+        let tex = app.pool.plm.getFromPool("tipsTex");
         tex.getComponent(Label).string = content;
         tex.parent = find("Canvas/menuLayer/TrainingLayer/tipsPar");
         tex.setPosition(initPos.x, initPos.y, 0);
@@ -262,7 +261,7 @@ export class TrainingLayer extends Component {
         let action = tween(tex).parallel(a1, a2)
             .call(() => {
                 tex.setScale(new Vec3(1, 1, 1));
-                plm.putToPool("tipsTex", tex, true);
+                app.pool.plm.putToPool("tipsTex", tex, true);
             });
         action.start();
     }

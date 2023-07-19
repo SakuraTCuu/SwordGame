@@ -1,6 +1,5 @@
 import { _decorator, Component, Node, Label, Sprite, SpriteFrame, RichText } from 'cc';
-import { em } from '../../global/EventManager';
-import { plm } from '../../global/PoolManager';
+import { em } from '../../Common/EventManager';
 import Utils from '../../Common/Utils';
 ;
 const { ccclass, property } = _decorator;
@@ -57,14 +56,14 @@ export class MergeEquLayer extends Component {
     updateEquList() {
         while (this._itemPrefabArr.length > 0) {
             let prefab = this._itemPrefabArr.shift();
-            plm.putToPool("SSLItemPrefab", prefab);
+            app.pool.plm.putToPool("SSLItemPrefab", prefab);
         }
         let list = app.bag.getItemList();
         for (const key in list) {
             let data = app.bag.getItemDataByIdOrName(key);
             if (data.type == "装备") {
                 let total = list[key];
-                let prefab = plm.getFromPool("SSLItemPrefab");
+                let prefab = app.pool.plm.getFromPool("SSLItemPrefab");
                 prefab.parent = this.itemContent;
                 prefab.getChildByName("itemBg").getComponent(Sprite).spriteFrame = this.itemQBg[data.quality - 1];
                 this.initPrefabLv(prefab, data);

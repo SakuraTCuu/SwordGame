@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, CircleCollider2D, Contact2DType } from 'cc';
-import { em } from '../../../global/EventManager';
+import { em } from '../../../Common/EventManager';
 import { EnemySkill } from './EnemySkill';
 import { Constant } from '../../../Common/Constant';
 const { ccclass, property } = _decorator;

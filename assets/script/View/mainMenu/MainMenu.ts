@@ -1,5 +1,5 @@
 import { _decorator, Component, Node, SpriteFrame, find, Sprite, Label, Color, Layers, director, sys, JsonAsset, native } from 'cc';
-import { em } from '../../global/EventManager';
+import { em } from '../../Common/EventManager';
 
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';

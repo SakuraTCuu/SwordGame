@@ -1,6 +1,5 @@
 import { _decorator, Component, Node, Prefab, find, instantiate, Label, Sprite, Color, NodePool, UITransform, ColorKey, SpriteFrame, Animation, Tween, tween, Vec3 } from 'cc';
-import { em } from '../../global/EventManager';
-import { plm } from '../../global/PoolManager';
+import { em } from '../../Common/EventManager';
 import Utils from '../../Common/Utils';
 const { ccclass, property } = _decorator;
 
@@ -36,7 +35,7 @@ export class SkillBookLayer extends Component {
     _guideRewardBookType: string;
     onLoad() {
         let prefab = find("switchBook/bookPrefab", this.node);
-        plm.addPoolToPools("SBLBookPrefab", new NodePool(), prefab);
+        app.pool.plm.addPoolToPools("SBLBookPrefab", new NodePool(), prefab);
         this._bookContent = find("ScrollView/view/content", this.node);
     }
     onEnable() {
@@ -300,7 +299,7 @@ export class SkillBookLayer extends Component {
             let data = em.dispatch("usingHeroBasePropertyFun", "getSkillBookDataByIdOrName", bookName);
             if (data.type == type) {
                 // console.log(data);
-                let prefab = plm.getFromPool("SBLBookPrefab");
+                let prefab = app.pool.plm.getFromPool("SBLBookPrefab");
                 let sprite = prefab.getComponent(Sprite);
                 prefab.parent = par;
                 prefab.getChildByName("name").getComponent(Label).string = data.name;
@@ -343,7 +342,7 @@ export class SkillBookLayer extends Component {
         while (par.children.length) {
             let child = par.children[0];
             child.removeFromParent();
-            plm.putToPool("SBLBookPrefab", child);
+            app.pool.plm.putToPool("SBLBookPrefab", child);
         }
     }
     startSkillBookLayerGuide() {

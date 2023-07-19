@@ -1,10 +1,9 @@
 import { _decorator, Component, Prefab, NodePool, Vec3, JsonAsset, SpriteAtlas, resources, find, AnimationClip, BoxCollider2D, Rect, Label, input, Input, Node } from 'cc';
 import { Constant } from '../../../Common/Constant';
 import QuadtreeRect from '../../../Libs/QuadTree/Quadtree';
-import RVOConfig from '../../../Libs/RVO/RVOConfig';
-import Simulator from '../../../Libs/RVO/Simulator';
-import { em } from '../../../global/EventManager';
-import { plm } from '../../../global/PoolManager';
+import RVOConfig from '../../../Libs/Rvo/RVOConfig';
+import Simulator from '../../../Libs/Rvo/Simulator';
+import { em } from '../../../Common/EventManager';
 const { ccclass, property } = _decorator;
 
 @ccclass('MonsterManager')
@@ -56,9 +55,9 @@ export class MonsterManager extends Component {
         em.add("createMonsterDamageTex", this.createMonsterDamageTex.bind(this));
         em.add("getAllMonsterColliders", this.getAllMonsterColliders.bind(this));
         em.add("getCurMonsterQuadtree", this.getCurMonsterQuadtree.bind(this));
-        plm.addPoolToPools("monsterChild", new NodePool(), this.monsterChildPrefab);
-        plm.addPoolToPools("monsterLeader", new NodePool(), this.monsterLeaderPrefab);
-        plm.addPoolToPools("monsterBullet", new NodePool(), this.bullet);
+        app.pool.plm.addPoolToPools("monsterChild", new NodePool(), this.monsterChildPrefab);
+        app.pool.plm.addPoolToPools("monsterLeader", new NodePool(), this.monsterLeaderPrefab);
+        app.pool.plm.addPoolToPools("monsterBullet", new NodePool(), this.bullet);
         // this._initPosList = {
         //     "up": { x: 0, y: 100 },
         //     "down": { x: 0, y: -100 },
@@ -167,7 +166,7 @@ export class MonsterManager extends Component {
     // 创建精英怪
     createMonsterLeader(id: number, type: number) {
         // let leader = instantiate(this.monsterLeaderPrefab);
-        let leader = plm.getFromPool("monsterLeader");
+        let leader = app.pool.plm.getFromPool("monsterLeader");
         // leader.parent = find("Canvas/enemyLayer");
         leader.parent = find("Canvas/enemyLayer/normal");
         let initOffset = this.getRandomInitPos();
@@ -285,7 +284,7 @@ export class MonsterManager extends Component {
         }
     }
     createMonster(id: number, pos: number[], initOffset: { x, y }) {
-        let prefab = plm.getFromPool("monsterChild");
+        let prefab = app.pool.plm.getFromPool("monsterChild");
         let data = em.dispatch("getMonsterDataById", id);
         // prefab.parent = this.node;
         let wp = em.dispatch("getHeroWorldPos");
@@ -363,7 +362,7 @@ export class MonsterManager extends Component {
         while (total) {
             let child = all[total - 1];
             child.removeFromParent();
-            plm.putToJunkyard(child);
+            app.pool.plm.putToJunkyard(child);
             total--;
         }
     }
@@ -372,7 +371,7 @@ export class MonsterManager extends Component {
     //     while (this.node.children.length) {
     //         let child = this.node.children[0];
     //         child.removeFromParent();
-    //         plm.putToJunkyard(child, true);
+    //         app.pool.plm.putToJunkyard(child, true);
     //     };
     // }
     //通过id  获取怪物属性

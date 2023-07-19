@@ -21,7 +21,7 @@
     "_active": true,
     "_components": [],
     "_prefab": {
-      "__id__": 608
+      "__id__": 607
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -52,7 +52,7 @@
     },
     "autoReleaseAssets": false,
     "_globals": {
-      "__id__": 609
+      "__id__": 608
     },
     "_id": "ecf9f657-a586-4565-aae7-21fdd9a378a0"
   },
@@ -102,9 +102,6 @@
       },
       {
         "__id__": 606
-      },
-      {
-        "__id__": 607
       }
     ],
     "_prefab": null,
@@ -10728,10 +10725,6 @@
     "GameUILayer": {
       "__id__": 28
     },
-    "itemInPlaying": {
-      "__uuid__": "92f2a0d4-084d-4373-8b87-98c3133c0112",
-      "__expectedType__": "cc.Prefab"
-    },
     "curDirPar": {
       "__id__": 56
     },
@@ -20348,23 +20341,6 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "damagePrefab": {
-      "__uuid__": "6233edbe-89cd-4d18-b616-f0ffda7f9c3b",
-      "__expectedType__": "cc.Prefab"
-    },
-    "tipsPrefab": {
-      "__uuid__": "c3c85e03-ffbe-48e7-8572-760dbba77eed",
-      "__expectedType__": "cc.Prefab"
-    },
-    "damageTexPar": {
-      "__id__": 597
-    },
-    "tipsTexPar": {
-      "__id__": 599
-    },
-    "tipsAnimLayer": {
-      "__id__": 568
-    },
     "_id": "b8JkB2ePVA951d+gF75hQL"
   },
   {
@@ -20433,37 +20409,6 @@
     "_id": "c5V1EV8IpMtrIvY1OE9t2u"
   },
   {
-    "__type__": "4e520BxXQJPQrigNDESbUJs",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 2
-    },
-    "_enabled": false,
-    "__prefab": null,
-    "stageConfigJson": {
-      "__uuid__": "0976774f-fcf0-4ed8-8186-d68a197aaa68",
-      "__expectedType__": "cc.JsonAsset"
-    },
-    "leaderAndBossConfigJson": {
-      "__uuid__": "52642be3-115e-491e-9e9f-b5aad152e999",
-      "__expectedType__": "cc.JsonAsset"
-    },
-    "rewardConfigJson": {
-      "__uuid__": "462276df-a6ec-4a15-a547-2c65a06b6fd3",
-      "__expectedType__": "cc.JsonAsset"
-    },
-    "monsterArmyConfigJson": {
-      "__uuid__": "9307f9ad-de0f-4a1d-8557-75e257aaeb54",
-      "__expectedType__": "cc.JsonAsset"
-    },
-    "bossPrefab": {
-      "__uuid__": "ac275b9c-83d5-4bf0-ac42-3bb439479738",
-      "__expectedType__": "cc.Prefab"
-    },
-    "_id": "e2kOjJhOZIu5HQR7lhPbOp"
-  },
-  {
     "__type__": "64480m/artD17W4H5xA7zEM",
     "_name": "",
     "_objFlags": 0,
@@ -20506,22 +20451,22 @@
   {
     "__type__": "cc.SceneGlobals",
     "ambient": {
-      "__id__": 610
+      "__id__": 609
     },
     "shadows": {
-      "__id__": 611
+      "__id__": 610
     },
     "_skybox": {
-      "__id__": 612
+      "__id__": 611
     },
     "fog": {
-      "__id__": 613
+      "__id__": 612
     },
     "octree": {
-      "__id__": 614
+      "__id__": 613
     },
     "lightProbeInfo": {
-      "__id__": 615
+      "__id__": 614
     },
     "bakedWithStationaryMainLight": false,
     "bakedWithHighpLightmap": false

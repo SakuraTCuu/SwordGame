@@ -1,5 +1,5 @@
-import { em } from '../../global/EventManager';
 import { Constant } from '../../Common/Constant';
+import { em } from '../../Common/EventManager';
 import Utils from '../../Common/Utils';
 import { sys } from 'cc';
 

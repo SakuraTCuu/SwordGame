@@ -1,8 +1,7 @@
 
 import { _decorator, Component, Node, Prefab, SpriteFrame, instantiate, Sprite, Label, find, Color, tween, Vec3, NodePool, ProgressBar, Slider, Tween, Animation, RichText, color } from 'cc';
-import { em } from '../../global/EventManager';
+import { em } from '../../Common/EventManager';
 
-import { plm } from '../../global/PoolManager';
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';
 
@@ -88,7 +87,7 @@ export class HeroInfoLayer extends Component {
 
         this._tipsViewNode = find("/heroProperty/tipsViewShow", this.node);
 
-        plm.addPoolToPools("SSLItemPrefab", new NodePool(), this.itemPrefab);
+        app.pool.plm.addPoolToPools("SSLItemPrefab", new NodePool(), this.itemPrefab);
 
         this.initRewardConfig();
         // this.initEquipment();
@@ -375,7 +374,7 @@ export class HeroInfoLayer extends Component {
     updateStorageSpace() {
         while (this._itemPrefabArr.length > 0) {
             let prefab = this._itemPrefabArr.shift();
-            plm.putToPool("SSLItemPrefab", prefab);
+            app.pool.plm.putToPool("SSLItemPrefab", prefab);
         }
         let list = app.bag.getItemList();
 
@@ -383,7 +382,7 @@ export class HeroInfoLayer extends Component {
             let total = list[key];
             if (key == "灵石" || key == "3") continue;//不显示灵石
             let data = app.bag.getItemDataByIdOrName(key);
-            let prefab = plm.getFromPool("SSLItemPrefab");
+            let prefab = app.pool.plm.getFromPool("SSLItemPrefab");
             prefab.parent = this.itemPrefabPar;
             prefab.getChildByName("itemBg").getComponent(Sprite).spriteFrame = this.itemQBg[data.quality - 1];
             this.initPrefabLv(prefab, data);

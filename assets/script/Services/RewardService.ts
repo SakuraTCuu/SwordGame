@@ -1,7 +1,7 @@
 import { Constant } from "../Common/Constant";
+import { em } from "../Common/EventManager";
 import Singleton from "../Decorators/Singleton";
 import IService from "../Interfaces/IService";
-import { em } from "../global/EventManager";
 
 
 @Singleton

@@ -1,7 +1,6 @@
 
 import { _decorator, Component, Node, Collider2D, BoxCollider2D, Button, Size, Contact2DType, Color, Sprite, Animation, UITransform, Vec2, find, NodePool, instantiate, Prefab } from 'cc';
-import { em } from '../../global/EventManager';
-import { plm } from '../../global/PoolManager';
+import { em } from '../../Common/EventManager';
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';
 import Queue from '../../Libs/Structs/Queue';
@@ -79,7 +78,7 @@ export class BossView extends IView {
 
     // =====================初始化阶段=====================
     initView() {
-        plm.addPoolToPools("normalParticle", new NodePool(), this.NormalParticleNode);
+        app.pool.plm.addPoolToPools("normalParticle", new NodePool(), this.NormalParticleNode);
 
         let animKey = this.bossLogic.getAnimKey();
         this.initBossMoveAnim(animKey);
@@ -402,7 +401,7 @@ export class BossView extends IView {
     //发射1发子弹 scale 为子弹碰撞体缩放
     usingNormalParticleOneShot(scale = 1) {
         if (Constant.GlobalGameData.stopAll) return;
-        let np = plm.getFromPool("normalParticle");
+        let np = app.pool.plm.getFromPool("normalParticle");
         let flyDir = this.getDirToHero();
         np.parent = find("Canvas/bulletLayer");
         let wp = this.node.getWorldPosition();
@@ -415,7 +414,7 @@ export class BossView extends IView {
     usingNormalParticleTriShot(posArr, scale = 1) {
         if (Constant.GlobalGameData.stopAll) return;
         for (const pos of posArr) {
-            let np = plm.getFromPool("normalParticle");
+            let np = app.pool.plm.getFromPool("normalParticle");
             let flyDir = this.getDirToHero();
             np.parent = find("Canvas/bulletLayer");
             let wp = this.node.getWorldPosition();
@@ -435,7 +434,7 @@ export class BossView extends IView {
             let arr = [];
             for (let j = 0; j < initPosArr.length; j++) {
                 let initPos = initPosArr[j];
-                let dp: any = plm.getFromPool("normalParticle");
+                let dp: any = app.pool.plm.getFromPool("normalParticle");
                 dp.active = true;
                 dp.setPosition(0, 0, 0);
                 dp.initPos = initPos;
@@ -467,7 +466,7 @@ export class BossView extends IView {
     usingNormalParticleCircle(total: number, r: number, scale = 1) {
         let initPosArr = Utils.getCirclePos(r, total);
         for (let i = 0; i < total; i++) {
-            let dp: any = plm.getFromPool("normalParticle");
+            let dp: any = app.pool.plm.getFromPool("normalParticle");
             dp.active = true;
             dp.setPosition(0, 0, 0);
             let layer = find("Canvas/bulletLayer");
@@ -490,7 +489,7 @@ export class BossView extends IView {
         if (Constant.GlobalGameData.stopAll) return;
         let dirs = this.getVerticalDirToCurDir(curDir);
         for (const dir of dirs) {
-            let np = plm.getFromPool("normalParticle");
+            let np = app.pool.plm.getFromPool("normalParticle");
             np.parent = find("Canvas/bulletLayer");
             let wp = this.node.getWorldPosition();
             np.active = true;

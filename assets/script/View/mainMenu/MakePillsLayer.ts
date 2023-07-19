@@ -1,7 +1,6 @@
 
 import { _decorator, Component, Node, Prefab, find, SpriteFrame, instantiate, Sprite, Label, Color, NodePool, Material, tween, Vec3 } from 'cc';
-import { em } from '../../global/EventManager';
-import { plm } from '../../global/PoolManager';
+import { em } from '../../Common/EventManager';
 import { Constant } from '../../Common/Constant';
 import Utils from '../../Common/Utils';
 ;
@@ -79,15 +78,15 @@ export class MakePillsLayer extends Component {
     ];
     onLoad() {
         this._pillPar = find("/selectPill/sliding/content", this.node);
-        // plm.addPoolToPools("MPLPillPrefab",new NodePool(),this.pillPrefab);//不需要回收 无需生成对象池
-        plm.addPoolToPools("MPLItemPrefab", new NodePool(), this.itemPrefab);
+        // app.pool.plm.addPoolToPools("MPLPillPrefab",new NodePool(),this.pillPrefab);//不需要回收 无需生成对象池
+        app.pool.plm.addPoolToPools("MPLItemPrefab", new NodePool(), this.itemPrefab);
         this.initPillList();
         this._curPillData = this._pillListConfig[0];
         this.updatePillState(this._pillPrefabArr[0]);
         // this.updateMaterialDemand();
 
         let tipsTexPool = new NodePool();
-        plm.addPoolToPools("tipsTex", tipsTexPool, this.tipsPrefab);
+        app.pool.plm.addPoolToPools("tipsTex", tipsTexPool, this.tipsPrefab);
         this.initStoveBtn();
     }
 
@@ -105,7 +104,7 @@ export class MakePillsLayer extends Component {
     initPillList() {
         this._pillListConfig.forEach((data, index) => {
             let pill = instantiate(this.pillPrefab);
-            // let pill = plm.getFromPool("MPLPillPrefab");
+            // let pill = app.pool.plm.getFromPool("MPLPillPrefab");
             pill.parent = this._pillPar;
             pill.getChildByName("sprite").getComponent(Sprite).spriteFrame = this.pillSF[data.imageIndex];
             pill.getChildByName("name").getComponent(Label).string = data.name;
@@ -245,7 +244,7 @@ export class MakePillsLayer extends Component {
 
     //=================创建提示信息===============
     createTipsTex(content: string, initPos = { x: 0, y: 100 }) {
-        let tex = plm.getFromPool("tipsTex");
+        let tex = app.pool.plm.getFromPool("tipsTex");
         tex.getComponent(Label).string = content;
         tex.parent = find("Canvas/menuLayer/MakePillsLayer/tipsPar");
         tex.setPosition(initPos.x, initPos.y, 0);
@@ -262,7 +261,7 @@ export class MakePillsLayer extends Component {
         let action = tween(tex).parallel(a1, a2)
             .call(() => {
                 tex.setScale(new Vec3(1, 1, 1));
-                plm.putToPool("tipsTex", tex, true);
+                app.pool.plm.putToPool("tipsTex", tex, true);
             });
         action.start();
     }

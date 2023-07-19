@@ -1,8 +1,8 @@
 import { JsonAsset } from 'cc';
-import { em } from '../global/EventManager';
 import Singleton from '../Decorators/Singleton';
 import IService from '../Interfaces/IService';
 import { Constant } from '../Common/Constant';
+import { em } from '../Common/EventManager';
 
 /**
  * 背包服务

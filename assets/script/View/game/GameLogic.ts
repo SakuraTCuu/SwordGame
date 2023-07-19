@@ -3,8 +3,7 @@ import { Constant } from "../../Common/Constant";
 import IBaseGame from "../../Interfaces/IBaseGame";
 import Queue from "../../Libs/Structs/Queue";
 import MonsterUtil from "../../Common/MonsterUtil";
-import { MonsterManager } from "../../enemy/monster/MonsterManager";
-import { em } from "../../global/EventManager";
+import { em } from "../../Common/EventManager";
 import { BossView } from "../../Role/Enemy/BossView";
 
 export default class GameLogic extends IBaseGame {
@@ -50,7 +49,7 @@ export default class GameLogic extends IBaseGame {
 
     private _isRunning: boolean = false;
     private _isQueenTask: boolean = false;
-    private _isJustBoss: boolean = true;
+    private _isJustBoss: boolean = false;
 
     constructor(bossPrefab: Prefab) {
         super();
@@ -303,17 +302,17 @@ export default class GameLogic extends IBaseGame {
 
     // 创建boss
     createBoss() {
-        em.dispatch("createMonsterBoss", this._bossConfig.bossId);
+        // em.dispatch("createMonsterBoss", this._bossConfig.bossId);
 
-        // console.log("createBoss: bossId: ", this._bossConfig.bossId);
-        // let boss = instantiate(this._bossPrefab);
-        // let bossController = boss.getComponent(BossView);
-        // bossController.initBoss(this._bossConfig.bossId);
+        console.log("createBoss: bossId: ", this._bossConfig.bossId);
+        let boss = instantiate(this._bossPrefab);
+        let bossController = boss.getComponent(BossView);
+        bossController.initBoss(this._bossConfig.bossId);
 
-        // // boss.parent = find("Canvas/bossLayer");
+        // boss.parent = find("Canvas/bossLayer");
 
-        // let wp = em.dispatch("getHeroWorldPos");
-        // boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
+        let wp = em.dispatch("getHeroWorldPos");
+        boss.setWorldPosition(wp.x, wp.y + 1000, wp.z);
     }
 
     //停止创建
