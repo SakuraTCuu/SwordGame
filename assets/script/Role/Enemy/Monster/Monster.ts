@@ -5,10 +5,12 @@ import Simulator from '../../../Libs/RVO/Simulator';
 import Vector2 from '../../../Libs/RVO/Vector2';
 import { Constant } from '../../../Common/Constant';
 import MonsterUtil from '../../../Common/MonsterUtil';
+import { EnemySkill } from '../skill/EnemySkill';
 const { ccclass, property } = _decorator;
 //
 @ccclass('Monster')
 export class Monster extends Component {
+
     @property(Material)
     flashWhiteMaterial;
     @property(Material)
@@ -147,7 +149,7 @@ export class Monster extends Component {
         this.runOthers();
         if (this._remainingDuration <= 0) {
             // app.pool.plm.putToPool("monster", this.node);
-            app.pool.plm.putToPool("monsterChild", this.node);
+            app.pool.put("monsterChild", this.node);
             this.removeAgent();
             this.unschedule(this.durationCountdown);
         }
@@ -171,26 +173,17 @@ export class Monster extends Component {
             this.updateBlood(damage);
         }
     }
+
     initMonsterMoveAnim(data) {
         let animKey = "monster" + data.animKey;
-        let clip = em.dispatch("getMonsterAnimByAnimKey", animKey);
+        let clip = app.loader.get(animKey, AnimationClip) as AnimationClip;
         if (clip) {
             this._moveAnimClip = clip;
-            this.node.getComponent(Animation).defaultClip = clip;
+            this.node.getComponent(Animation).defaultClip = this._moveAnimClip;
             this.node.getComponent(Animation).play();
-        } else {
-            let path = "/anim/enemy/monster/" + animKey;
-            app.loader.load("resources", path, (err, assets) => {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                this._moveAnimClip = assets;
-                this.node.getComponent(Animation).defaultClip = assets;
-                this.node.getComponent(Animation).play();
-            });
         }
     }
+    
     initCollider() {
         let collider = this.getComponent(BoxCollider2D);
         if (!collider) collider = this.node.addComponent(BoxCollider2D);
@@ -256,7 +249,7 @@ export class Monster extends Component {
     // }
     //怪物死亡
     monsterDied() {
-        app.pool.plm.putToPool("monsterChild", this.node);
+        app.pool.put("monsterChild", this.node);
         this.removeAgent();
         // 加经验
         em.dispatch("usingHeroControlFun", "updateExpProgress", 100);
@@ -668,7 +661,8 @@ export class Monster extends Component {
     }
     // 攻击 仅攻击一次
     shotOnce(color) {
-        let bullet = app.pool.plm.getFromPool("monsterBullet");
+        let bullet = app.pool.get("monsterBullet");
+        // let bullet = app.pool.plm.getFromPool("monsterBullet");
         bullet.getComponent(Sprite).color = color;
         let flyDir = this.getDirToHero();
         bullet.parent = find("Canvas/bulletLayer");
@@ -676,7 +670,7 @@ export class Monster extends Component {
         bullet.active = true;
         bullet.setWorldPosition(wp);
         this._bulletData.damage = this._curMonsterData.damage;
-        bullet.getComponent("EnemySkill").init(this._bulletData, flyDir, 0.5);
+        bullet.getComponent(EnemySkill).init(this._bulletData, flyDir, 0.5);
     }
     // 获取朝向hero的方向
     getDirToHero() {

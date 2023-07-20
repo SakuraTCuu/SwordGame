@@ -241,7 +241,8 @@ export default class GameLogic extends IBaseGame {
 
                 let monsterID = this._curStageData.id[Math.random() * this._curStageData.id.length | 0];
                 let type = this._bossConfig.type[Math.random() * this._bossConfig.type.length | 0];
-                em.dispatch("createMonsterLeader", monsterID, type);
+                this.dispatch(Constant.EventId.createMonsterLeader, monsterID, type);
+                // em.dispatch("createMonsterLeader", monsterID, type);
                 this._curLeaderTotal++;
             } else {
                 this.createMonsterByCurData();

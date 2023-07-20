@@ -64,11 +64,11 @@ export default class ResLoader {
 
             if (this.resCacheAssets) {
                 if (resource instanceof Array) {
-                    resource.forEach(element => {
-                        this.resCacheAssets.cacheAsset(element.nativeUrl || paths, element);
+                    resource.forEach((element: Asset) => {
+                        this.resCacheAssets.cacheAsset(element.name, element);
                     });
                 } else {
-                    this.resCacheAssets.cacheAsset(resource.path, resource);
+                    this.resCacheAssets.cacheAsset(resource.name || pathsOut, resource);
                 }
             }
             if (onCompleteOut) {
@@ -166,6 +166,9 @@ export default class ResLoader {
     }
 
     public getRes(path: string, type?) {
-        this.resCacheAssets.getAsset(path, type);
+        let res = this.resCacheAssets.getAsset(path, type);
+        if (res) {
+            return res;
+        }
     }
 }

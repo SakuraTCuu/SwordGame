@@ -527,16 +527,15 @@ export class StaticDataService implements IService {
         return null;
     }
 
-    getMonsterStrongDataByStage(stage: string) {
-        let has = this.monsterStrongData.hasOwnProperty(stage);
+    getMonsterStrongDataByStage(stage: string | number) {
+        let key = "stage" + stage;
+        let has = this.monsterStrongData.hasOwnProperty(key);
         if (has) {
-            return this.monsterStrongData["stage" + Constant.GlobalGameData.curStage]
+            return this.monsterStrongData[key]
         }
-        console.log("property " + stage + " of monsterStrongData is null");
+        console.log("property " + key + " of monsterStrongData is null");
         return null;
     }
-
-
 
 }
 

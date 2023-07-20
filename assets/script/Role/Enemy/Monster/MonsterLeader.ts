@@ -1,9 +1,10 @@
 
-import { _decorator, Component, Node, Animation, Sprite, Material, instantiate, find, Vec3, tween, BoxCollider2D, Prefab, UITransform, Size, Contact2DType } from 'cc';
+import { _decorator, Component, Node, Animation, Sprite, Material, instantiate, find, Vec3, tween, BoxCollider2D, Prefab, UITransform, Size, Contact2DType, js } from 'cc';
 import { Monster } from './Monster';
 import { Constant } from '../../../Common/Constant';
 import Simulator from '../../../Libs/RVO/Simulator';
 import { em } from '../../../Common/EventManager';
+import Utils from '../../../Common/Utils';
 const { ccclass, property } = _decorator;
 
 @ccclass('MonsterLeader')
@@ -31,7 +32,10 @@ export class MonsterLeader extends Monster {
     createLeader(id, type) {
         this._type = "leader";
         //需要对数据进行修改 进行深拷贝
-        let data = JSON.parse(JSON.stringify(em.dispatch("getMonsterDataById", id)));
+        let data = Utils.deepCopy(app.staticData.getMonsterDataById(id));
+        if (!data) {
+            return `createLeader ${id} 对应的data为空`;
+        }
         this.setDefaultMaterialByType(type);
         switch (type) {
             case 0:
@@ -162,7 +166,7 @@ export class MonsterLeader extends Monster {
     monsterDied() {
         //节点已经被清除 无法找到父节点 血条更新处理
         if (this.node.parent) {
-            app.pool.plm.putToPool("monsterLeader", this.node);
+            app.pool.put("monsterLeader", this.node);
             em.dispatch(Constant.EventId.updateLeaderCurTotal, -1);
             em.dispatch("showKillLeaderReward", this._strengthType);
             // 加经验

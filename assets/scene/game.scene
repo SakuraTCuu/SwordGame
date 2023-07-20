@@ -107,7 +107,7 @@
     "_prefab": null,
     "_lpos": {
       "__type__": "cc.Vec3",
-      "x": 374.99999999999994,
+      "x": 375.00000000000006,
       "y": 672,
       "z": 0
     },
@@ -967,28 +967,11 @@
     },
     "_enabled": true,
     "__prefab": null,
-    "monsterChildPrefab": {
-      "__uuid__": "897a34e3-d8b5-47ca-b955-5fec104e5e02",
-      "__expectedType__": "cc.Prefab"
-    },
-    "monsterLeaderPrefab": {
-      "__uuid__": "730a291b-ab60-4d61-9f43-3ff34a15a143",
-      "__expectedType__": "cc.Prefab"
-    },
-    "monsterPropertiesJson": {
-      "__uuid__": "9519a4b9-0a23-4f5f-a99a-2b57d7a69dee",
-      "__expectedType__": "cc.JsonAsset"
-    },
-    "monsterStrongJson": {
-      "__uuid__": "17118139-2969-4b4d-81a6-73203299944e",
-      "__expectedType__": "cc.JsonAsset"
+    "enemyLayer": {
+      "__id__": 22
     },
     "monsterTotalLabel": {
       "__id__": 25
-    },
-    "bullet": {
-      "__uuid__": "08b18131-2dc0-4058-bb77-a49e8c01598a",
-      "__expectedType__": "cc.Prefab"
     },
     "_id": "b6q9Tj2/5PR4gidATybgU1"
   },
@@ -20390,8 +20373,8 @@
     "__prefab": null,
     "_alignFlags": 45,
     "_target": null,
-    "_left": -5.684341886080802e-14,
-    "_right": -5.684341886080802e-14,
+    "_left": 5.684341886080802e-14,
+    "_right": 5.684341886080802e-14,
     "_top": -5.684341886080802e-14,
     "_bottom": -5.684341886080802e-14,
     "_horizontalCenter": 0,

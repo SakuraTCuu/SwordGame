@@ -194,6 +194,26 @@ export default class Utils {
         let y = p1.y - p2.y;
         return x * x + y * y > v;
     }
+
+
+    //函数拷贝
+    static deepCopy(obj: any): any {
+        let newobj = null;
+
+        //判断是否需要继续进行递归
+        if (typeof (obj) == 'object' && obj !== null) {
+            newobj = obj instanceof Array ? [] : {};
+            //进行下一层递归克隆
+            for (let i in obj) {
+                newobj[i] = Utils.deepCopy(obj[i])
+            }
+            //如果不是对象直接赋值
+        } else {
+            newobj = obj
+        };
+
+        return newobj;
+    }
 }
 
 

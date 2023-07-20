@@ -173,7 +173,7 @@ export default class Loader {
         });
     }
 
-    public get<T extends Asset>(path: string, type?: AssetType<T>) {
-        this.resLoader.getRes(path, type);
+    public get<T extends Asset>(path: string, type?: AssetType<T>): Asset {
+        return this.resLoader.getRes(path, type);
     }
 }

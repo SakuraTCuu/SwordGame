@@ -204,13 +204,13 @@ namespace PoolService {
             console.log("成功添加对象池" + string);
         }
         // 获取对象池中的对象
-        getFromPool(string: string, isNotice: boolean = false) {
+        getFromPool(string: string, isNotice: boolean = false): Node {
             let pool = this.pools[string];
             let prefab = this.prefabs[string];
             // if (!pool && !prefab) return console.log("对象池或预制件不存在");
             if (!pool) {
                 console.warn("对象池" + string + "不存在");
-                return false;
+                return null;
             }
             if (!prefab) throw "预制件" + string + "不存在";
             let obj = null;

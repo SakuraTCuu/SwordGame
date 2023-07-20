@@ -41,6 +41,7 @@ export namespace Constant {
         createDamageTex = 'createDamageTex', //创建伤害文本
         createTipsTex = 'createTipsTex',
         showMassMonsterComing = 'showMassMonsterComing',
+        createMonsterLeader = 'createMonsterLeader', 
     }
 
     //属性标记

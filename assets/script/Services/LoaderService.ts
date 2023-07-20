@@ -119,7 +119,7 @@ export default class LoaderService implements IService {
     /**
      * TODO:  实现get
      */
-    public get<T extends Asset>(path: string, type?: AssetType<T>) {
+    public get<T extends Asset>(path: string, type?: AssetType<T>): Asset {
         return this.loader.get(path, type);
     }
 
