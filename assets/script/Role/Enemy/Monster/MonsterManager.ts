@@ -7,18 +7,29 @@ import { em } from '../../../Common/EventManager';
 import { Monster } from './Monster';
 import { MonsterLeader } from './MonsterLeader';
 import { BossView } from '../BossView';
+import IView from '../../../Interfaces/IView';
 const { ccclass, property } = _decorator;
 
 @ccclass('MonsterManager')
-export class MonsterManager extends Component {
+export class MonsterManager extends IView {
 
     @property(Node)
     enemyLayer: Node = null;
 
+    @property(Node)
+    bossLayer: Node = null;
+
     @property(Label)
     monsterTotalLabel;
 
-    _initPosList = null;
+    _distance: number = 300;
+
+    _initPosList = {
+        "up": { x: 0, y: this._distance },
+        "down": { x: 0, y: -this._distance },
+        "left": { x: -this._distance, y: 0 },
+        "right": { x: this._distance, y: 0 }
+    };
     _monsterProperties = {};
 
     _createCount: number = 0;//记录monster 创建数
@@ -31,36 +42,46 @@ export class MonsterManager extends Component {
 
     _monsterNodeList: Record<string, Node | undefined> = {};
 
-    onDestroy() {
-        em.remove("usingMonsterManagerFun");
-        em.remove("createMonsterByOutsideData");
-        em.remove("createMonsterLeader");
-        em.remove("getMonsterTotal");
-        em.remove("removeAllMonsters");
-        em.remove("createMonsterDamageTex");
-        em.remove("getAllMonsterColliders");
-        em.remove("getCurMonsterQuadtree");
-    }
-
-    onLoad() {
-        // this.
+    protected onRegister?(...r: any[]): void {
         em.add("usingMonsterManagerFun", this.usingMonsterManagerFun.bind(this));
         em.add("createMonsterByOutsideData", this.createMonsterByOutsideData.bind(this));
         em.add("createMonsterLeader", this.createMonsterLeader.bind(this));
         em.add("getMonsterTotal", this.getMonsterTotal.bind(this));
         em.add("removeAllMonsters", this.removeAllMonsters.bind(this));
-        em.add("createMonsterDamageTex", this.createMonsterDamageTex.bind(this));
+        this.subscribe(Constant.EventId.createMonsterDamageTex, this.createMonsterDamageTex.bind(this));
         em.add("getAllMonsterColliders", this.getAllMonsterColliders.bind(this));
         em.add("getCurMonsterQuadtree", this.getCurMonsterQuadtree.bind(this));
 
-        this._initPosList = {
-            "up": { x: 0, y: 300 },
-            "down": { x: 0, y: -300 },
-            "left": { x: -300, y: 0 },
-            "right": { x: 300, y: 0 }
-        };
         this.initRVOConfig();
         this.initEnemyLayer();
+    }
+
+    protected onUnRegister?(...r: any[]): void {
+        em.remove("usingMonsterManagerFun");
+        em.remove("createMonsterByOutsideData");
+        em.remove("createMonsterLeader");
+        em.remove("getMonsterTotal");
+        em.remove("removeAllMonsters");
+        this.unsubscribe(Constant.EventId.createMonsterDamageTex, this.createMonsterDamageTex, this);
+        em.remove("getAllMonsterColliders");
+        em.remove("getCurMonsterQuadtree");
+    }
+
+    onTick(delta: number): void {
+        if (Constant.GlobalGameData.stopAll) return;
+        this.updateQuadtree();
+        Simulator.Instance.doStep();
+        if (!Constant.GlobalGameConfig.framingInitMonster) return;
+        if (this._waitCreateQueue.length > 0) {
+            // console.log("分帧生成", this._waitCreateQueue);
+            let max = 1;
+            let count = this._waitCreateQueue.length > max ? max : this._waitCreateQueue.length;
+            while (count) {
+                let data = this._waitCreateQueue.shift();
+                this.createMonster(data.monsterId, data.pos, data.initOffset);
+                count--;
+            }
+        }
     }
 
     start() {
@@ -103,9 +124,8 @@ export class MonsterManager extends Component {
                 this._quadtree.insert(rect);
             }
         };
-        let bossLayer = find("Canvas/bossLayer");
-        for (let i = 0; i < bossLayer.children.length; i++) {
-            let boss = bossLayer.children[i];
+        for (let i = 0; i < this.bossLayer.children.length; i++) {
+            let boss = this.bossLayer.children[i];
             let collider = boss.getChildByName("sprite").getComponent(BoxCollider2D);
             let rect = collider.worldAABB;
             this._quadtree.insert(rect);
@@ -138,10 +158,9 @@ export class MonsterManager extends Component {
         }, interval);
     }
 
+    //创建怪物
     createMonster(id: number, pos: number[], initOffset: { x, y }) {
         let monster = app.pool.get("monsterChild");
-
-        let monsterStrongData = app.staticData.getMonsterStrongDataByStage(Constant.GlobalGameData.curStage);
 
         let data = app.staticData.getMonsterDataById(id);
         // prefab.parent = this.node;
@@ -150,7 +169,7 @@ export class MonsterManager extends Component {
         monster.parent = this.getParNodeByKey(data.color);
         monster.setWorldPosition(initOffset.x + wp.x + pos[0], initOffset.y + wp.y + pos[1], 0);
         monster.active = true;
-        monster.getComponent(Monster).init(data, id, monsterStrongData);//初始化碰撞脚本血量
+        monster.getComponent(Monster).init(id);//初始化碰撞脚本血量
     }
 
     // 创建精英怪
@@ -164,72 +183,20 @@ export class MonsterManager extends Component {
         leader.getComponent(MonsterLeader).createLeader(id, type);
     }
 
-    //获取玩家附近点
-    getAllAroundWpList(wp: { x, y, z }) {
-        let list = { up: new Vec3(), down: new Vec3(), left: new Vec3(), right: new Vec3() };
-        for (const dir in list) {
-            let obj = list[dir];
-            obj.x = wp.x + this._initPosList[dir].x;
-            obj.y = wp.y + this._initPosList[dir].y;
-            obj.z = 0;
-        };
-        return list;
-    }
-
-    //===============创建各种队形===================
     /**
-     * @method createQueueCircle  创建圆形队伍
-     * @param r 圆形方程半径
-     * @param total 生成的在圆上的点的总数
+     * @description: 增加随机偏移量 
+     * @param {object} initOffset {x,y} x为x轴上的偏移量 y为y轴上的偏移量
+     *  如果x轴或y轴等于0则在该轴上增加0 如果都为0 则不变
      */
-    createQueueCircle(r: number, total: number) {
-        if (total % 4 !== 0) throw "生成的在圆上的点的总数错误，不是4的倍数" + total;
-        let quarter = total / 4;
-        let arr = [];
-        for (let i = 1; i < quarter; i++) {//第一象限
-            let y = r * Math.sin(Math.PI / 180 * i / quarter * 90);
-            let x = Math.sqrt(r * r - y * y);
-            arr.push([x, y], [x, -y], [-x, y], [-x, -y]);
-        };
-        arr.push([0, r], [0, -r], [r, 0], [-r, 0]);
-        return arr;
-    }
-
-    /**
-     * @method createQueueHeart 创建心形队伍 
-     * @param r 心形方程 半径
-     * @param total 生成的在心形上的点的总数
-     * 公式 X=16(sinθ)³  Y=13cosθ-5cos2θ-2cos3θ-cos4θ (0≤θ≤2π)
-     */
-    createQueueHeart(r: number, total: number) {
-        if (total < 20) throw "total过小，无法生成心形方程";
-        let unit = 2 * Math.PI / total;
-        r /= 16;// X=16(sinθ)³ 推断 x 最大为16；所以对y缩放
-        let arr = [];
-        while (total) {
-            let radian = unit * total;
-            let x = 16 * (Math.sin(radian) ** 3);
-            let y = 13 * Math.cos(radian) - 5 * Math.cos(2 * radian) - 2 * Math.cos(3 * radian) - Math.cos(4 * radian);
-            x *= r;
-            y *= r;
-            arr.push([x, y]);
-            total--;
-        }
-        return arr;
-    }
-
-    //==================外部调用=======================
-    /**
-   * 通过外部数据创建关卡怪物
-   * @param {number} id 生成怪物id
-   * @param {object} queue 生成怪物队形
-   */
-    createMonsterByOutsideData(id, queue, initOffset: { x, y } = null) {
-        // console.log("参数为",id,queue);
-        if (initOffset == null) {
-            initOffset = this.getRandomInitPos();
-        };
-        this.createMonsterQueue(id, queue, initOffset);
+    addRandomOffset(initOffset: { x: number, y: number }) {
+        if (initOffset.x == 0 && initOffset.y != 0) {
+            let y = initOffset.y;
+            initOffset.x += Math.random() > 0.5 ? (0.5 * y + Math.random() * y * 0.5 | 0) : -(0.5 * y + Math.random() * y * 0.5 | 0);
+        } else if (initOffset.x != 0 && initOffset.y == 0) {
+            let x = initOffset.x;
+            initOffset.y += Math.random() > 0.5 ? (0.5 * x + Math.random() * x * 0.5 | 0) : -(0.5 * x + Math.random() * x * 0.5 | 0);
+        } else return initOffset;
+        return initOffset;
     }
 
     // 获取随机上下左右 四个初始化方向
@@ -252,6 +219,31 @@ export class MonsterManager extends Component {
         }
     }
 
+    //获取玩家附近点
+    getAllAroundWpList(wp: { x, y, z }) {
+        let list = { up: new Vec3(), down: new Vec3(), left: new Vec3(), right: new Vec3() };
+        for (const dir in list) {
+            let obj = list[dir];
+            obj.x = wp.x + this._initPosList[dir].x;
+            obj.y = wp.y + this._initPosList[dir].y;
+            obj.z = 0;
+        };
+        return list;
+    }
+
+    /**
+    * 通过外部数据创建关卡怪物
+    * @param {number} id 生成怪物id
+    * @param {object} queue 生成怪物队形
+    */
+    createMonsterByOutsideData(id, queue, initOffset: { x, y } = null) {
+        // console.log("参数为",id,queue);
+        if (initOffset == null) {
+            initOffset = this.getRandomInitPos();
+        };
+        this.createMonsterQueue(id, queue, initOffset);
+    }
+
     //生成怪物   
     createMonsterQueue(monsterId: number, queue: number[][], initOffset: { x, y }) {
         initOffset = this.addRandomOffset(initOffset);
@@ -260,39 +252,6 @@ export class MonsterManager extends Component {
             if (Constant.GlobalGameConfig.framingInitMonster) this._waitCreateQueue.push({ monsterId, pos, initOffset });
             else this.createMonster(monsterId, pos, initOffset);
         });
-    }
-
-    update() {
-        if (Constant.GlobalGameData.stopAll) return;
-        this.updateQuadtree();
-        Simulator.Instance.doStep();
-        if (!Constant.GlobalGameConfig.framingInitMonster) return;
-        if (this._waitCreateQueue.length > 0) {
-            // console.log("分帧生成", this._waitCreateQueue);
-            let max = 1;
-            let count = this._waitCreateQueue.length > max ? max : this._waitCreateQueue.length;
-            while (count) {
-                let data = this._waitCreateQueue.shift();
-                this.createMonster(data.monsterId, data.pos, data.initOffset);
-                count--;
-            }
-        }
-    }
-
-    /**
-     * @description: 增加随机偏移量 
-     * @param {object} initOffset {x,y} x为x轴上的偏移量 y为y轴上的偏移量
-     *  如果x轴或y轴等于0则在该轴上增加0 如果都为0 则不变
-     */
-    addRandomOffset(initOffset: { x: number, y: number }) {
-        if (initOffset.x == 0 && initOffset.y != 0) {
-            let y = initOffset.y;
-            initOffset.x += Math.random() > 0.5 ? (0.5 * y + Math.random() * y * 0.5 | 0) : -(0.5 * y + Math.random() * y * 0.5 | 0);
-        } else if (initOffset.x != 0 && initOffset.y == 0) {
-            let x = initOffset.x;
-            initOffset.y += Math.random() > 0.5 ? (0.5 * x + Math.random() * x * 0.5 | 0) : -(0.5 * x + Math.random() * x * 0.5 | 0);
-        } else return initOffset;
-        return initOffset;
     }
 
     //获取怪物总数  不获取boss 
@@ -350,29 +309,13 @@ export class MonsterManager extends Component {
         }
     }
 
-    // //移除所有怪物
-    // removeAllMonsters() {
-    //     while (this.node.children.length) {
-    //         let child = this.node.children[0];
-    //         child.removeFromParent();
-    //         app.pool.plm.putToJunkyard(child, true);
-    //     };
-    // }
-
     //创建怪物伤害文本
     createMonsterDamageTex(node, damage) {
         //判断英雄 伤害免疫
-        if (em.dispatch("getHeroControlProperty", "_isDamageImmunity")) return;
-        em.dispatch("usingHeroControlFun", "updateBloodProgress", -damage);
+        // if (em.dispatch("getHeroControlProperty", "_isDamageImmunity")) return;
+        // em.dispatch("usingHeroControlFun", "updateBloodProgress", -damage);
+        this.dispatch(Constant.EventId.updateBloodProgress, -damage);
     }
-
-    // //创建怪物伤害文本
-    // createMonsterDamageTex(node, damage) {
-    //     //判断英雄 伤害免疫
-    //     if (em.dispatch("getHeroControlProperty", "_isDamageImmunity")) return;
-    //     em.dispatch("createDamageTex", node, damage, { x: 0, y: 50 });
-    //     em.dispatch("usingHeroControlFun", "updateBloodProgress", -damage);
-    // }
 
     // 获取敌人节点上所有的碰撞器  精英怪和boss 的未获取
     getAllMonsterColliders() {

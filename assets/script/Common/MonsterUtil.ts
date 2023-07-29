@@ -244,4 +244,47 @@ export default class MonsterUtil {
         arr4.forEach(element => arr.push(element));
         return arr;
     }
+
+     /**
+    * @method createQueueCircle  创建圆形队伍
+    * @param r 圆形方程半径
+    * @param total 生成的在圆上的点的总数
+    */
+   static createQueueCircle(r: number, total: number) {
+       if (total % 4 !== 0) throw "生成的在圆上的点的总数错误，不是4的倍数" + total;
+       let quarter = total / 4;
+       let arr = [];
+       for (let i = 1; i < quarter; i++) {//第一象限
+           let y = r * Math.sin(Math.PI / 180 * i / quarter * 90);
+           let x = Math.sqrt(r * r - y * y);
+           arr.push([x, y], [x, -y], [-x, y], [-x, -y]);
+       };
+       arr.push([0, r], [0, -r], [r, 0], [-r, 0]);
+       return arr;
+   }
+
+
+    /**
+     * @method createQueueHeart 创建心形队伍 
+     * @param r 心形方程 半径
+     * @param total 生成的在心形上的点的总数
+     * 公式 X=16(sinθ)³  Y=13cosθ-5cos2θ-2cos3θ-cos4θ (0≤θ≤2π)
+     */
+    static createQueueHeart(r: number, total: number) {
+        if (total < 20) throw "total过小，无法生成心形方程";
+        let unit = 2 * Math.PI / total;
+        r /= 16;// X=16(sinθ)³ 推断 x 最大为16；所以对y缩放
+        let arr = [];
+        while (total) {
+            let radian = unit * total;
+            let x = 16 * (Math.sin(radian) ** 3);
+            let y = 13 * Math.cos(radian) - 5 * Math.cos(2 * radian) - 2 * Math.cos(3 * radian) - Math.cos(4 * radian);
+            x *= r;
+            y *= r;
+            arr.push([x, y]);
+            total--;
+        }
+        return arr;
+    }
+
 }

@@ -1,5 +1,6 @@
 import { _decorator, Component, Node, Sprite, find, SpriteFrame, instantiate, Label, director } from 'cc';
 import { em } from '../Common/EventManager';
+import { Constant } from '../Common/Constant';
 const { ccclass, property } = _decorator;
 
 @ccclass('PassRewardLayer')

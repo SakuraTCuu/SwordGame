@@ -6,10 +6,12 @@ import Vector2 from '../../../Libs/RVO/Vector2';
 import { Constant } from '../../../Common/Constant';
 import MonsterUtil from '../../../Common/MonsterUtil';
 import { EnemySkill } from '../skill/EnemySkill';
+import { MonsterManager } from './MonsterManager';
+import IView from '../../../Interfaces/IView';
 const { ccclass, property } = _decorator;
 //
 @ccclass('Monster')
-export class Monster extends Component {
+export class Monster extends IView {
 
     @property(Material)
     flashWhiteMaterial;
@@ -88,11 +90,27 @@ export class Monster extends Component {
         "fast": false,//加速
         "frozen": false,//冻结
     };
+
     onDestroy() {
         this.initDefaultData();
     }
 
-    init(data, id, strongList) {
+    protected onRegister?(...r: any[]): void {
+
+    }
+
+    protected onUnRegister?(...r: any[]): void {
+
+    }
+
+    onTick(delta: number): void {
+
+    }
+
+    init(id: number) {
+        let data = app.staticData.getMonsterDataById(id);
+        let strongList = app.staticData.getMonsterStrongDataByStage(Constant.GlobalGameData.curStage);
+
         this.initDefaultData();
         this._curMonsterData = JSON.parse(JSON.stringify(data));
         if (strongList) {
@@ -118,6 +136,7 @@ export class Monster extends Component {
                 throw "color " + this._curMonsterData.color + " is undefined.";
                 break;
         }
+
         this._parKey = this._curMonsterData.color;
         this.switchParByType(this._parKey);
         this.recoveryDefaultMaterial();
@@ -183,7 +202,7 @@ export class Monster extends Component {
             this.node.getComponent(Animation).play();
         }
     }
-    
+
     initCollider() {
         let collider = this.getComponent(BoxCollider2D);
         if (!collider) collider = this.node.addComponent(BoxCollider2D);
@@ -212,7 +231,6 @@ export class Monster extends Component {
             // this._diedAnimProgress = 0;
             // spriteComp.material = this.diedMaterial;
             // this.schedule(this.playDiedEffect, 1 / 60);
-
             this.monsterDied();
         } else {
             this.monsterIsRepelled(backDis);
@@ -417,7 +435,8 @@ export class Monster extends Component {
             em.dispatch("usingHeroControlFun", "addDebuffSlow", 5, 10);//降低10点移速 持续5s
         }
         if (type == "hero") {
-            em.dispatch("createMonsterDamageTex", other.node, this.getMonsterCurDamage());
+            this.dispatch(Constant.EventId.createMonsterDamageTex, other.node, this.getMonsterCurDamage());
+            // em.dispatch("createMonsterDamageTex", other.node, this.getMonsterCurDamage());
         } else if (type == "puppet") {
             other.node.updateBloodProgress(-this.getMonsterCurDamage());
         } else throw "type is " + type;

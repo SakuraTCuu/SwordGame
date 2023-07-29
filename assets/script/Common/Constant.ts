@@ -42,6 +42,8 @@ export namespace Constant {
         createTipsTex = 'createTipsTex',
         showMassMonsterComing = 'showMassMonsterComing',
         createMonsterLeader = 'createMonsterLeader', 
+        createMonsterDamageTex = 'createMonsterDamageTex',
+        updateBloodProgress = 'updateBloodProgress',
     }
 
     //属性标记
